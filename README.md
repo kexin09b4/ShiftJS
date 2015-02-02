@@ -36,7 +36,7 @@ test.transition({
 	background: "#3399ff"
 }, 1200, function(){
 	// Completion function executed here
-);
+});
 ```
 
 ##### Browser Support:
