@@ -18,13 +18,18 @@
 				border: none;
 				cursor: pointer;
 				position: absolute;
-				left: 450px;
 				top: 100px;
 				height: 50px;
 				border-radius: 25px;
 				width: 40px;
 				height: 40px;
 				background: #054f7d;
+			}
+			button:first-of-type {
+				left: 450px;
+			}
+			button:nth-of-type(2) {
+				left: 520px;
 			}
 			button:hover {
 				border: 1px solid red;
@@ -34,30 +39,40 @@
 	<body>
 		<div id="testDiv"></div>
 		<button></button>
+		<button></button>
 		<script type="text/javascript">
 			
 			var btn = document.getElementsByTagName("button")[0];
+			var btn2 = document.getElementsByTagName("button")[1];
 			
 			var test = new Transition("#testDiv");
 			
 			function complete(){
-				alert("Animation complete!");
+				alert("Animation 1 complete!");
+			};
+			
+			function complete2(){
+				alert("Animation 2 complete!");
 			};
 			
 			btn.onclick = function(){
 				
 				test.transition({
 					left: "500px",
-					top: "200px",
+					top: "260px",
 					width: "150px",
-					background: "#3399ff"
-				}, 1200);
+					background: "#3399ff",
+					transform: "rotate(90deg)"
+				}, 1200, complete);
 				
-				setTimeout(function(){
-					test.transition({
-						opacity: 0
-					}, 800, complete);
-				}, 1200);
+			};
+			
+			btn2.onclick = function(){
+				
+				test.transition({
+					opacity: 0,
+					height: "120px"
+				}, 800, complete2);
 				
 			};
 			

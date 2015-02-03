@@ -20,7 +20,7 @@ var test = new Transition(_selector, [_context]);
 test.transition(_properties, [_duration, _complete]);
 ```
 
-* _properties = object containing user-defined style keys (required)
+* _properties = object containing user-defined style keys (required; accepts any valid, transitionable CSS properties)
 * _duration = miliseconds (optional... if excluded, default duration is 500)
 * _complete = callback executed after the animation completes (optional)
 
@@ -33,16 +33,24 @@ test.transition({
 	left: "500px",
 	top: "200px",
 	width: "150px",
-	background: "#3399ff"
+	background: "#3399ff",
+	transform: "rotate(30deg)",
+	opacity: 0.2
 }, 1200, function(){
 	// Completion function executed here
 });
 ```
 
-##### Browser Support:
+##### Current Browser Support:
 
 * IE10+
 * Firefox 34+
 * Chrome 31+
 * Safari 7.1+
 * Opera 26+
+
+##### _Planned Expansions..._
+
+* Working to include queue
+* Will include the ability to determine "easing" value
+* Will include built-in methods for specific transitions: fadeIn()/fadeOut(), rotate(), zoomIn()/zoomOut(), etc.

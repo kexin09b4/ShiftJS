@@ -13,6 +13,8 @@
 		
 		var elem, selectedElements;
 		
+		// Gather the set
+		//
 		if (_context){
 			elem = document.querySelector(_context);
 			selectedElements = elem.querySelectorAll(_selector);
@@ -21,7 +23,7 @@
 		}
 		
 		if (selectedElements.length > 0){
-			this.init = selectedElements;
+			this.set = selectedElements;
 		} else {
 			return [];
 		}
@@ -36,49 +38,31 @@
 			
 			if (_properties && typeof _properties === "object"){
 				
-				var _collection = this.init;
-				var properties = Object.keys(_properties);
+				var _collection = this.set;
 				
+				// Add all applicable styles to the element per user-definition
+				//
 				for (i = 0; i < _collection.length; i++){
 					
-					_collection[i].style.transitionDuration = timer;
-					
-					if (properties.length > 1){
-						
-						var transitionProperty = new String;
-						
-						for (j = 0; j < properties.length - 1; j++){
-							transitionProperty += properties[j] + ", ";
-						}
-						
-						transitionProperty += properties[properties.length - 1];
-						_collection[i].style.transitionProperty = transitionProperty;
-						
-					} else {
-						_collection[i].style.transitionProperty	= properties[0];
-					}
+					_collection[i].style.transition = "all " + timer;
 					
 					for (styles in _properties){
 						_collection[i].style[styles] = _properties[styles];
 					}
 				}
 				
-				setTimeout(function(){ // "transitionend" event is proving unreliable with this script... for now...
-					
-					// Trigger callback on completion of the specified transitions
-					//
+				// Trigger "complete" function parameter if applicable and reset all transition values
+				//
+				var _callback = function(){
 					if (_complete){
 						_complete();
 					}
-					
-					// After transition, reset all transition properties and durations
-					//
-					for (k = 0; k < _collection.length; k++){
-						_collection[k].style.transitionProperty = "";
-						_collection[k].style.transitionDuration = "";
-					}
-					
-				}, _duration);
+					_collection[_collection.length - 1].removeEventListener("transitionend", _callback);
+				}
+				
+				// Triggered after all element transitions
+				//
+				_collection[_collection.length - 1].addEventListener("transitionend", _callback);
 				
 			} else {
 				throw new Error("Transition requires an object as its primary parameter with valid 'style' keys.");
