@@ -35,6 +35,8 @@
 		}
 		
 		collection[collection.length - 1].addEventListener("transitionend", callback);
+		
+		return this;
 	};
 	
 	

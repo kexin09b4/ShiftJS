@@ -5,6 +5,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<script type="text/javascript" src="transition.js"></script>
 		<script type="text/javascript" src="extensions/fade.js"></script>
+		<script type="text/javascript" src="extensions/delay.js"></script>
 		<style type="text/css">
 			#testDiv {
 				position: absolute;
@@ -64,13 +65,13 @@
 					width: "150px",
 					background: "#3399ff",
 					transform: "rotate(90deg)"
-				}, 1.2, complete);
+				}, 1.2, complete).delay(1);
 				
 			};
 			
 			btn2.onclick = function(){
 				
-				test.fadeOut(0.9, complete2);
+				test.fadeOut(0.9, complete2).delay(1);
 				
 			};
 			
