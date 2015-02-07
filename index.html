@@ -3,7 +3,7 @@
 	<head>
 		<title>TransitionJS</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<script type="text/javascript" src="transition.js"></script>
+		<script type="text/javascript" src="shift.js"></script>
 		<script type="text/javascript" src="extensions/fade.js"></script>
 		<script type="text/javascript" src="extensions/delay.js"></script>
 		<style type="text/css">
@@ -47,7 +47,7 @@
 			var btn = document.getElementsByTagName("button")[0];
 			var btn2 = document.getElementsByTagName("button")[1];
 			
-			var test = new Transition("#testDiv");
+			var test = new Shift("#testDiv");
 			
 			function complete(){
 				alert("Animation 1 complete!");
@@ -71,7 +71,7 @@
 			
 			btn2.onclick = function(){
 				
-				test.fadeOut(0.9, complete2).delay(1);
+				shift("#testDiv").fadeOut(0.9, complete2); // PROGRAM _complete FUNCTIONS AS A SEPARATE METHOD, NOT AS A PARAMETER
 				
 			};
 			

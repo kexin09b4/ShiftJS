@@ -2,7 +2,7 @@
  * NOTES TO COME HERE
  */
  	
-	Transition.prototype.fadeOut = function(_duration, _complete){
+	Shift.prototype.fadeOut = function(_duration, _complete){
 		
 		var i, j, timer, easing, callback, collection;
 		
@@ -43,6 +43,6 @@
 	
 	
 	
-	/*Transition.prototype.fadeIn = function(){
+	/*Shift.prototype.fadeIn = function(){
 		
 	};*/

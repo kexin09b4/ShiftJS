@@ -1,5 +1,5 @@
 /**
- * TransitionJS
+ * Shift.js
  * 
  * Stand-alone JavaScript module that triggers native CSS3 transition-based animations in modern browsers
  * 
@@ -9,7 +9,7 @@
  	
  	// Constructor
  	//
-	var Transition = function(_selector, _context){
+	var Shift = function(_selector, _context){
 		
 		var elem, selectedElements;
 		
@@ -78,9 +78,13 @@
 				collection[collection.length - 1].addEventListener("transitionend", callback);
 				
 			} else {
-				throw new Error("Transition requires an object as its first parameter with valid 'style' keys.");
+				throw new Error("Shift requires an object as its first parameter with valid 'style' keys.");
 			}
 			
 			return this;
 		};
+	};
+	
+	var shift = function(_selector, _context) {
+		return new Shift(_selector, _context);
 	};

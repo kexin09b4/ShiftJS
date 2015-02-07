@@ -2,7 +2,7 @@
  * NOTES TO COME HERE
  */
  	
-	Transition.prototype.delay = function(_delay){
+	Shift.prototype.delay = function(_delay){
 		
 		var i, j, collection;
 		

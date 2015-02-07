@@ -1,4 +1,4 @@
-# TransitionJS
+# ShiftJS
 
 ##### Stand-alone JavaScript module that triggers native CSS3 transition-based animations in modern browsers.
 
@@ -9,7 +9,7 @@ This script does not require jQuery or any other JavaScript libraries to work.
 ##### Initialization:
 
 ```
-var test = new Transition(_selector, [_context]);
+var test = shift(_selector, [_context]);
 ```
 
 * _selector above may refer to IDs, classNames or tagNames.
@@ -27,7 +27,7 @@ test.transition(_properties, [_duration, _complete]);
 ##### Example:
 
 ```
-var test = new Transition("#testDiv");
+var test = new Shift("#testDiv");
 
 test.transition({
 	left: "500px",
