@@ -14,7 +14,7 @@ var test = new Transition(_selector, [_context]);
 
 * _selector above may refer to IDs, classNames or tagNames.
 
-##### Calling the "transition()" method:
+##### Calling the "transition()" Method:
 
 ```
 test.transition(_properties, [_duration, _complete]);
@@ -41,6 +41,21 @@ test.transition({
 });
 ```
 
+##### Easing
+
+* To choose an easing value, simply include "easing" as a property in your object
+* If omitted, the default value is "ease"
+
+##### Example With Easing
+
+```
+test.transition({
+	left: "500px",
+	top: "200px",
+	easing: "linear"
+}, 1200, complete);
+```
+
 ##### Current Browser Support:
 
 * IE10+
@@ -52,5 +67,4 @@ test.transition({
 ##### _Planned Expansions..._
 
 * Working to include queue
-* Will include the ability to determine "easing" value
 * Will include built-in methods for specific transitions: fadeIn()/fadeOut(), rotate(), zoomIn()/zoomOut(), etc.

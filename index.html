@@ -4,6 +4,7 @@
 		<title>TransitionJS</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<script type="text/javascript" src="transition.js"></script>
+		<script type="text/javascript" src="extensions/fade.js"></script>
 		<style type="text/css">
 			#testDiv {
 				position: absolute;
@@ -69,10 +70,7 @@
 			
 			btn2.onclick = function(){
 				
-				test.transition({
-					opacity: 0,
-					height: "120px"
-				}, 800, complete2);
+				test.fadeOut(900, complete2);
 				
 			};
 			

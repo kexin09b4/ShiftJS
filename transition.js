@@ -32,40 +32,53 @@
 		//
 		this.transition = function(_properties, _duration, _complete){
 			
-			var i, j, k, styles;
+			var i, j, timer, easing, styles;
 			
-			var timer = (_duration) ? (_duration / 1000) + "s" : "0.5s"; // Default duration is half a second
+			timer = (_duration && typeof _duration === "number") ? (_duration / 1000) + "s" : "0.5s"; // Default duration is half a second
+			easing = (_properties.hasOwnProperty("easing")) ? " " + _properties["easing"] : ""; // Default browser easing is "ease"
 			
 			if (_properties && typeof _properties === "object"){
 				
-				var _collection = this.set;
+				var collection = this.set;
 				
 				// Add all applicable styles to the element per user-definition
 				//
-				for (i = 0; i < _collection.length; i++){
+				for (i = 0; i < collection.length; i++){
 					
-					_collection[i].style.transition = "all " + timer;
+					collection[i].style.transition = "all " + timer + easing;
 					
 					for (styles in _properties){
-						_collection[i].style[styles] = _properties[styles];
+						if (styles != "easing"){
+							collection[i].style[styles] = _properties[styles];
+						}
 					}
 				}
 				
 				// Trigger "complete" function parameter if applicable and reset all transition values
 				//
-				var _callback = function(){
-					if (_complete){
+				var callback = function(){
+					
+					if (_duration && typeof _duration !== "number" && typeof _duration !== "string"){
+						_duration();
+					} else if (_complete){
 						_complete();
 					}
-					_collection[_collection.length - 1].removeEventListener("transitionend", _callback);
+					
+					// Reset all transitions after completion
+					//
+					for (j = 0; j < collection.length; j++){
+						collection[j].style.transition = "";
+					}
+					
+					collection[collection.length - 1].removeEventListener("transitionend", callback);
 				}
 				
 				// Triggered after all element transitions
 				//
-				_collection[_collection.length - 1].addEventListener("transitionend", _callback);
+				collection[collection.length - 1].addEventListener("transitionend", callback);
 				
 			} else {
-				throw new Error("Transition requires an object as its primary parameter with valid 'style' keys.");
+				throw new Error("Transition requires an object as its first parameter with valid 'style' keys.");
 			}
 			
 			return this;
