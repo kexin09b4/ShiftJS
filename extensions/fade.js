@@ -2,7 +2,7 @@
  * NOTES TO COME HERE
  */
  	
-	Shift.prototype.fadeOut = function(_duration, _complete){
+	shift.fn.fadeOut = function(_duration){
 		
 		var i, j, timer, easing, callback, collection;
 		
@@ -17,12 +17,6 @@
 		}
 		
 		callback = function(){
-					
-			if (_duration && typeof _duration !== "number" && typeof _duration !== "string"){
-				_duration();
-			} else if (_complete){
-				_complete();
-			}
 			
 			// Reset all transitions after completion
 			//
