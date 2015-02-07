@@ -34,7 +34,7 @@
 			
 			var i, j, timer, easing, styles;
 			
-			timer = (_duration && typeof _duration === "number") ? (_duration / 1000) + "s" : "0.5s"; // Default duration is half a second
+			timer = (_duration && typeof _duration === "number") ? _duration + "s" : "0.5s"; // Default duration is half a second
 			easing = (_properties.hasOwnProperty("easing")) ? " " + _properties["easing"] : ""; // Default browser easing is "ease"
 			
 			if (_properties && typeof _properties === "object"){

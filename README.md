@@ -36,7 +36,7 @@ test.transition({
 	background: "#3399ff",
 	transform: "rotate(30deg)",
 	opacity: 0.2
-}, 1200, function(){
+}, 1.2, function(){
 	// Completion function executed here
 });
 ```
@@ -53,7 +53,7 @@ test.transition({
 	left: "500px",
 	top: "200px",
 	easing: "linear"
-}, 1200, complete);
+}, 0.9, complete);
 ```
 
 ##### Current Browser Support:

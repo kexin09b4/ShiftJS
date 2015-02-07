@@ -7,7 +7,7 @@
 		var i, j, timer, easing, callback, collection;
 		
 		collection = this.set;
-		timer = (_duration && typeof _duration === "number") ? (_duration / 1000) + "s" : "0.5s";
+		timer = (_duration && typeof _duration === "number") ? _duration + "s" : "0.5s";
 		
 		for (i = 0; i < collection.length; i++){
 					
