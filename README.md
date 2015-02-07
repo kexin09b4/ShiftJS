@@ -21,7 +21,7 @@ test.transition(_properties, [_duration, _complete]);
 ```
 
 * _properties = object containing user-defined style keys (required; accepts any valid, transitionable CSS properties)
-* _duration = miliseconds (optional... if excluded, default duration is 500)
+* _duration = seconds (optional... if excluded, default is 0.5)
 * _complete = callback executed after the animation completes (optional)
 
 ##### Example:
