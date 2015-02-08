@@ -58,19 +58,13 @@
 			
 			btn.onclick = function(){
 				
-				test.animate({
-					left: "500px",
-					top: "260px",
-					width: "150px",
-					background: "#3399ff",
-					transform: "rotate(90deg)"
-				}, 1.2).delay(1).complete(completion);
+				test.complete(completion).ease("linear").fadeIn(0.8);
 				
 			};
 			
 			btn2.onclick = function(){
 				
-				shift("#testDiv")
+				test
 					.fadeOut(0.9)
 					.ease("linear")
 					.delay(1)
