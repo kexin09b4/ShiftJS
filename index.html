@@ -5,6 +5,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<script type="text/javascript" src="shift.js"></script>
 		<script type="text/javascript" src="extensions/animate.js"></script>
+		<script type="text/javascript" src="extensions/complete.js"></script>
 		<script type="text/javascript" src="extensions/easing.js"></script>
 		<script type="text/javascript" src="extensions/fade.js"></script>
 		<script type="text/javascript" src="extensions/delay.js"></script>
@@ -51,7 +52,7 @@
 			
 			var test = shift("#testDiv");
 			
-			function complete(){
+			function completion(){
 				alert("Animation complete!");
 			};
 			
@@ -63,17 +64,17 @@
 					width: "150px",
 					background: "#3399ff",
 					transform: "rotate(90deg)"
-				}, 1.2).delay(1);
-				
-				setTimeout(function(){
-					test.fadeOut(0.9);
-				}, 2250);
+				}, 1.2).delay(1).complete(completion);
 				
 			};
 			
 			btn2.onclick = function(){
 				
-				test.fadeOut(0.9).ease("linear"); // PROGRAM _complete FUNCTIONS AS A SEPARATE METHOD, NOT AS A PARAMETER
+				shift("#testDiv")
+					.fadeOut(0.9)
+					.ease("linear")
+					.delay(1)
+					.complete(completion);
 				
 			};
 			
