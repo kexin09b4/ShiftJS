@@ -6,9 +6,10 @@
 		<script type="text/javascript" src="shift.js"></script>
 		<script type="text/javascript" src="extensions/animate.js"></script>
 		<script type="text/javascript" src="extensions/complete.js"></script>
+		<script type="text/javascript" src="extensions/css.js"></script>
+		<script type="text/javascript" src="extensions/delay.js"></script>
 		<script type="text/javascript" src="extensions/easing.js"></script>
 		<script type="text/javascript" src="extensions/fade.js"></script>
-		<script type="text/javascript" src="extensions/delay.js"></script>
 		<style type="text/css">
 			#testDiv {
 				position: absolute;
@@ -58,17 +59,13 @@
 			
 			btn.onclick = function(){
 				
-				test.complete(completion).ease("linear").fadeIn(0.8);
+				test.css("background", "#f00");
 				
 			};
 			
 			btn2.onclick = function(){
 				
-				test
-					.fadeOut(0.9)
-					.ease("linear")
-					.delay(1)
-					.complete(completion);
+				test.css("background", "#3399ff", 2);
 				
 			};
 			

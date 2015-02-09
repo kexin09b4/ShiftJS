@@ -40,8 +40,6 @@
 			//
 			collection[collection.length - 1].addEventListener("transitionend", callback);
 			
-		} else {
-			throw new Error("Shift requires an object as its first parameter with valid 'style' keys.");
 		}
 		
 		return this;
