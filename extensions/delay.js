@@ -1,24 +1,29 @@
 /**
- * NOTES TO COME HERE
+ * delay()
+ * 
+ * Adds a transition-delay to each instance
+ * 
+ * Parameter:
+ * -delay (number in seconds, not a string)
  */
  	
 	shift.fn.delay = function(_delay){
 		
-		var i, j, collection;
+		var timer, collection;
 			
-		collection = this.set;
-		timer = (_delay && typeof _delay === "number") ? _delay + "s" : "0.5s";
+		collection = this.collection;
+		timer = (_delay && typeof _delay === "number") ? _delay + "s" : "0.5s"; // Default duration is half a second
 	
-		for (i = 0; i < collection.length; i++){
-			collection[i].style.transitionDelay = _delay + "s";
-		}
+		$loop(collection,function(){
+			this.style.transitionDelay = _delay + "s";
+		});
 		
 		// Reset transition-delays
 		//
 		collection[collection.length - 1].addEventListener("transitionend",function(){
-			for (j = 0; j < collection.length; j++){
-				collection[j].style.transitionDelay = "";
-			}
+			$loop(collection,function(){
+				this.style.transitionDelay = "";
+			});
 		});
 		
 		return this;

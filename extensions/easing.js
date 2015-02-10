@@ -1,17 +1,22 @@
 /**
- * NOTES TO COME HERE
+ * ease()
+ * 
+ * Adjusts the easing/transition-timing-function of each instance
+ * 
+ * Parameter:
+ * -easing (string)
  */
  	
 	shift.fn.ease = function(_easing){
 		
-		var i, collection;
+		var easing, collection;
 		
-		collection = this.set;
-		_easing = (_easing && typeof _easing === "string") ? _easing : "ease"; // Native default is "ease"
+		collection = this.collection;
+		easing = (_easing && typeof _easing === "string") ? _easing : "ease"; // Native browser default is "ease"
 		
-		for (i = 0; i < collection.length; i++){
-			collection[i].style.transitionTimingFunction = _easing;
-		}
+		$loop(collection,function(){
+			this.style.transitionTimingFunction = easing;
+		});
 		
 		return this;
 	};

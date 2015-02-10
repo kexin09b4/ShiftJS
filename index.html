@@ -6,7 +6,7 @@
 		<script type="text/javascript" src="shift.js"></script>
 		<script type="text/javascript" src="extensions/animate.js"></script>
 		<script type="text/javascript" src="extensions/complete.js"></script>
-		<script type="text/javascript" src="extensions/css.js"></script>
+		<script type="text/javascript" src="extensions/set.js"></script>
 		<script type="text/javascript" src="extensions/delay.js"></script>
 		<script type="text/javascript" src="extensions/easing.js"></script>
 		<script type="text/javascript" src="extensions/fade.js"></script>
@@ -59,13 +59,25 @@
 			
 			btn.onclick = function(){
 				
-				test.css("background", "#f00");
+				test
+					.set("background", "#f00")
+					.delay(0.5)
+					.ease("linear")
+					.complete(completion);
+				
+				/*test.animate({
+					left: "800px"
+				}, 1.5);*/
 				
 			};
 			
 			btn2.onclick = function(){
 				
-				test.css("background", "#3399ff", 2);
+				test.fadeOut(0.8);
+				
+				setTimeout(function(){
+					test.fadeIn(0.8);
+				}, 1610);
 				
 			};
 			

@@ -1,12 +1,19 @@
 /**
- * NOTES TO COME HERE
+ * complete()
+ * 
+ * Triggers a function after all transitions end
+ * 
+ * Parameter:
+ * -complete (callback triggered after transitions)
  */
  	
 	shift.fn.complete = function(_complete){
 		
-		var collection = this.set;
+		var callback, collection;
 		
-		var callback = function(){
+		collection = this.collection;
+		
+		callback = function(){
 			_complete();
 			collection[collection.length - 1].removeEventListener("transitionend", callback);
 		};

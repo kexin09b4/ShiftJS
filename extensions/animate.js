@@ -1,27 +1,32 @@
 /**
- * NOTES TO COME HERE
+ * animate()
+ * 
+ * Applies several CSS styles to the target DOM elements
+ * 
+ * Parameters:
+ * -properties (object containing CSS key-value pairs)
+ * -duration (optional... number in seconds, not a string)
  */
  	
 	shift.fn.animate = function(_properties, _duration){
 		
-		var i, j, timer, styles, callback;
-			
+		var timer, styles, callback, collection;
+		
+		collection = this.collection;
 		timer = (_duration && typeof _duration === "number") ? _duration + "s" : "0.5s"; // Default duration is half a second
 		
 		if (_properties && typeof _properties === "object"){
 			
-			var collection = this.set;
-			
 			// Add all applicable styles to the element per user-definition
 			//
-			for (i = 0; i < collection.length; i++){
+			$loop(collection,function(){
 				
-				collection[i].style.transition = "all " + timer;
+				this.style.transition = "all " + timer;
 				
 				for (styles in _properties){
-					collection[i].style[styles] = _properties[styles];
+					this.style[styles] = _properties[styles];
 				}
-			}
+			});
 			
 			// Trigger "complete" function parameter if applicable and reset all transition values
 			//
@@ -29,15 +34,13 @@
 				
 				// Reset all transitions after completion
 				//
-				for (j = 0; j < collection.length; j++){
-					collection[j].style.transition = "";
-				}
+				$loop(collection,function(){
+					this.style.transition = "";
+				});
 				
 				collection[collection.length - 1].removeEventListener("transitionend", callback);
-			}
+			};
 			
-			// Triggered after all element transitions
-			//
 			collection[collection.length - 1].addEventListener("transitionend", callback);
 			
 		}
