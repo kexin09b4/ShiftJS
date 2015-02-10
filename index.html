@@ -6,10 +6,12 @@
 		<script type="text/javascript" src="shift.js"></script>
 		<script type="text/javascript" src="extensions/animate.js"></script>
 		<script type="text/javascript" src="extensions/complete.js"></script>
-		<script type="text/javascript" src="extensions/set.js"></script>
 		<script type="text/javascript" src="extensions/delay.js"></script>
 		<script type="text/javascript" src="extensions/easing.js"></script>
 		<script type="text/javascript" src="extensions/fade.js"></script>
+		<script type="text/javascript" src="extensions/move.js"></script>
+		<script type="text/javascript" src="extensions/rotate.js"></script>
+		<script type="text/javascript" src="extensions/set.js"></script>
 		<style type="text/css">
 			#testDiv {
 				position: absolute;
@@ -59,25 +61,24 @@
 			
 			btn.onclick = function(){
 				
-				test
-					.set("background", "#f00")
-					.delay(0.5)
-					.ease("linear")
-					.complete(completion);
+				test.animate({
+					left: "750px",
+					width: "150px"
+				}, 1.2);
 				
-				/*test.animate({
-					left: "800px"
-				}, 1.5);*/
+				setTimeout(function(){
+					test.rotate(40);
+				}, 1250);
 				
 			};
 			
 			btn2.onclick = function(){
 				
-				test.fadeOut(0.8);
+				test.move("left", "500px", 0.8);
 				
 				setTimeout(function(){
-					test.fadeIn(0.8);
-				}, 1610);
+					test.move("top", "400px", 0.8).complete(completion);
+				}, 850);
 				
 			};
 			

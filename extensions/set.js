@@ -18,10 +18,14 @@
 		timer = (_duration && typeof _duration === "number") ? _duration + "s" : "0.5s"; // Default duration is half a second
 		
 		if (_property && _value && typeof _property === "string" && typeof _value === "string"){
+			
 			$loop(collection,function(){
 				this.style.transition = _property + " " + timer;
 				this.style[_property] = _value;
 			});
+			
+		} else {
+			throw new Error("'Property' and 'value' parameters for set() must be strings.");
 		}
 		
 		// Reset transitions after completion

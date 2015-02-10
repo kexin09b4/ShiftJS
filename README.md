@@ -1,10 +1,10 @@
 # ShiftJS
 
-##### Stand-alone JavaScript module that triggers native CSS3 transition-based animations in modern browsers.
+##### Stand-alone JavaScript library that triggers native CSS3 transition-based animations in modern browsers.
 
 Full documentation and examples to come soon...
 
-##### Current Browser Support:
+##### Browser Support:
 
 * IE10+
 * Firefox 34+

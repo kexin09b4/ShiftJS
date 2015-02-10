@@ -34,7 +34,7 @@
 	
 	// Shorthand method for the results above
 	//
-	var shift = function(_selector, _context) {
+	var shift = function(_selector, _context){
 		return new Shift(_selector, _context);
 	};
 	

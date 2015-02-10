@@ -13,7 +13,7 @@
 		
 		collection = this.collection;
 		
-		callback = function(){
+		callback = function(){ // The browser will throw a native error if the _complete parameter is not a function
 			_complete();
 			collection[collection.length - 1].removeEventListener("transitionend", callback);
 		};
