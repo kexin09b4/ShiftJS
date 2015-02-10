@@ -2,11 +2,11 @@
  * NOTES TO COME HERE
  */
  	
-	shift.fn.css = function(_property, _value, _duration){
+	shift.fn.set = function(_property, _value, _duration){
 		
 		var i, j, collection, timer;
 			
-		collection = this.set;
+		collection = this.collection;
 		timer = (_duration && typeof _duration === "number") ? _duration + "s" : "0.5s";
 		
 		if (_property && _value && typeof _property === "string" && typeof _value === "string"){
