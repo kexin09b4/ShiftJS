@@ -11,3 +11,5 @@ Full documentation and examples to come soon...
 * Chrome 31+
 * Safari 7.1+
 * Opera 26+
+
+_In older browsers, some transform-based animations will not work if the browser does not natively support the feature. All other CSS changes will be applied normally albeit without a smooth CSS3 transition._
