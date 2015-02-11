@@ -56,29 +56,41 @@
 			var test = shift("#testDiv");
 			
 			function completion(){
-				alert("Animation complete!");
+				console.log("Animation complete!");
 			};
+			
+			var animObj = {left: "750px", width: "150px", borderRadius: "20px"};
 			
 			btn.onclick = function(){
 				
-				test.animate({
-					left: "750px",
-					width: "150px"
-				}, 1.2);
-				
-				setTimeout(function(){
-					test.rotate(40);
-				}, 1250);
+				test
+					.animate(animObj, 1.2)
+					.delay(0.5)
+					.complete(function(){
+						test
+							.rotate(40)
+							.complete(function(){
+								test
+									.set("background", "#f00")
+									.move("top", "150px")
+									.fadeOut(1.2)
+									.complete(completion);
+							});
+					});
 				
 			};
 			
 			btn2.onclick = function(){
 				
-				test.move("left", "500px", 0.8);
-				
-				setTimeout(function(){
-					test.move("top", "400px", 0.8).complete(completion);
-				}, 850);
+				test
+					.fadeOut(0.8)
+					.complete(function(){
+						test
+							.fadeIn(0.8)
+							.complete(function(){
+								console.log("yay");
+							});
+					});
 				
 			};
 			

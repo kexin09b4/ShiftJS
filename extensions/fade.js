@@ -28,10 +28,10 @@
 				this.style.visibility = "hidden";
 			});
 			
-			collection[collection.length - 1].removeEventListener("transitionend", callback);
+			collection[collection.length - 1].removeEventListener("transitionend", callback, false);
 		};
 		
-		collection[collection.length - 1].addEventListener("transitionend", callback);
+		collection[collection.length - 1].addEventListener("transitionend", callback, false);
 		
 		return this;
 	};
@@ -57,10 +57,10 @@
 				this.style.transition = "";
 			});
 			
-			collection[collection.length - 1].removeEventListener("transitionend", callback);
+			collection[collection.length - 1].removeEventListener("transitionend", callback, false);
 		};
 		
-		collection[collection.length - 1].addEventListener("transitionend", callback);
+		collection[collection.length - 1].addEventListener("transitionend", callback, false);
 		
 		return this;
 	};

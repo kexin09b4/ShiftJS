@@ -13,6 +13,8 @@ module.exports = function(grunt){
 		    		"extensions/delay.js",
 		    		"extensions/easing.js",
 		    		"extensions/fade.js",
+		    		"extensions/move.js",
+		    		"extensions/rotate.js",
 		    		"extensions/set.js"
 			    ],
 			    dest: "bin/<%= pkg.name %>-v<%= pkg.version %>.js"

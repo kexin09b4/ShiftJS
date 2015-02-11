@@ -18,13 +18,5 @@
 			this.style.transitionDelay = _delay + "s";
 		});
 		
-		// Reset transition-delays
-		//
-		collection[collection.length - 1].addEventListener("transitionend",function(){
-			$loop(collection,function(){
-				this.style.transitionDelay = "";
-			});
-		});
-		
 		return this;
 	};

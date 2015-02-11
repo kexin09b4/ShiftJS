@@ -34,7 +34,7 @@
 	
 	// Shorthand method for the results above
 	//
-	var shift = function(_selector, _context) {
+	var shift = function(_selector, _context){
 		return new Shift(_selector, _context);
 	};
 	
@@ -90,10 +90,10 @@
 					this.style.transition = "";
 				});
 				
-				collection[collection.length - 1].removeEventListener("transitionend", callback);
+				collection[collection.length - 1].removeEventListener("transitionend", callback, false);
 			};
 			
-			collection[collection.length - 1].addEventListener("transitionend", callback);
+			collection[collection.length - 1].addEventListener("transitionend", callback, false);
 			
 		}
 		
@@ -111,16 +111,29 @@
  	
 	shift.fn.complete = function(_complete){
 		
-		var callback, collection;
+		var callback, active, collection;
 		
+		active = true;
 		collection = this.collection;
 		
-		callback = function(){
-			_complete();
-			collection[collection.length - 1].removeEventListener("transitionend", callback);
+		callback = function(){ // The browser will throw a native error if the _complete parameter is not a function
+			
+			if (active){ // Prevents the event from firing too many times with method chaining
+				
+				// setTimeout block below is necessary to prevent completion event from firing too soon
+				//
+				setTimeout(function(){
+					collection[collection.length - 1].removeEventListener("transitionend", callback, false); // NOT WORKING!!!!!
+					_complete();
+				}, 50);
+				
+				active = false;
+			
+			}
+			
 		};
 		
-		collection[collection.length - 1].addEventListener("transitionend", callback);
+		collection[collection.length - 1].addEventListener("transitionend", callback, false);
 		
 		return this;
 	};
@@ -143,14 +156,6 @@
 	
 		$loop(collection,function(){
 			this.style.transitionDelay = _delay + "s";
-		});
-		
-		// Reset transition-delays
-		//
-		collection[collection.length - 1].addEventListener("transitionend",function(){
-			$loop(collection,function(){
-				this.style.transitionDelay = "";
-			});
 		});
 		
 		return this;
@@ -209,10 +214,10 @@
 				this.style.visibility = "hidden";
 			});
 			
-			collection[collection.length - 1].removeEventListener("transitionend", callback);
+			collection[collection.length - 1].removeEventListener("transitionend", callback, false);
 		};
 		
-		collection[collection.length - 1].addEventListener("transitionend", callback);
+		collection[collection.length - 1].addEventListener("transitionend", callback, false);
 		
 		return this;
 	};
@@ -238,14 +243,114 @@
 				this.style.transition = "";
 			});
 			
-			collection[collection.length - 1].removeEventListener("transitionend", callback);
+			collection[collection.length - 1].removeEventListener("transitionend", callback, false);
 		};
 		
-		collection[collection.length - 1].addEventListener("transitionend", callback);
+		collection[collection.length - 1].addEventListener("transitionend", callback, false);
 		
 		return this;
 	};
 
+/**
+ * move()
+ * 
+ * Moves the target DOM elements to the specified left or top value
+ * 
+ * Parameters:
+ * -direction (required; either "left" or "top")
+ * -value (required; either pixels or percentages)
+ * -duration (optional... in seconds as a number, not a string)
+ */
+ 	
+	shift.fn.move = function(_direction, _value, _duration){
+		
+		var timer, callback, collection;
+			
+		collection = this.collection;
+		timer = (_duration && typeof _duration === "number") ? _duration + "s" : "0.5s"; // Default duration is half a second
+		
+		if (_direction && _value && typeof _direction === "string" && typeof _value === "string"){
+			
+			if (_direction === "left" || _direction === "top"){
+			
+				$loop(collection,function(){
+					this.style.transition = _direction + " " + timer;
+					this.style[_direction] = _value;
+				});
+			
+			} else {
+				throw new Error("Acceptable direction values for move() are 'left' and 'top'.");
+			}
+		}
+		
+		callback = function(){
+			
+			// Reset all transitions after completion
+			//
+			$loop(collection,function(){
+				this.style.transition = "";
+			});
+			
+			collection[collection.length - 1].removeEventListener("transitionend", callback, false);
+		};
+		
+		collection[collection.length - 1].addEventListener("transitionend", callback, false);
+		
+		return this;
+	};
+
+/**
+ * rotate()
+ * 
+ * Rotates the target DOM elements to the specified degree value
+ * 
+ * Parameters:
+ * -degree (required... degrees as a number, not a string)
+ * -duration (optional... seconds as a number, not a string)
+ */
+ 	
+ 	// Note: as of the time this library was built, Safari still requires the -webkit- vendor prefix for transforms
+ 	//
+	shift.fn.rotate = function(_degree, _duration){
+		
+		var timer, callback, collection;
+			
+		collection = this.collection;
+		timer = (_duration && typeof _duration === "number") ? _duration + "s" : "0.5s"; // Default duration is half a second
+		
+		if (_degree && typeof _degree === "number"){
+			
+			$loop(collection,function(){
+				
+				this.style.transition = "transform " + timer;
+				this.style.webkitTransition = "-webkit-transform " + timer;
+				
+				this.style.transform = "rotate(" + _degree + "deg)";
+				this.style.webkitTransform = "rotate(" + _degree + "deg)";
+				
+			});
+			
+		} else {
+			throw new Error("Degree value for rotate() must be a valid number.");
+		}
+		
+		callback = function(){
+			
+			// Reset all transitions after completion
+			//
+			$loop(collection,function(){
+				this.style.transition = "";
+			});
+			
+			collection[collection.length - 1].removeEventListener("transitionend", callback, false);
+		};
+		
+		collection[collection.length - 1].addEventListener("transitionend", callback, false);
+		
+		return this;
+	};
+	
+	/* rotate3d, rotateX, rotateY, rotateZ to go here */
 /**
  * set()
  * 
@@ -260,25 +365,34 @@
  	
 	shift.fn.set = function(_property, _value, _duration){
 		
-		var timer, collection;
+		var timer, callback, collection;
 			
 		collection = this.collection;
 		timer = (_duration && typeof _duration === "number") ? _duration + "s" : "0.5s"; // Default duration is half a second
 		
 		if (_property && _value && typeof _property === "string" && typeof _value === "string"){
+			
 			$loop(collection,function(){
 				this.style.transition = _property + " " + timer;
 				this.style[_property] = _value;
 			});
+			
+		} else {
+			throw new Error("'Property' and 'value' parameters for set() must be strings.");
 		}
 		
-		// Reset transitions after completion
-		//
-		collection[collection.length - 1].addEventListener("transitionend",function(){
+		callback = function(){
+			
+			// Reset all transitions after completion
+			//
 			$loop(collection,function(){
 				this.style.transition = "";
 			});
-		});
+			
+			collection[collection.length - 1].removeEventListener("transitionend", callback, false);
+		};
+		
+		collection[collection.length - 1].addEventListener("transitionend", callback, false);
 		
 		return this;
 	};
