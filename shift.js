@@ -13,13 +13,24 @@
  	//
 	var Shift = function(_selector, _context){
 		
-		var elem, selectedElements;
+		var selectedElements, ctx, els, i, j;
 		
 		// Gather the set
 		//
 		if (_context){
-			elem = document.querySelector(_context);
-			selectedElements = elem.querySelectorAll(_selector);
+			
+			ctx = document.querySelectorAll(_context);
+			selectedElements = [];
+			
+			for (i = 0; i < ctx.length; i++){
+				
+				els = ctx[i].querySelectorAll(_selector);
+				
+				for (j = 0; j < els.length; j++){
+					selectedElements.push(els[j]);
+				}
+			}
+			
 		} else {
 			selectedElements = document.querySelectorAll(_selector);
 		}
