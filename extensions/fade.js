@@ -5,17 +5,20 @@
  * 
  * Parameter:
  * -duration (optional... number in seconds, not a string)
+ * -easing (optional... string)
+ * -complete (optional... callback fired after transitionend)
  */
  	
-	shift.fn.fadeOut = function(_duration){
+	shift.fn.fadeOut = function(_duration, _easing, _complete){
 		
-		var timer, callback, collection;
+		var timer, callback, easing, collection;
 		
 		collection = this.collection;
-		timer = (_duration && typeof _duration === "number") ? _duration + "s" : "0.5s"; // Default duration is half a second
+		easing = (_easing && typeof _easing === "string") ? _easing : $shiftEasing; // Default easing is "ease"
+		timer = (_duration && typeof _duration === "number") ? _duration + "s" : $shiftDuration; // Default duration is half a second
 		
 		$loop(collection,function(){
-			this.style.transition = "all " + timer;
+			this.style.transition = "all " + timer + " " + easing;
 			this.style.opacity = 0;
 		});
 		
@@ -28,6 +31,12 @@
 				this.style.visibility = "hidden";
 			});
 			
+			if (_complete){
+				setTimeout(function(){ // setTimeout necessary to let transitions reset properly
+					_complete();
+				}, 50);
+			}
+			
 			collection[collection.length - 1].removeEventListener("transitionend", callback, false);
 		};
 		
@@ -36,16 +45,17 @@
 		return this;
 	};
 	
-	shift.fn.fadeIn = function(_duration){
+	shift.fn.fadeIn = function(_duration, _easing, _complete){
 		
-		var timer, callback, collection;
+		var timer, callback, easing, collection;
 		
 		collection = this.collection;
+		easing = (_easing && typeof _easing === "string") ? _easing : $shiftEasing;
 		timer = (_duration && typeof _duration === "number") ? _duration + "s" : "0.5s";
 		
 		$loop(collection,function(){
 			this.style.visibility = "visible";
-			this.style.transition = "all " + timer;
+			this.style.transition = "all " + timer + " " + easing;
 			this.style.opacity = 1;
 		});
 		
@@ -56,6 +66,10 @@
 			$loop(collection,function(){
 				this.style.transition = "";
 			});
+			
+			if (_complete){
+				_complete();
+			}
 			
 			collection[collection.length - 1].removeEventListener("transitionend", callback, false);
 		};

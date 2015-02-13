@@ -60,6 +60,38 @@
 	// Prototype shorthand
 	//
 	shift.fn = Shift.prototype;
+	
+	/**
+	 * Below are variables developers can reset themselves to better suit the needs of their site or application.
+	 * The variables are prefixed by "$" to reduce the possibility of interference with other variables or libraries.
+	 * Choices include:
+	 * -duration
+	 * -easing
+	 * -delay
+	 */
+	
+	Shift.environment = {
+		"duration": "0.5s",
+		"easing": "ease",
+		"delay": "0.5s"
+	};
+	
+	var $shiftDuration, $shiftEasing, $shiftDelay;
+	
+	$shiftDuration = Shift.environment["duration"];
+	$shiftEasing = Shift.environment["easing"];
+	$shiftDelay = Shift.environment["delay"];
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 /**
  * animate()
@@ -69,14 +101,17 @@
  * Parameters:
  * -properties (object containing CSS key-value pairs)
  * -duration (optional... number in seconds, not a string)
+ * -easing (optional... string)
+ * -complete (optional... callback fired after transitionend)
  */
  	
-	shift.fn.animate = function(_properties, _duration){
+	shift.fn.animate = function(_properties, _duration, _easing, _complete){
 		
-		var timer, styles, callback, collection;
+		var timer, styles, callback, easing, collection;
 		
 		collection = this.collection;
-		timer = (_duration && typeof _duration === "number") ? _duration + "s" : "0.5s"; // Default duration is half a second
+		easing = (_easing && typeof _easing === "string") ? _easing : $shiftEasing; // Default easing is "ease"
+		timer = (_duration && typeof _duration === "number") ? _duration + "s" : $shiftDuration; // Default duration is half a second
 		
 		if (_properties && typeof _properties === "object"){
 			
@@ -84,7 +119,7 @@
 			//
 			$loop(collection,function(){
 				
-				this.style.transition = "all " + timer;
+				this.style.transition = "all " + timer + " " + easing;
 				
 				for (styles in _properties){
 					this.style[styles] = _properties[styles];
@@ -101,50 +136,18 @@
 					this.style.transition = "";
 				});
 				
+				if (_complete){
+					setTimeout(function(){ // setTimeout necessary to let transitions reset properly
+						_complete();
+					}, 50);
+				}
+				
 				collection[collection.length - 1].removeEventListener("transitionend", callback, false);
 			};
 			
 			collection[collection.length - 1].addEventListener("transitionend", callback, false);
 			
 		}
-		
-		return this;
-	};
-
-/**
- * complete()
- * 
- * Triggers a function after all transitions end
- * 
- * Parameter:
- * -complete (callback triggered after transitions)
- */
- 	
-	shift.fn.complete = function(_complete){
-		
-		var callback, active, collection;
-		
-		active = true;
-		collection = this.collection;
-		
-		callback = function(){ // The browser will throw a native error if the _complete parameter is not a function
-			
-			if (active){ // Prevents the event from firing too many times with method chaining
-				
-				// setTimeout block below is necessary to prevent completion event from firing too soon
-				//
-				setTimeout(function(){
-					collection[collection.length - 1].removeEventListener("transitionend", callback, false); // NOT WORKING!!!!!
-					_complete();
-				}, 50);
-				
-				active = false;
-			
-			}
-			
-		};
-		
-		collection[collection.length - 1].addEventListener("transitionend", callback, false);
 		
 		return this;
 	};
@@ -163,33 +166,10 @@
 		var timer, collection;
 			
 		collection = this.collection;
-		timer = (_delay && typeof _delay === "number") ? _delay + "s" : "0.5s"; // Default duration is half a second
+		timer = (_delay && typeof _delay === "number") ? _delay + "s" : $shiftDelay; // Default delay is half a second
 	
 		$loop(collection,function(){
-			this.style.transitionDelay = _delay + "s";
-		});
-		
-		return this;
-	};
-
-/**
- * ease()
- * 
- * Adjusts the easing/transition-timing-function of each instance
- * 
- * Parameter:
- * -easing (string)
- */
- 	
-	shift.fn.ease = function(_easing){
-		
-		var easing, collection;
-		
-		collection = this.collection;
-		easing = (_easing && typeof _easing === "string") ? _easing : "ease"; // Native browser default is "ease"
-		
-		$loop(collection,function(){
-			this.style.transitionTimingFunction = easing;
+			this.style.transitionDelay = timer;
 		});
 		
 		return this;
@@ -202,17 +182,20 @@
  * 
  * Parameter:
  * -duration (optional... number in seconds, not a string)
+ * -easing (optional... string)
+ * -complete (optional... callback fired after transitionend)
  */
  	
-	shift.fn.fadeOut = function(_duration){
+	shift.fn.fadeOut = function(_duration, _easing, _complete){
 		
-		var timer, callback, collection;
+		var timer, callback, easing, collection;
 		
 		collection = this.collection;
-		timer = (_duration && typeof _duration === "number") ? _duration + "s" : "0.5s"; // Default duration is half a second
+		easing = (_easing && typeof _easing === "string") ? _easing : $shiftEasing; // Default easing is "ease"
+		timer = (_duration && typeof _duration === "number") ? _duration + "s" : $shiftDuration; // Default duration is half a second
 		
 		$loop(collection,function(){
-			this.style.transition = "all " + timer;
+			this.style.transition = "all " + timer + " " + easing;
 			this.style.opacity = 0;
 		});
 		
@@ -225,6 +208,12 @@
 				this.style.visibility = "hidden";
 			});
 			
+			if (_complete){
+				setTimeout(function(){ // setTimeout necessary to let transitions reset properly
+					_complete();
+				}, 50);
+			}
+			
 			collection[collection.length - 1].removeEventListener("transitionend", callback, false);
 		};
 		
@@ -233,16 +222,17 @@
 		return this;
 	};
 	
-	shift.fn.fadeIn = function(_duration){
+	shift.fn.fadeIn = function(_duration, _easing, _complete){
 		
-		var timer, callback, collection;
+		var timer, callback, easing, collection;
 		
 		collection = this.collection;
+		easing = (_easing && typeof _easing === "string") ? _easing : $shiftEasing;
 		timer = (_duration && typeof _duration === "number") ? _duration + "s" : "0.5s";
 		
 		$loop(collection,function(){
 			this.style.visibility = "visible";
-			this.style.transition = "all " + timer;
+			this.style.transition = "all " + timer + " " + easing;
 			this.style.opacity = 1;
 		});
 		
@@ -254,53 +244,9 @@
 				this.style.transition = "";
 			});
 			
-			collection[collection.length - 1].removeEventListener("transitionend", callback, false);
-		};
-		
-		collection[collection.length - 1].addEventListener("transitionend", callback, false);
-		
-		return this;
-	};
-
-/**
- * move()
- * 
- * Moves the target DOM elements to the specified left or top value
- * 
- * Parameters:
- * -direction (required; either "left" or "top")
- * -value (required; either pixels or percentages)
- * -duration (optional... in seconds as a number, not a string)
- */
- 	
-	shift.fn.move = function(_direction, _value, _duration){
-		
-		var timer, callback, collection;
-			
-		collection = this.collection;
-		timer = (_duration && typeof _duration === "number") ? _duration + "s" : "0.5s"; // Default duration is half a second
-		
-		if (_direction && _value && typeof _direction === "string" && typeof _value === "string"){
-			
-			if (_direction === "left" || _direction === "top"){
-			
-				$loop(collection,function(){
-					this.style.transition = _direction + " " + timer;
-					this.style[_direction] = _value;
-				});
-			
-			} else {
-				throw new Error("Acceptable direction values for move() are 'left' and 'top'.");
+			if (_complete){
+				_complete();
 			}
-		}
-		
-		callback = function(){
-			
-			// Reset all transitions after completion
-			//
-			$loop(collection,function(){
-				this.style.transition = "";
-			});
 			
 			collection[collection.length - 1].removeEventListener("transitionend", callback, false);
 		};
@@ -318,23 +264,26 @@
  * Parameters:
  * -degree (required... degrees as a number, not a string)
  * -duration (optional... seconds as a number, not a string)
+ * -easing (optional... string)
+ * -complete (optional... callback fired after transitionend)
  */
  	
  	// Note: as of the time this library was built, Safari still requires the -webkit- vendor prefix for transforms
  	//
-	shift.fn.rotate = function(_degree, _duration){
+	shift.fn.rotate = function(_degree, _duration, _easing, _complete){
 		
-		var timer, callback, collection;
+		var timer, callback, easing, collection;
 			
 		collection = this.collection;
-		timer = (_duration && typeof _duration === "number") ? _duration + "s" : "0.5s"; // Default duration is half a second
+		easing = (_easing && typeof _easing === "string") ? _easing : $shiftEasing; // Default easing is "ease"
+		timer = (_duration && typeof _duration === "number") ? _duration + "s" : $shiftDuration; // Default duration is half a second
 		
 		if (_degree && typeof _degree === "number"){
 			
 			$loop(collection,function(){
 				
 				this.style.transition = "transform " + timer;
-				this.style.webkitTransition = "-webkit-transform " + timer;
+				this.style.webkitTransition = "-webkit-transform " + timer + " " + easing;
 				
 				this.style.transform = "rotate(" + _degree + "deg)";
 				this.style.webkitTransform = "rotate(" + _degree + "deg)";
@@ -352,6 +301,12 @@
 			$loop(collection,function(){
 				this.style.transition = "";
 			});
+			
+			if (_complete){
+				setTimeout(function(){ // setTimeout necessary to let transitions reset properly
+					_complete();
+				}, 50);
+			}
 			
 			collection[collection.length - 1].removeEventListener("transitionend", callback, false);
 		};
@@ -372,19 +327,22 @@
  * -property (required; string)
  * -value (required; string)
  * -duration (optional... number in seconds, not a string)
+ * -easing (optional... string)
+ * -complete (optional... callback fired after transitionend)
  */
  	
-	shift.fn.set = function(_property, _value, _duration){
+	shift.fn.set = function(_property, _value, _duration, _easing, _complete){
 		
-		var timer, callback, collection;
+		var timer, callback, easing, collection;
 			
 		collection = this.collection;
-		timer = (_duration && typeof _duration === "number") ? _duration + "s" : "0.5s"; // Default duration is half a second
+		easing = (_easing && typeof _easing === "string") ? _easing : $shiftEasing; // Default easing is "ease"
+		timer = (_duration && typeof _duration === "number") ? _duration + "s" : $shiftDuration; // Default duration is half a second
 		
 		if (_property && _value && typeof _property === "string" && typeof _value === "string"){
 			
 			$loop(collection,function(){
-				this.style.transition = _property + " " + timer;
+				this.style.transition = _property + " " + timer + " " + easing;
 				this.style[_property] = _value;
 			});
 			
@@ -399,6 +357,12 @@
 			$loop(collection,function(){
 				this.style.transition = "";
 			});
+			
+			if (_complete){
+				setTimeout(function(){ // setTimeout necessary to let transitions reset properly
+					_complete();
+				}, 50);
+			}
 			
 			collection[collection.length - 1].removeEventListener("transitionend", callback, false);
 		};

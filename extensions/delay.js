@@ -12,10 +12,10 @@
 		var timer, collection;
 			
 		collection = this.collection;
-		timer = (_delay && typeof _delay === "number") ? _delay + "s" : "0.5s"; // Default duration is half a second
+		timer = (_delay && typeof _delay === "number") ? _delay + "s" : $shiftDelay; // Default delay is half a second
 	
 		$loop(collection,function(){
-			this.style.transitionDelay = _delay + "s";
+			this.style.transitionDelay = timer;
 		});
 		
 		return this;

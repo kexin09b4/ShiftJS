@@ -60,3 +60,35 @@
 	// Prototype shorthand
 	//
 	shift.fn = Shift.prototype;
+	
+	/**
+	 * Below are variables developers can reset themselves to better suit the needs of their site or application.
+	 * The variables are prefixed by "$" to reduce the possibility of interference with other variables or libraries.
+	 * Choices include:
+	 * -duration
+	 * -easing
+	 * -delay
+	 */
+	
+	Shift.environment = {
+		"duration": "0.5s",
+		"easing": "ease",
+		"delay": "0.5s"
+	};
+	
+	var $shiftDuration, $shiftEasing, $shiftDelay;
+	
+	$shiftDuration = Shift.environment["duration"];
+	$shiftEasing = Shift.environment["easing"];
+	$shiftDelay = Shift.environment["delay"];
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

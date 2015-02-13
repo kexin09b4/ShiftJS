@@ -9,11 +9,8 @@ module.exports = function(grunt){
 			    src: [
 				    "shift.js",
 		    		"extensions/animate.js",
-		    		"extensions/complete.js",
 		    		"extensions/delay.js",
-		    		"extensions/easing.js",
 		    		"extensions/fade.js",
-		    		"extensions/move.js",
 		    		"extensions/rotate.js",
 		    		"extensions/set.js"
 			    ],
