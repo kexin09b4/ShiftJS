@@ -71,9 +71,9 @@
 			
 			btn.onclick = function(){
 				
-				test.animate(animObj, 1.2, "", function(){
-					test.rotate(35, 0.6, "ease-in-out", function(){
-						test.fadeOut(0.75, "", func);
+				test.animate(animObj, 2, "ease", function(){
+					test.rotate(35, 0.6, "in-out", function(){
+						test.fadeOut(0.75, "linear", func);
 					});
 				});
 				
@@ -81,9 +81,9 @@
 			
 			btn2.onclick = function(){
 				
-				//test.fadeIn(0.6, "", func2);
+				test.fadeOut(1, "", func2);
 				
-				test.rotate(65, 0.8, "", func).origin(1, 5);
+				//test.rotate(65, 0.8, "", func).origin(1, 5);
 				
 			};
 			

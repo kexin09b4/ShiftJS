@@ -90,6 +90,53 @@
 	$shiftDelay    = Shift.environment["delay"];
 	$shiftOriginX  = Shift.environment["transform-origin-x"];
 	$shiftOriginY  = Shift.environment["transform-origin-y"];
+	
+	/**
+	 * Below is the easing funcion.
+	 * This function maps certain values to CSS3 easing values.
+	 * Choices include:
+	 * -in
+	 * -out
+	 * -in-out
+	 * -linear
+	 * -snap
+	 * -custom (applies cubic-bezier)
+	 */
+	
+	var $easingMap = function(_value){
+		
+		var easingValue;
+		
+		switch (_value){
+			case "in":
+				easingValue = "ease-in";
+				break;
+			case "out":
+				easingValue = "ease-out";
+				break;
+			case "in-out":
+				easingValue = "ease-in-out";
+				break;
+			case "linear":
+				easingValue = "linear";
+				break;
+			case "snap":
+				easingValue = "cubic-bezier(0,1,.5,1)";
+				break;
+			default:
+				easingValue = $shiftEasing;
+				break;
+		};
+		
+		// Override the default value if a cubic-bezier array is passed
+		//
+		if (typeof _value === "object" && _value.length === 4){
+			easingValue = "cubic-bezier(" + _value[0] + "," + _value[1] + "," + _value[2] + "," + _value[3] + ")";
+		}
+		
+		return easingValue;
+		
+	};
 
 /**
  * animate()
@@ -108,7 +155,7 @@
 		var timer, styles, callback, easing, collection;
 		
 		collection = this.collection;
-		easing = (_easing && typeof _easing === "string") ? _easing : $shiftEasing; // Default easing is "ease"
+		easing = $easingMap(_easing); // Default easing is "ease"
 		timer = (_duration && typeof _duration === "number") ? _duration + "s" : $shiftDuration; // Default duration is half a second
 		
 		if (_properties && typeof _properties === "object"){
@@ -174,7 +221,7 @@
 	};
 
 /**
- * fadeIn() / fadeOut()
+ * fadeOut() / fadeIn()
  * 
  * Fades-in/out the target DOM elements
  * 
@@ -189,7 +236,7 @@
 		var timer, callback, easing, collection;
 		
 		collection = this.collection;
-		easing = (_easing && typeof _easing === "string") ? _easing : $shiftEasing; // Default easing is "ease"
+		easing = $easingMap(_easing); // Default easing is "ease"
 		timer = (_duration && typeof _duration === "number") ? _duration + "s" : $shiftDuration; // Default duration is half a second
 		
 		$loop(collection,function(){
@@ -225,7 +272,7 @@
 		var timer, callback, easing, collection;
 		
 		collection = this.collection;
-		easing = (_easing && typeof _easing === "string") ? _easing : $shiftEasing;
+		easing = $easingMap(_easing); // Default easing is "ease"
 		timer = (_duration && typeof _duration === "number") ? _duration + "s" : "0.5s";
 		
 		$loop(collection,function(){
@@ -301,7 +348,7 @@
 		var timer, callback, easing, collection;
 			
 		collection = this.collection;
-		easing = (_easing && typeof _easing === "string") ? _easing : $shiftEasing; // Default easing is "ease"
+		easing = $easingMap(_easing); // Default easing is "ease"
 		timer = (_duration && typeof _duration === "number") ? _duration + "s" : $shiftDuration; // Default duration is half a second
 		
 		if (_degree && typeof _degree === "number"){
@@ -361,7 +408,7 @@
 		var timer, callback, easing, collection;
 			
 		collection = this.collection;
-		easing = (_easing && typeof _easing === "string") ? _easing : $shiftEasing; // Default easing is "ease"
+		easing = $easingMap(_easing); // Default easing is "ease"
 		timer = (_duration && typeof _duration === "number") ? _duration + "s" : $shiftDuration; // Default duration is half a second
 		
 		if (_property && _value && typeof _property === "string" && typeof _value === "string"){

@@ -17,7 +17,7 @@
 		var timer, callback, easing, collection;
 			
 		collection = this.collection;
-		easing = (_easing && typeof _easing === "string") ? _easing : $shiftEasing; // Default easing is "ease"
+		easing = $easingMap(_easing); // Default easing is "ease"
 		timer = (_duration && typeof _duration === "number") ? _duration + "s" : $shiftDuration; // Default duration is half a second
 		
 		if (_property && _value && typeof _property === "string" && typeof _value === "string"){

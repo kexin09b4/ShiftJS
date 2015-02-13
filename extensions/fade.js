@@ -1,5 +1,5 @@
 /**
- * fadeIn() / fadeOut()
+ * fadeOut() / fadeIn()
  * 
  * Fades-in/out the target DOM elements
  * 
@@ -14,7 +14,7 @@
 		var timer, callback, easing, collection;
 		
 		collection = this.collection;
-		easing = (_easing && typeof _easing === "string") ? _easing : $shiftEasing; // Default easing is "ease"
+		easing = $easingMap(_easing); // Default easing is "ease"
 		timer = (_duration && typeof _duration === "number") ? _duration + "s" : $shiftDuration; // Default duration is half a second
 		
 		$loop(collection,function(){
@@ -50,7 +50,7 @@
 		var timer, callback, easing, collection;
 		
 		collection = this.collection;
-		easing = (_easing && typeof _easing === "string") ? _easing : $shiftEasing;
+		easing = $easingMap(_easing); // Default easing is "ease"
 		timer = (_duration && typeof _duration === "number") ? _duration + "s" : "0.5s";
 		
 		$loop(collection,function(){
