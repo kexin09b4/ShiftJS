@@ -11,6 +11,7 @@ module.exports = function(grunt){
 		    		"extensions/animate.js",
 		    		"extensions/delay.js",
 		    		"extensions/fade.js",
+		    		"extensions/origin.js",
 		    		"extensions/rotate.js",
 		    		"extensions/set.js"
 			    ],

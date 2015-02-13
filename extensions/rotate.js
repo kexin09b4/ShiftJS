@@ -57,5 +57,3 @@
 		
 		return this;
 	};
-	
-	/* rotate3d, rotateX, rotateY, rotateZ to go here */

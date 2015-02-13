@@ -10,7 +10,7 @@
 	shift.fn.delay = function(_delay){
 		
 		var timer, collection;
-			
+		
 		collection = this.collection;
 		timer = (_delay && typeof _delay === "number") ? _delay + "s" : $shiftDelay; // Default delay is half a second
 	

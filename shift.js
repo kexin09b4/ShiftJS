@@ -68,27 +68,25 @@
 	 * -duration
 	 * -easing
 	 * -delay
+	 * -transform-origin (x and y values input separately)
 	 */
 	
+	// Define default values
+	//
 	Shift.environment = {
 		"duration": "0.5s",
 		"easing": "ease",
-		"delay": "0.5s"
+		"delay": "0.5s",
+		"transform-origin-x": "50%",
+		"transform-origin-y": "50%"
 	};
 	
-	var $shiftDuration, $shiftEasing, $shiftDelay;
+	// Shorthand variables to access the values above
+	//
+	var $shiftDuration, $shiftEasing, $shiftDelay, $shiftOriginX, $shiftOriginY;
 	
 	$shiftDuration = Shift.environment["duration"];
-	$shiftEasing = Shift.environment["easing"];
-	$shiftDelay = Shift.environment["delay"];
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	$shiftEasing   = Shift.environment["easing"];
+	$shiftDelay    = Shift.environment["delay"];
+	$shiftOriginX  = Shift.environment["transform-origin-x"];
+	$shiftOriginY  = Shift.environment["transform-origin-y"];

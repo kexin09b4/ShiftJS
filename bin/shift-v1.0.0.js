@@ -68,30 +68,28 @@
 	 * -duration
 	 * -easing
 	 * -delay
+	 * -transform-origin (x and y values input separately)
 	 */
 	
+	// Define default values
+	//
 	Shift.environment = {
 		"duration": "0.5s",
 		"easing": "ease",
-		"delay": "0.5s"
+		"delay": "0.5s",
+		"transform-origin-x": "50%",
+		"transform-origin-y": "50%"
 	};
 	
-	var $shiftDuration, $shiftEasing, $shiftDelay;
+	// Shorthand variables to access the values above
+	//
+	var $shiftDuration, $shiftEasing, $shiftDelay, $shiftOriginX, $shiftOriginY;
 	
 	$shiftDuration = Shift.environment["duration"];
-	$shiftEasing = Shift.environment["easing"];
-	$shiftDelay = Shift.environment["delay"];
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	$shiftEasing   = Shift.environment["easing"];
+	$shiftDelay    = Shift.environment["delay"];
+	$shiftOriginX  = Shift.environment["transform-origin-x"];
+	$shiftOriginY  = Shift.environment["transform-origin-y"];
 
 /**
  * animate()
@@ -164,7 +162,7 @@
 	shift.fn.delay = function(_delay){
 		
 		var timer, collection;
-			
+		
 		collection = this.collection;
 		timer = (_delay && typeof _delay === "number") ? _delay + "s" : $shiftDelay; // Default delay is half a second
 	
@@ -257,6 +255,34 @@
 	};
 
 /**
+ * origin()
+ * 
+ * Defines a transform-origin to applicable animations
+ * 
+ * Parameter:
+ * -x (number; percentage)
+ * -y (number; percentage)
+ */
+ 	
+ 	// Note: as of the time this library was built, Safari still requires the -webkit- vendor prefix for transforms
+ 	//
+	shift.fn.origin = function(_x, _y){
+		
+		var x, y, collection;
+		
+		collection = this.collection;
+		x = (_x && typeof _x === "number") ? _x + "%" : $shiftOriginX; // Default transform-originX is 50%
+		y = (_y && typeof _y === "number") ? _y + "%" : $shiftOriginY; // Default transform-originY is 50%
+	
+		$loop(collection,function(){
+			this.style.transformOrigin = x + " " + y;
+			this.style.webkitTransformOrigin = x + " " + y;
+		});
+		
+		return this;
+	};
+
+/**
  * rotate()
  * 
  * Rotates the target DOM elements to the specified degree value
@@ -315,8 +341,7 @@
 		
 		return this;
 	};
-	
-	/* rotate3d, rotateX, rotateY, rotateZ to go here */
+
 /**
  * set()
  * 
