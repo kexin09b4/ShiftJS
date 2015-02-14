@@ -71,17 +71,23 @@
 			
 			btn.onclick = function(){
 				
-				test.animate(animObj, 2, "ease", function(){
+				/*test.animate(animObj, 2, "ease", function(){
 					test.rotate(35, 0.6, "in-out", function(){
 						test.fadeOut(0.75, "linear", func);
-					});
-				});
+					}).origin(2, 2);
+				}).delay(0.6);*/
+				
+				test.set("background", "#f00", 0.8, "", func);
 				
 			};
 			
 			btn2.onclick = function(){
 				
-				test.fadeOut(1, "", func2);
+				test.set("top", "200px", 0.6, "", function(){
+					test.set("left", "200px", 0.6, "", func2);
+				});
+				
+				//test.fadeOut(1, "", func2);
 				
 				//test.rotate(65, 0.8, "", func).origin(1, 5);
 				

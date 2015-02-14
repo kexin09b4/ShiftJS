@@ -22,32 +22,20 @@
 			
 			// Add all applicable styles to the element per user-definition
 			//
-			$loop(collection,function(){
+			$shiftLoop(collection, function(){
 				
 				this.style.transition = "all " + timer + " " + easing;
 				
 				for (styles in _properties){
 					this.style[styles] = _properties[styles];
 				}
+				
 			});
 			
-			// Trigger "complete" function parameter if applicable and reset all transition values
+			// Resets and completions...
 			//
 			callback = function(){
-				
-				// Reset all transitions after completion
-				//
-				$loop(collection,function(){
-					this.style.transition = "";
-				});
-				
-				if (_complete){
-					setTimeout(function(){ // setTimeout necessary to let transitions reset properly
-						_complete();
-					}, 50);
-				}
-				
-				collection[collection.length - 1].removeEventListener("transitionend", callback, false);
+				$shiftCallback(collection, _complete, callback);
 			};
 			
 			collection[collection.length - 1].addEventListener("transitionend", callback, false);

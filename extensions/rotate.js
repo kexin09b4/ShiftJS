@@ -22,7 +22,7 @@
 		
 		if (_degree && typeof _degree === "number"){
 			
-			$loop(collection,function(){
+			$shiftLoop(collection, function(){
 				
 				this.style.transition = "transform " + timer;
 				this.style.webkitTransition = "-webkit-transform " + timer + " " + easing;
@@ -36,21 +36,10 @@
 			throw new Error("Degree value for rotate() must be a valid number.");
 		}
 		
+		// Resets and completions...
+		//
 		callback = function(){
-			
-			// Reset all transitions after completion
-			//
-			$loop(collection,function(){
-				this.style.transition = "";
-			});
-			
-			if (_complete){
-				setTimeout(function(){ // setTimeout necessary to let transitions reset properly
-					_complete();
-				}, 50);
-			}
-			
-			collection[collection.length - 1].removeEventListener("transitionend", callback, false);
+			$shiftCallback(collection, _complete, callback);
 		};
 		
 		collection[collection.length - 1].addEventListener("transitionend", callback, false);

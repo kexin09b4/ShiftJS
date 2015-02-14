@@ -22,7 +22,7 @@
 		
 		if (_property && _value && typeof _property === "string" && typeof _value === "string"){
 			
-			$loop(collection,function(){
+			$shiftLoop(collection, function(){
 				this.style.transition = _property + " " + timer + " " + easing;
 				this.style[_property] = _value;
 			});
@@ -31,21 +31,10 @@
 			throw new Error("'Property' and 'value' parameters for set() must be strings.");
 		}
 		
+		// Resets and completions...
+		//
 		callback = function(){
-			
-			// Reset all transitions after completion
-			//
-			$loop(collection,function(){
-				this.style.transition = "";
-			});
-			
-			if (_complete){
-				setTimeout(function(){ // setTimeout necessary to let transitions reset properly
-					_complete();
-				}, 50);
-			}
-			
-			collection[collection.length - 1].removeEventListener("transitionend", callback, false);
+			$shiftCallback(collection, _complete, callback);
 		};
 		
 		collection[collection.length - 1].addEventListener("transitionend", callback, false);

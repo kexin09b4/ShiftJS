@@ -9,7 +9,7 @@
  * Stand-alone JavaScript library that triggers native CSS3 transition-based animations in modern browsers
  */
  	
- 	// Constructor
+ 	// Constructor - gathers the set
  	//
 	var Shift = function(_selector, _context){
 		
@@ -51,19 +51,52 @@
 	
 	// Loop through each member of the collection throughout each extension
 	//
-	var $loop = function(_array, _callback){
+	var $shiftLoop = function(_array, _callback){
 		for (var i = 0; i < _array.length; i++){
 			_callback.call(_array[i]);
 		}
 	};
 	
-	// Prototype shorthand
-	//
-	shift.fn = Shift.prototype;
+	/**
+	 * $shiftReset()
+	 * To be used in all extensions after the transition has completed...
+	 * Called in the $shiftCallback function below
+	 */
+	
+	var $shiftReset = function(_array){
+		for (var j = 0; j < _array.length; j++){
+			_array[j].style.transition = "";
+			_array[j].style.webkitTransition = "";
+		}
+	};
 	
 	/**
-	 * Below are variables developers can reset themselves to better suit the needs of their site or application.
-	 * The variables are prefixed by "$" to reduce the possibility of interference with other variables or libraries.
+	 * $shiftCallback()
+	 * To be used in all extensions after the transition has completed
+	 * Leverages the $shiftReset function above
+	 */
+	
+	var $shiftCallback = function(_array, _complete, _callback){
+		
+		// Reset all transitions after completion
+		//
+		$shiftReset(_array);
+		
+		if (_complete){
+			setTimeout(function(){ // setTimeout necessary to let transitions reset properly
+				_complete();
+			}, 50);
+		}
+		
+		// Necessary to prevent the transitionend event from firing too many times
+		//
+		_array[_array.length - 1].removeEventListener("transitionend", _callback, false);
+		
+	};
+	
+	/**
+	 * Below are variables developers can reset themselves to better suit the needs of their site or application
+	 * The variables are prefixed by "$" to reduce the possibility of interference with other variables or libraries
 	 * Choices include:
 	 * -duration
 	 * -easing
@@ -74,11 +107,11 @@
 	// Define default values
 	//
 	Shift.environment = {
-		"duration": "0.5s",
-		"easing": "ease",
-		"delay": "0.5s",
-		"transform-origin-x": "50%",
-		"transform-origin-y": "50%"
+		duration: "0.5s",
+		easing: "ease",
+		delay: "0.5s",
+		originX: "50%",
+		originY: "50%"
 	};
 	
 	// Shorthand variables to access the values above
@@ -88,12 +121,12 @@
 	$shiftDuration = Shift.environment["duration"];
 	$shiftEasing   = Shift.environment["easing"];
 	$shiftDelay    = Shift.environment["delay"];
-	$shiftOriginX  = Shift.environment["transform-origin-x"];
-	$shiftOriginY  = Shift.environment["transform-origin-y"];
+	$shiftOriginX  = Shift.environment["originX"];
+	$shiftOriginY  = Shift.environment["originY"];
 	
 	/**
-	 * Below is the easing funcion.
-	 * This function maps certain values to CSS3 easing values.
+	 * Below is the easing funcion
+	 * This function maps certain values to CSS3 easing values
 	 * Choices include:
 	 * -in
 	 * -out
@@ -124,7 +157,7 @@
 				easingValue = "cubic-bezier(0,1,.5,1)";
 				break;
 			default:
-				easingValue = $shiftEasing;
+				easingValue = $shiftEasing; // If no easing is defined, the default value will be "ease"
 				break;
 		};
 		
@@ -137,3 +170,7 @@
 		return easingValue;
 		
 	};
+	
+	// Prototype shorthand for building new extensions
+	//
+	shift.fn = Shift.prototype;

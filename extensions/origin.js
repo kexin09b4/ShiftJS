@@ -17,8 +17,10 @@
 		collection = this.collection;
 		x = (_x && typeof _x === "number") ? _x + "%" : $shiftOriginX; // Default transform-originX is 50%
 		y = (_y && typeof _y === "number") ? _y + "%" : $shiftOriginY; // Default transform-originY is 50%
-	
-		$loop(collection,function(){
+		
+		// Apply transform-origin to all members of the collection
+		//
+		$shiftLoop(collection, function(){
 			this.style.transformOrigin = x + " " + y;
 			this.style.webkitTransformOrigin = x + " " + y;
 		});

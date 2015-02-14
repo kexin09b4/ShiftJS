@@ -9,7 +9,7 @@
  * Stand-alone JavaScript library that triggers native CSS3 transition-based animations in modern browsers
  */
  	
- 	// Constructor
+ 	// Constructor - gathers the set
  	//
 	var Shift = function(_selector, _context){
 		
@@ -51,19 +51,52 @@
 	
 	// Loop through each member of the collection throughout each extension
 	//
-	var $loop = function(_array, _callback){
+	var $shiftLoop = function(_array, _callback){
 		for (var i = 0; i < _array.length; i++){
 			_callback.call(_array[i]);
 		}
 	};
 	
-	// Prototype shorthand
-	//
-	shift.fn = Shift.prototype;
+	/**
+	 * $shiftReset()
+	 * To be used in all extensions after the transition has completed...
+	 * Called in the $shiftCallback function below
+	 */
+	
+	var $shiftReset = function(_array){
+		for (var j = 0; j < _array.length; j++){
+			_array[j].style.transition = "";
+			_array[j].style.webkitTransition = "";
+		}
+	};
 	
 	/**
-	 * Below are variables developers can reset themselves to better suit the needs of their site or application.
-	 * The variables are prefixed by "$" to reduce the possibility of interference with other variables or libraries.
+	 * $shiftCallback()
+	 * To be used in all extensions after the transition has completed
+	 * Leverages the $shiftReset function above
+	 */
+	
+	var $shiftCallback = function(_array, _complete, _callback){
+		
+		// Reset all transitions after completion
+		//
+		$shiftReset(_array);
+		
+		if (_complete){
+			setTimeout(function(){ // setTimeout necessary to let transitions reset properly
+				_complete();
+			}, 50);
+		}
+		
+		// Necessary to prevent the transitionend event from firing too many times
+		//
+		_array[_array.length - 1].removeEventListener("transitionend", _callback, false);
+		
+	};
+	
+	/**
+	 * Below are variables developers can reset themselves to better suit the needs of their site or application
+	 * The variables are prefixed by "$" to reduce the possibility of interference with other variables or libraries
 	 * Choices include:
 	 * -duration
 	 * -easing
@@ -74,11 +107,11 @@
 	// Define default values
 	//
 	Shift.environment = {
-		"duration": "0.5s",
-		"easing": "ease",
-		"delay": "0.5s",
-		"transform-origin-x": "50%",
-		"transform-origin-y": "50%"
+		duration: "0.5s",
+		easing: "ease",
+		delay: "0.5s",
+		originX: "50%",
+		originY: "50%"
 	};
 	
 	// Shorthand variables to access the values above
@@ -88,12 +121,12 @@
 	$shiftDuration = Shift.environment["duration"];
 	$shiftEasing   = Shift.environment["easing"];
 	$shiftDelay    = Shift.environment["delay"];
-	$shiftOriginX  = Shift.environment["transform-origin-x"];
-	$shiftOriginY  = Shift.environment["transform-origin-y"];
+	$shiftOriginX  = Shift.environment["originX"];
+	$shiftOriginY  = Shift.environment["originY"];
 	
 	/**
-	 * Below is the easing funcion.
-	 * This function maps certain values to CSS3 easing values.
+	 * Below is the easing funcion
+	 * This function maps certain values to CSS3 easing values
 	 * Choices include:
 	 * -in
 	 * -out
@@ -124,7 +157,7 @@
 				easingValue = "cubic-bezier(0,1,.5,1)";
 				break;
 			default:
-				easingValue = $shiftEasing;
+				easingValue = $shiftEasing; // If no easing is defined, the default value will be "ease"
 				break;
 		};
 		
@@ -137,6 +170,10 @@
 		return easingValue;
 		
 	};
+	
+	// Prototype shorthand for building new extensions
+	//
+	shift.fn = Shift.prototype;
 
 /**
  * animate()
@@ -162,32 +199,20 @@
 			
 			// Add all applicable styles to the element per user-definition
 			//
-			$loop(collection,function(){
+			$shiftLoop(collection, function(){
 				
 				this.style.transition = "all " + timer + " " + easing;
 				
 				for (styles in _properties){
 					this.style[styles] = _properties[styles];
 				}
+				
 			});
 			
-			// Trigger "complete" function parameter if applicable and reset all transition values
+			// Resets and completions...
 			//
 			callback = function(){
-				
-				// Reset all transitions after completion
-				//
-				$loop(collection,function(){
-					this.style.transition = "";
-				});
-				
-				if (_complete){
-					setTimeout(function(){ // setTimeout necessary to let transitions reset properly
-						_complete();
-					}, 50);
-				}
-				
-				collection[collection.length - 1].removeEventListener("transitionend", callback, false);
+				$shiftCallback(collection, _complete, callback);
 			};
 			
 			collection[collection.length - 1].addEventListener("transitionend", callback, false);
@@ -212,8 +237,10 @@
 		
 		collection = this.collection;
 		timer = (_delay && typeof _delay === "number") ? _delay + "s" : $shiftDelay; // Default delay is half a second
-	
-		$loop(collection,function(){
+		
+		// Apply the delay to all members of the collection
+		//
+		$shiftLoop(collection, function(){
 			this.style.transitionDelay = timer;
 		});
 		
@@ -239,27 +266,15 @@
 		easing = $easingMap(_easing); // Default easing is "ease"
 		timer = (_duration && typeof _duration === "number") ? _duration + "s" : $shiftDuration; // Default duration is half a second
 		
-		$loop(collection,function(){
+		$shiftLoop(collection, function(){
 			this.style.transition = "all " + timer + " " + easing;
 			this.style.opacity = 0;
 		});
 		
+		// Resets and completions...
+		//
 		callback = function(){
-			
-			// Reset all transitions after completion
-			//
-			$loop(collection,function(){
-				this.style.transition = "";
-				this.style.visibility = "hidden";
-			});
-			
-			if (_complete){
-				setTimeout(function(){ // setTimeout necessary to let transitions reset properly
-					_complete();
-				}, 50);
-			}
-			
-			collection[collection.length - 1].removeEventListener("transitionend", callback, false);
+			$shiftCallback(collection, _complete, callback);
 		};
 		
 		collection[collection.length - 1].addEventListener("transitionend", callback, false);
@@ -275,25 +290,16 @@
 		easing = $easingMap(_easing); // Default easing is "ease"
 		timer = (_duration && typeof _duration === "number") ? _duration + "s" : "0.5s";
 		
-		$loop(collection,function(){
+		$shiftLoop(collection, function(){
 			this.style.visibility = "visible";
 			this.style.transition = "all " + timer + " " + easing;
 			this.style.opacity = 1;
 		});
 		
+		// Resets and completions...
+		//
 		callback = function(){
-			
-			// Reset all transitions after completion
-			//
-			$loop(collection,function(){
-				this.style.transition = "";
-			});
-			
-			if (_complete){
-				_complete();
-			}
-			
-			collection[collection.length - 1].removeEventListener("transitionend", callback, false);
+			$shiftCallback(collection, _complete, callback);
 		};
 		
 		collection[collection.length - 1].addEventListener("transitionend", callback, false);
@@ -320,8 +326,10 @@
 		collection = this.collection;
 		x = (_x && typeof _x === "number") ? _x + "%" : $shiftOriginX; // Default transform-originX is 50%
 		y = (_y && typeof _y === "number") ? _y + "%" : $shiftOriginY; // Default transform-originY is 50%
-	
-		$loop(collection,function(){
+		
+		// Apply transform-origin to all members of the collection
+		//
+		$shiftLoop(collection, function(){
 			this.style.transformOrigin = x + " " + y;
 			this.style.webkitTransformOrigin = x + " " + y;
 		});
@@ -353,7 +361,7 @@
 		
 		if (_degree && typeof _degree === "number"){
 			
-			$loop(collection,function(){
+			$shiftLoop(collection, function(){
 				
 				this.style.transition = "transform " + timer;
 				this.style.webkitTransition = "-webkit-transform " + timer + " " + easing;
@@ -367,21 +375,10 @@
 			throw new Error("Degree value for rotate() must be a valid number.");
 		}
 		
+		// Resets and completions...
+		//
 		callback = function(){
-			
-			// Reset all transitions after completion
-			//
-			$loop(collection,function(){
-				this.style.transition = "";
-			});
-			
-			if (_complete){
-				setTimeout(function(){ // setTimeout necessary to let transitions reset properly
-					_complete();
-				}, 50);
-			}
-			
-			collection[collection.length - 1].removeEventListener("transitionend", callback, false);
+			$shiftCallback(collection, _complete, callback);
 		};
 		
 		collection[collection.length - 1].addEventListener("transitionend", callback, false);
@@ -413,7 +410,7 @@
 		
 		if (_property && _value && typeof _property === "string" && typeof _value === "string"){
 			
-			$loop(collection,function(){
+			$shiftLoop(collection, function(){
 				this.style.transition = _property + " " + timer + " " + easing;
 				this.style[_property] = _value;
 			});
@@ -422,21 +419,10 @@
 			throw new Error("'Property' and 'value' parameters for set() must be strings.");
 		}
 		
+		// Resets and completions...
+		//
 		callback = function(){
-			
-			// Reset all transitions after completion
-			//
-			$loop(collection,function(){
-				this.style.transition = "";
-			});
-			
-			if (_complete){
-				setTimeout(function(){ // setTimeout necessary to let transitions reset properly
-					_complete();
-				}, 50);
-			}
-			
-			collection[collection.length - 1].removeEventListener("transitionend", callback, false);
+			$shiftCallback(collection, _complete, callback);
 		};
 		
 		collection[collection.length - 1].addEventListener("transitionend", callback, false);

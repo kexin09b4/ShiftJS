@@ -13,8 +13,10 @@
 		
 		collection = this.collection;
 		timer = (_delay && typeof _delay === "number") ? _delay + "s" : $shiftDelay; // Default delay is half a second
-	
-		$loop(collection,function(){
+		
+		// Apply the delay to all members of the collection
+		//
+		$shiftLoop(collection, function(){
 			this.style.transitionDelay = timer;
 		});
 		
