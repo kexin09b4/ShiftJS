@@ -9,6 +9,7 @@
 		<script type="text/javascript" src="extensions/fade.js"></script>
 		<script type="text/javascript" src="extensions/origin.js"></script>
 		<script type="text/javascript" src="extensions/rotate.js"></script>
+		<script type="text/javascript" src="extensions/scale.js"></script>
 		<script type="text/javascript" src="extensions/set.js"></script>
 		<style type="text/css">
 			#testDiv {
@@ -18,6 +19,7 @@
 				width: 50px;
 				height: 50px;
 				background: #0f0;
+				border: 1px solid #008080;
 			}
 			button {
 				outline: none;
@@ -77,19 +79,35 @@
 					}).origin(2, 2);
 				}).delay(0.6);*/
 				
-				test.set("background", "#f00", 0.8, "", func);
+				//test.set("background", "#f00", 0.8, "", func);
+				
+				test.scale([2.4,1.8], 0.8, "ease", function(){
+					test.scale([1,1], 0.8, "ease", function(){
+						test.scaleX(4, 0.8, "ease", function(){
+							test.scaleY(4, 0.8, "ease", func);
+						}).origin(0, 0);
+					});
+				});
 				
 			};
 			
 			btn2.onclick = function(){
 				
-				test.set("top", "200px", 0.6, "", function(){
+				/*test.set("top", "200px", 0.6, "", function(){
 					test.set("left", "200px", 0.6, "", func2);
-				});
+				});*/
 				
 				//test.fadeOut(1, "", func2);
 				
-				//test.rotate(65, 0.8, "", func).origin(1, 5);
+				//test.rotate(65, 0.8, "", func2).origin(1, 5);
+				
+				//test.scaleX(3, 1, "ease", func2).origin(0, 0).delay(0.5);
+				
+				/*test.rotateY(56, 0.6, "snap", function(){
+					test.rotateX(166, 0.6, "ease", func2).delay(0.5);
+				});*/
+				
+				test.rotateY(180, 1.4, "snap", func2);
 				
 			};
 			

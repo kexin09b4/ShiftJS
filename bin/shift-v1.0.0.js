@@ -324,8 +324,8 @@
 		var x, y, collection;
 		
 		collection = this.collection;
-		x = (_x && typeof _x === "number") ? _x + "%" : $shiftOriginX; // Default transform-originX is 50%
-		y = (_y && typeof _y === "number") ? _y + "%" : $shiftOriginY; // Default transform-originY is 50%
+		x = (_x && typeof _x === "number" || _x === 0) ? _x + "%" : $shiftOriginX; // Default transform-originX is 50%
+		y = (_y && typeof _y === "number" || _y === 0) ? _y + "%" : $shiftOriginY; // Default transform-originY is 50%
 		
 		// Apply transform-origin to all members of the collection
 		//
@@ -338,9 +338,9 @@
 	};
 
 /**
- * rotate()
+ * rotate() / rotateX() / rotateY()
  * 
- * Rotates the target DOM elements to the specified degree value
+ * Rotates the target DOM elements to the specified x/y degree values
  * 
  * Parameters:
  * -degree (required... degrees as a number, not a string)
@@ -359,7 +359,7 @@
 		easing = $easingMap(_easing); // Default easing is "ease"
 		timer = (_duration && typeof _duration === "number") ? _duration + "s" : $shiftDuration; // Default duration is half a second
 		
-		if (_degree && typeof _degree === "number"){
+		if (_degree && typeof _degree === "number" || _degree === 0){
 			
 			$shiftLoop(collection, function(){
 				
@@ -373,6 +373,195 @@
 			
 		} else {
 			throw new Error("Degree value for rotate() must be a valid number.");
+		}
+		
+		// Resets and completions...
+		//
+		callback = function(){
+			$shiftCallback(collection, _complete, callback);
+		};
+		
+		collection[collection.length - 1].addEventListener("transitionend", callback, false);
+		
+		return this;
+	};
+	
+	shift.fn.rotateX = function(_degree, _duration, _easing, _complete){
+		
+		var timer, callback, easing, collection;
+			
+		collection = this.collection;
+		easing = $easingMap(_easing); // Default easing is "ease"
+		timer = (_duration && typeof _duration === "number") ? _duration + "s" : $shiftDuration; // Default duration is half a second
+		
+		if (_degree && typeof _degree === "number" || _degree === 0){
+			
+			$shiftLoop(collection, function(){
+				
+				this.style.transition = "transform " + timer;
+				this.style.webkitTransition = "-webkit-transform " + timer + " " + easing;
+				
+				this.style.transform = "rotateX(" + _degree + "deg)";
+				this.style.webkitTransform = "rotateX(" + _degree + "deg)";
+				
+			});
+			
+		} else {
+			throw new Error("Degree value for rotateX() must be a valid number.");
+		}
+		
+		// Resets and completions...
+		//
+		callback = function(){
+			$shiftCallback(collection, _complete, callback);
+		};
+		
+		collection[collection.length - 1].addEventListener("transitionend", callback, false);
+		
+		return this;
+	};
+	
+	shift.fn.rotateY = function(_degree, _duration, _easing, _complete){
+		
+		var timer, callback, easing, collection;
+			
+		collection = this.collection;
+		easing = $easingMap(_easing); // Default easing is "ease"
+		timer = (_duration && typeof _duration === "number") ? _duration + "s" : $shiftDuration; // Default duration is half a second
+		
+		if (_degree && typeof _degree === "number" || _degree === 0){
+			
+			$shiftLoop(collection, function(){
+				
+				this.style.transition = "transform " + timer;
+				this.style.webkitTransition = "-webkit-transform " + timer + " " + easing;
+				
+				this.style.transform = "rotateY(" + _degree + "deg)";
+				this.style.webkitTransform = "rotateY(" + _degree + "deg)";
+				
+			});
+			
+		} else {
+			throw new Error("Degree value for rotateY() must be a valid number.");
+		}
+		
+		// Resets and completions...
+		//
+		callback = function(){
+			$shiftCallback(collection, _complete, callback);
+		};
+		
+		collection[collection.length - 1].addEventListener("transitionend", callback, false);
+		
+		return this;
+	};
+
+/**
+ * scale() / scaleX() / scaleY()
+ * 
+ * Scales the target DOM elements to the specified x/y values
+ * 
+ * Parameters:
+ * -values (required... array of numbers; scale multipliers)
+ * -duration (optional... seconds as a number, not a string)
+ * -easing (optional... string)
+ * -complete (optional... callback fired after transitionend)
+ */
+ 	
+ 	// Note: as of the time this library was built, Safari still requires the -webkit- vendor prefix for transforms
+ 	//
+	shift.fn.scale = function(_values, _duration, _easing, _complete){
+		
+		var timer, callback, easing, collection;
+			
+		collection = this.collection;
+		easing = $easingMap(_easing); // Default easing is "ease"
+		timer = (_duration && typeof _duration === "number") ? _duration + "s" : $shiftDuration; // Default duration is half a second
+		
+		if (_values && typeof _values === "object" && _values.length === 2){
+			
+			$shiftLoop(collection, function(){
+				
+				this.style.transition = "transform " + timer;
+				this.style.webkitTransition = "-webkit-transform " + timer + " " + easing;
+				
+				this.style.transform = "scale(" + _values[0] + "," + _values[1] + ")";
+				this.style.webkitTransform = "scale(" + _values[0] + "," + _values[1] + ")";
+				
+			});
+			
+		} else {
+			throw new Error("scale() requires an array with two numbers as its first argument.");
+		}
+		
+		// Resets and completions...
+		//
+		callback = function(){
+			$shiftCallback(collection, _complete, callback);
+		};
+		
+		collection[collection.length - 1].addEventListener("transitionend", callback, false);
+		
+		return this;
+	};
+	
+	shift.fn.scaleX = function(_value, _duration, _easing, _complete){
+		
+		var timer, callback, easing, collection;
+			
+		collection = this.collection;
+		easing = $easingMap(_easing); // Default easing is "ease"
+		timer = (_duration && typeof _duration === "number") ? _duration + "s" : $shiftDuration; // Default duration is half a second
+		
+		if (_value && typeof _value === "number" || _value === 0){
+			
+			$shiftLoop(collection, function(){
+				
+				this.style.transition = "transform " + timer;
+				this.style.webkitTransition = "-webkit-transform " + timer + " " + easing;
+				
+				this.style.transform = "scaleX(" + _value + ")";
+				this.style.webkitTransform = "scaleX(" + _value + ")";
+				
+			});
+			
+		} else {
+			throw new Error("scaleX() requires a number as its first argument.");
+		}
+		
+		// Resets and completions...
+		//
+		callback = function(){
+			$shiftCallback(collection, _complete, callback);
+		};
+		
+		collection[collection.length - 1].addEventListener("transitionend", callback, false);
+		
+		return this;
+	};
+	
+	shift.fn.scaleY = function(_value, _duration, _easing, _complete){
+		
+		var timer, callback, easing, collection;
+			
+		collection = this.collection;
+		easing = $easingMap(_easing); // Default easing is "ease"
+		timer = (_duration && typeof _duration === "number") ? _duration + "s" : $shiftDuration; // Default duration is half a second
+		
+		if (_value && typeof _value === "number" || _value === 0){
+			
+			$shiftLoop(collection, function(){
+				
+				this.style.transition = "transform " + timer;
+				this.style.webkitTransition = "-webkit-transform " + timer + " " + easing;
+				
+				this.style.transform = "scaleY(" + _value + ")";
+				this.style.webkitTransform = "scaleY(" + _value + ")";
+				
+			});
+			
+		} else {
+			throw new Error("scaleY() requires a number as its first argument.");
 		}
 		
 		// Resets and completions...

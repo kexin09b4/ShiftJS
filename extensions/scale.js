@@ -1,10 +1,10 @@
 /**
- * rotate() / rotateX() / rotateY()
+ * scale() / scaleX() / scaleY()
  * 
- * Rotates the target DOM elements to the specified x/y degree values
+ * Scales the target DOM elements to the specified x/y values
  * 
  * Parameters:
- * -degree (required... degrees as a number, not a string)
+ * -values (required... array of numbers; scale multipliers)
  * -duration (optional... seconds as a number, not a string)
  * -easing (optional... string)
  * -complete (optional... callback fired after transitionend)
@@ -12,7 +12,7 @@
  	
  	// Note: as of the time this library was built, Safari still requires the -webkit- vendor prefix for transforms
  	//
-	shift.fn.rotate = function(_degree, _duration, _easing, _complete){
+	shift.fn.scale = function(_values, _duration, _easing, _complete){
 		
 		var timer, callback, easing, collection;
 			
@@ -20,20 +20,20 @@
 		easing = $easingMap(_easing); // Default easing is "ease"
 		timer = (_duration && typeof _duration === "number") ? _duration + "s" : $shiftDuration; // Default duration is half a second
 		
-		if (_degree && typeof _degree === "number" || _degree === 0){
+		if (_values && typeof _values === "object" && _values.length === 2){
 			
 			$shiftLoop(collection, function(){
 				
 				this.style.transition = "transform " + timer;
 				this.style.webkitTransition = "-webkit-transform " + timer + " " + easing;
 				
-				this.style.transform = "rotate(" + _degree + "deg)";
-				this.style.webkitTransform = "rotate(" + _degree + "deg)";
+				this.style.transform = "scale(" + _values[0] + "," + _values[1] + ")";
+				this.style.webkitTransform = "scale(" + _values[0] + "," + _values[1] + ")";
 				
 			});
 			
 		} else {
-			throw new Error("Degree value for rotate() must be a valid number.");
+			throw new Error("scale() requires an array with two numbers as its first argument.");
 		}
 		
 		// Resets and completions...
@@ -47,7 +47,7 @@
 		return this;
 	};
 	
-	shift.fn.rotateX = function(_degree, _duration, _easing, _complete){
+	shift.fn.scaleX = function(_value, _duration, _easing, _complete){
 		
 		var timer, callback, easing, collection;
 			
@@ -55,20 +55,20 @@
 		easing = $easingMap(_easing); // Default easing is "ease"
 		timer = (_duration && typeof _duration === "number") ? _duration + "s" : $shiftDuration; // Default duration is half a second
 		
-		if (_degree && typeof _degree === "number" || _degree === 0){
+		if (_value && typeof _value === "number" || _value === 0){
 			
 			$shiftLoop(collection, function(){
 				
 				this.style.transition = "transform " + timer;
 				this.style.webkitTransition = "-webkit-transform " + timer + " " + easing;
 				
-				this.style.transform = "rotateX(" + _degree + "deg)";
-				this.style.webkitTransform = "rotateX(" + _degree + "deg)";
+				this.style.transform = "scaleX(" + _value + ")";
+				this.style.webkitTransform = "scaleX(" + _value + ")";
 				
 			});
 			
 		} else {
-			throw new Error("Degree value for rotateX() must be a valid number.");
+			throw new Error("scaleX() requires a number as its first argument.");
 		}
 		
 		// Resets and completions...
@@ -82,7 +82,7 @@
 		return this;
 	};
 	
-	shift.fn.rotateY = function(_degree, _duration, _easing, _complete){
+	shift.fn.scaleY = function(_value, _duration, _easing, _complete){
 		
 		var timer, callback, easing, collection;
 			
@@ -90,20 +90,20 @@
 		easing = $easingMap(_easing); // Default easing is "ease"
 		timer = (_duration && typeof _duration === "number") ? _duration + "s" : $shiftDuration; // Default duration is half a second
 		
-		if (_degree && typeof _degree === "number" || _degree === 0){
+		if (_value && typeof _value === "number" || _value === 0){
 			
 			$shiftLoop(collection, function(){
 				
 				this.style.transition = "transform " + timer;
 				this.style.webkitTransition = "-webkit-transform " + timer + " " + easing;
 				
-				this.style.transform = "rotateY(" + _degree + "deg)";
-				this.style.webkitTransform = "rotateY(" + _degree + "deg)";
+				this.style.transform = "scaleY(" + _value + ")";
+				this.style.webkitTransform = "scaleY(" + _value + ")";
 				
 			});
 			
 		} else {
-			throw new Error("Degree value for rotateY() must be a valid number.");
+			throw new Error("scaleY() requires a number as its first argument.");
 		}
 		
 		// Resets and completions...

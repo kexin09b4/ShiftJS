@@ -13,6 +13,7 @@ module.exports = function(grunt){
 		    		"extensions/fade.js",
 		    		"extensions/origin.js",
 		    		"extensions/rotate.js",
+		    		"extensions/scale.js",
 		    		"extensions/set.js"
 			    ],
 			    dest: "bin/<%= pkg.name %>-v<%= pkg.version %>.js"
