@@ -27,7 +27,12 @@
 				this.style.transition = "all " + timer + " " + easing;
 				
 				for (styles in _properties){
+					
 					this.style[styles] = _properties[styles];
+					
+					if (styles === "transform"){
+						this.style.webkitTransform = _properties[styles]; // Takes care of transform vendor-prefixing automatically for the end user
+					}
 				}
 				
 			});

@@ -1,10 +1,10 @@
 /**
- * scale() / scaleX() / scaleY()
+ * skew() / skewX() / skewY()
  * 
- * Scales the target DOM elements to the specified x/y values
+ * Skews the target DOM elements to the specified x/y values
  * 
  * Parameters:
- * -values (required... number or array of numbers; scale multipliers)
+ * -values (required... number or array of numbers; degrees)
  * -duration (optional... seconds as a number, not a string)
  * -easing (optional... string)
  * -complete (optional... callback fired after transitionend)
@@ -12,7 +12,7 @@
  	
  	// Note: as of the time this library was built, Safari still requires the -webkit- vendor prefix for transforms
  	//
-	shift.fn.scale = function(_values, _duration, _easing, _complete){
+	shift.fn.skew = function(_values, _duration, _easing, _complete){
 		
 		var timer, callback, easing, collection;
 			
@@ -27,25 +27,25 @@
 				this.style.transition = "transform " + timer;
 				this.style.webkitTransition = "-webkit-transform " + timer + " " + easing;
 				
-				this.style.transform = "scale(" + _values[0] + "," + _values[1] + ")";
-				this.style.webkitTransform = "scale(" + _values[0] + "," + _values[1] + ")";
+				this.style.transform = "skew(" + _values[0] + "deg," + _values[1] + "deg)";
+				this.style.webkitTransform = "skew(" + _values[0] + "deg," + _values[1] + "deg)";
 				
 			});
 			
-		} else if (_values && typeof _values === "number" || _values === 0){ // If no array is passed, apply the same scale value to x and y
+		} else if (_values && typeof _values === "number" || _values === 0){ // If no array is passed, apply the same skew value to x and y
 			
 			$shiftLoop(collection, function(){
 				
 				this.style.transition = "transform " + timer;
 				this.style.webkitTransition = "-webkit-transform " + timer + " " + easing;
 				
-				this.style.transform = "scale(" + _values + ")";
-				this.style.webkitTransform = "scale(" + _values + ")";
+				this.style.transform = "skew(" + _values + "deg)";
+				this.style.webkitTransform = "skew(" + _values + "deg)";
 				
 			});
 			
 		} else {
-			throw new Error("The first argument for scale() must either be a number or an array of 2 numbers.")
+			throw new Error("The first argument for skew() must either be a number or an array of 2 numbers.")
 		}
 		
 		// Resets and completions...
@@ -59,7 +59,7 @@
 		return this;
 	};
 	
-	shift.fn.scaleX = function(_value, _duration, _easing, _complete){
+	shift.fn.skewX = function(_value, _duration, _easing, _complete){
 		
 		var timer, callback, easing, collection;
 			
@@ -74,13 +74,13 @@
 				this.style.transition = "transform " + timer;
 				this.style.webkitTransition = "-webkit-transform " + timer + " " + easing;
 				
-				this.style.transform = "scaleX(" + _value + ")";
-				this.style.webkitTransform = "scaleX(" + _value + ")";
+				this.style.transform = "skewX(" + _value + "deg)";
+				this.style.webkitTransform = "skewX(" + _value + "deg)";
 				
 			});
 			
 		} else {
-			throw new Error("scaleX() requires a number as its first argument.");
+			throw new Error("skewX() requires a number as its first argument.");
 		}
 		
 		// Resets and completions...
@@ -94,7 +94,7 @@
 		return this;
 	};
 	
-	shift.fn.scaleY = function(_value, _duration, _easing, _complete){
+	shift.fn.skewY = function(_value, _duration, _easing, _complete){
 		
 		var timer, callback, easing, collection;
 			
@@ -109,13 +109,13 @@
 				this.style.transition = "transform " + timer;
 				this.style.webkitTransition = "-webkit-transform " + timer + " " + easing;
 				
-				this.style.transform = "scaleY(" + _value + ")";
-				this.style.webkitTransform = "scaleY(" + _value + ")";
+				this.style.transform = "skewY(" + _value + "deg)";
+				this.style.webkitTransform = "skewY(" + _value + "deg)";
 				
 			});
 			
 		} else {
-			throw new Error("scaleY() requires a number as its first argument.");
+			throw new Error("skewY() requires a number as its first argument.");
 		}
 		
 		// Resets and completions...

@@ -11,6 +11,8 @@
 		<script type="text/javascript" src="extensions/rotate.js"></script>
 		<script type="text/javascript" src="extensions/scale.js"></script>
 		<script type="text/javascript" src="extensions/set.js"></script>
+		<script type="text/javascript" src="extensions/skew.js"></script>
+		<script type="text/javascript" src="extensions/translate.js"></script>
 		<style type="text/css">
 			#testDiv {
 				position: absolute;
@@ -45,7 +47,9 @@
 		</style>
 	</head>
 	<body>
-		<div id="testDiv"></div>
+		<div id="outerDiv">
+			<div id="testDiv"></div>
+		</div>
 		<button></button>
 		<button></button>
 		<script type="text/javascript">
@@ -81,13 +85,33 @@
 				
 				//test.set("background", "#f00", 0.8, "", func);
 				
-				test.scale([2.4,1.8], 0.8, "ease", function(){
+				/*test.scale([2.4,1.8], 0.8, "ease", function(){
 					test.scale([1,1], 0.8, "ease", function(){
 						test.scaleX(4, 0.8, "ease", function(){
 							test.scaleY(4, 0.8, "ease", func);
 						}).origin(0, 0);
 					});
-				});
+				});*/
+				
+				/*test.set("transform", "rotate(145deg) scale(1.6,1.6)", "", "", function(){
+					test.set("border-radius", "35px", 1);
+				});*/
+				
+				/*test.animate({
+					left: "200px",
+					top: "160px",
+					transform: "scale(2.4) rotate(125deg)"
+				}, 1.5, "ease", function(){
+					test.set("transform", "scale(1) rotate(0)", 0.8, "snap", func);
+				});*/
+				
+				//test.skewX(40, 0.8, "snap", func);
+				
+				//test.translate(100, 0.8, "snap", func);
+				
+				//test.translate([120, 200], 0.8, "ease", func);
+				
+				test.rotate(140).origin(20, 40);
 				
 			};
 			
@@ -107,7 +131,21 @@
 					test.rotateX(166, 0.6, "ease", func2).delay(0.5);
 				});*/
 				
-				test.rotateY(180, 1.4, "snap", func2);
+				//test.rotateY(180, 1.4, "snap", func2);
+				
+				//test.scale(2.4, 0.8, "ease", func2);
+				
+				//test.skew([24, 44], 0.8, "snap", func2);
+				
+				//test.skew(-34, 0.8, "snap", func2);
+				
+				//test.skewY(-34, 0.8, "snap", func2);
+				
+				//test.translateX(120, 0.8, "ease", func2);
+				
+				test.translateY(200, 0.8, "ease", function(){
+					test.translateY(0, 0.8, "ease", func2).delay(0.5);
+				});
 				
 			};
 			

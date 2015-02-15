@@ -1,7 +1,7 @@
 /**
  * origin()
  * 
- * Defines a transform-origin to applicable animations
+ * Defines a transform-origin for applicable animations
  * 
  * Parameter:
  * -x (number; percentage)

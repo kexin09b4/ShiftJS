@@ -23,8 +23,14 @@
 		if (_property && _value && typeof _property === "string" && typeof _value === "string"){
 			
 			$shiftLoop(collection, function(){
+				
 				this.style.transition = _property + " " + timer + " " + easing;
 				this.style[_property] = _value;
+				
+				if (_property === "transform"){
+					this.style.transition = "-webkit-transform" + " " + timer + " " + easing;
+					this.style.webkitTransform = _value; // Takes care of transform vendor-prefixing automatically for the end user
+				}
 			});
 			
 		} else {
