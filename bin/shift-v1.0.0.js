@@ -141,6 +141,9 @@
 		var easingValue;
 		
 		switch (_value){
+			case "ease":
+				easingValue = "ease"; // Necessary to put this here in case developers change the default value
+				break;
 			case "in":
 				easingValue = "ease-in";
 				break;
@@ -157,7 +160,7 @@
 				easingValue = "cubic-bezier(0,1,.5,1)";
 				break;
 			default:
-				easingValue = $shiftEasing; // If no easing is defined, the default value will be "ease"
+				easingValue = $shiftEasing; // If no easing is defined, the default value will be "ease" unless redefined by the developer
 				break;
 		};
 		
