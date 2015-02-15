@@ -287,6 +287,8 @@
 		return this;
 	};
 	
+	// fadeIn() assumes opacity < 1 before calling the method
+	//
 	shift.fn.fadeIn = function(_duration, _easing, _complete){
 		
 		var timer, callback, easing, collection;
@@ -296,7 +298,6 @@
 		timer = (_duration && typeof _duration === "number") ? _duration + "s" : "0.5s";
 		
 		$shiftLoop(collection, function(){
-			this.style.visibility = "visible";
 			this.style.transition = "all " + timer + " " + easing;
 			this.style.opacity = 1;
 		});
