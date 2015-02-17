@@ -298,7 +298,7 @@
 		
 		collection = this.collection;
 		easing = $easingMap(_easing); // Default easing is "ease"
-		timer = (_duration && typeof _duration === "number") ? _duration + "s" : "0.5s";
+		timer = (_duration && typeof _duration === "number") ? _duration + "s" : $shiftDuration;
 		
 		$shiftLoop(collection, function(){
 			this.style.transition = "all " + timer + " " + easing;
