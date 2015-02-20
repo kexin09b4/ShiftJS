@@ -114,8 +114,12 @@
 		originY: "50%"
 	};
 	
-	// Shorthand variables to access the values above
-	//
+	/**
+	 * Shorthand variables to access the values above
+	 * Note: $-prefixed variables are for use within the library only...
+	 * If resetting default values, users will have to use the "Shift.environment" syntax
+	 */
+	
 	var $shiftDuration, $shiftEasing, $shiftDelay, $shiftOriginX, $shiftOriginY;
 	
 	$shiftDuration = Shift.environment["duration"];
