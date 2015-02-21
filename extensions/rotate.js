@@ -24,7 +24,7 @@
 			
 			$shiftLoop(collection, function(){
 				
-				this.style.transition = "transform " + timer;
+				this.style.transition = "transform " + timer + " " + easing;
 				this.style.webkitTransition = "-webkit-transform " + timer + " " + easing;
 				
 				this.style.transform = "rotate(" + _degree + "deg)";
@@ -59,7 +59,7 @@
 			
 			$shiftLoop(collection, function(){
 				
-				this.style.transition = "transform " + timer;
+				this.style.transition = "transform " + timer + " " + easing;
 				this.style.webkitTransition = "-webkit-transform " + timer + " " + easing;
 				
 				this.style.transform = "rotateX(" + _degree + "deg)";
@@ -94,7 +94,7 @@
 			
 			$shiftLoop(collection, function(){
 				
-				this.style.transition = "transform " + timer;
+				this.style.transition = "transform " + timer + " " + easing;
 				this.style.webkitTransition = "-webkit-transform " + timer + " " + easing;
 				
 				this.style.transform = "rotateY(" + _degree + "deg)";

@@ -24,7 +24,7 @@
 			
 			$shiftLoop(collection, function(){
 				
-				this.style.transition = "transform " + timer;
+				this.style.transition = "transform " + timer + " " + easing;
 				this.style.webkitTransition = "-webkit-transform " + timer + " " + easing;
 				
 				this.style.transform = "skew(" + _values[0] + "deg," + _values[1] + "deg)";
@@ -36,7 +36,7 @@
 			
 			$shiftLoop(collection, function(){
 				
-				this.style.transition = "transform " + timer;
+				this.style.transition = "transform " + timer + " " + easing;
 				this.style.webkitTransition = "-webkit-transform " + timer + " " + easing;
 				
 				this.style.transform = "skew(" + _values + "deg)";
@@ -71,7 +71,7 @@
 			
 			$shiftLoop(collection, function(){
 				
-				this.style.transition = "transform " + timer;
+				this.style.transition = "transform " + timer + " " + easing;
 				this.style.webkitTransition = "-webkit-transform " + timer + " " + easing;
 				
 				this.style.transform = "skewX(" + _value + "deg)";
@@ -106,7 +106,7 @@
 			
 			$shiftLoop(collection, function(){
 				
-				this.style.transition = "transform " + timer;
+				this.style.transition = "transform " + timer + " " + easing;
 				this.style.webkitTransition = "-webkit-transform " + timer + " " + easing;
 				
 				this.style.transform = "skewY(" + _value + "deg)";

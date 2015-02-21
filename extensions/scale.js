@@ -24,7 +24,7 @@
 			
 			$shiftLoop(collection, function(){
 				
-				this.style.transition = "transform " + timer;
+				this.style.transition = "transform " + timer + " " + easing;
 				this.style.webkitTransition = "-webkit-transform " + timer + " " + easing;
 				
 				this.style.transform = "scale(" + _values[0] + "," + _values[1] + ")";
@@ -36,7 +36,7 @@
 			
 			$shiftLoop(collection, function(){
 				
-				this.style.transition = "transform " + timer;
+				this.style.transition = "transform " + timer + " " + easing;
 				this.style.webkitTransition = "-webkit-transform " + timer + " " + easing;
 				
 				this.style.transform = "scale(" + _values + ")";
@@ -71,7 +71,7 @@
 			
 			$shiftLoop(collection, function(){
 				
-				this.style.transition = "transform " + timer;
+				this.style.transition = "transform " + timer + " " + easing;
 				this.style.webkitTransition = "-webkit-transform " + timer + " " + easing;
 				
 				this.style.transform = "scaleX(" + _value + ")";
@@ -106,7 +106,7 @@
 			
 			$shiftLoop(collection, function(){
 				
-				this.style.transition = "transform " + timer;
+				this.style.transition = "transform " + timer + " " + easing;
 				this.style.webkitTransition = "-webkit-transform " + timer + " " + easing;
 				
 				this.style.transform = "scaleY(" + _value + ")";
