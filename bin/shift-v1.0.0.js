@@ -691,8 +691,8 @@
 				this.style.transition = "transform " + timer + " " + easing;
 				this.style.webkitTransition = "-webkit-transform " + timer + " " + easing;
 				
-				this.style.transform = "skew(" + _values + "deg)";
-				this.style.webkitTransform = "skew(" + _values + "deg)";
+				this.style.transform = "skew(" + _values + "deg, " + _values + "deg)";
+				this.style.webkitTransform = "skew(" + _values + "deg, " + _values + "deg)";
 				
 			});
 			
