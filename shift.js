@@ -161,7 +161,7 @@
 				easingValue = "linear";
 				break;
 			case "snap":
-				easingValue = "cubic-bezier(0,1,.5,1)";
+				easingValue = "cubic-bezier(0,1,0.5,1)";
 				break;
 			default:
 				easingValue = $shiftEasing; // If no easing is defined, the default value will be "ease" unless redefined by the developer
