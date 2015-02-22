@@ -68,7 +68,7 @@ shift(_selector).fadeIn(_duration, _easing, _complete);
 _Defines a 2d rotation._
 
 ```
-shift(_selector).rotate(_degrees, _easing, _complete);
+shift(_selector).rotate(_degrees, _duration, _easing, _complete);
 ```
 
 ##### rotateX()
@@ -76,7 +76,7 @@ shift(_selector).rotate(_degrees, _easing, _complete);
 _Defines a rotation along the X axis._
 
 ```
-shift(_selector).rotateX(_degrees, _easing, _complete);
+shift(_selector).rotateX(_degrees, _duration, _easing, _complete);
 ```
 
 ##### rotateY()
@@ -84,7 +84,7 @@ shift(_selector).rotateX(_degrees, _easing, _complete);
 _Defines a rotation along the Y axis._
 
 ```
-shift(_selector).rotateY(_degrees, _easing, _complete);
+shift(_selector).rotateY(_degrees, _duration, _easing, _complete);
 ```
 
 ##### scale()
@@ -183,7 +183,7 @@ shift(_selector).fadeOut().delay(_number); => seconds, not milliseconds
 _Alters the transform-origin of the current transform animation. The default transform-origin is "50%, 50%"._
 
 ```
-shift(_selector).rotate(_number).origin(_number, _number); => each "_number" is the X and Y percentage value, respectively
+shift(_selector).rotate(_number).origin(_number, _number); => each "_number" argument for origin() is the X and Y percentage value, respectively
 ```
 
 ##### Acceptable "_easing" Values
