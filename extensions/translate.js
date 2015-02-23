@@ -40,7 +40,7 @@
 				this.style.webkitTransition = "-webkit-transform " + timer + " " + easing;
 				
 				this.style.transform = "translate(" + _values + "px," + _values + "px)";
-				this.style.webkitTransform = "translate(" + _values + "px" + _values + "px)";
+				this.style.webkitTransform = "translate(" + _values + "px," + _values + "px)";
 				
 			});
 			

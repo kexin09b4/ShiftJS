@@ -39,8 +39,8 @@
 				this.style.transition = "transform " + timer + " " + easing;
 				this.style.webkitTransition = "-webkit-transform " + timer + " " + easing;
 				
-				this.style.transform = "scale(" + _values + ")";
-				this.style.webkitTransform = "scale(" + _values + ")";
+				this.style.transform = "scale(" + _values + ", " + _values + ")";
+				this.style.webkitTransform = "scale(" + _values + ", " + _values + ")";
 				
 			});
 			
