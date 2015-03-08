@@ -23,7 +23,7 @@ module.exports = function(grunt){
 		},
 		uglify: {
 		    options: {
-		    	banner: "/* ShiftJS v<%= pkg.version %> | Copyright (c) <%= grunt.template.today('yyyy') %> Dan Zervoudakes | https://github.com/DanZiti/ShiftJS/blob/master/LICENSE */\n" // WILL NEED TO UPDATE COPYRIGHT DATE IN 2016
+		    	banner: "/* ShiftJS v<%= pkg.version %> | Copyright (c) <%= grunt.template.today('yyyy') %> Dan Zervoudakes | https://github.com/DanZiti/ShiftJS/blob/master/LICENSE */\n"
 		    },
 		    build: {
             	src: "bin/<%= pkg.name %>-v<%= pkg.version %>.js",
