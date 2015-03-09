@@ -216,7 +216,7 @@ shift(_selector).fadeOut(2); => 2-second transition
 The complete parameter comes in handy for more involved sequential animations. This parameter triggers a callback on "transitionend".
 
 ```
-shift(_selector).set(_property, _value, _duration, _easing, function(){
+shift(_selector).set(_property, _value, _duration, _easing, function() {
 	// do stuff here
 });
 ```

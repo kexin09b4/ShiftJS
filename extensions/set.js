@@ -12,7 +12,7 @@
  * -complete (optional... callback fired after transitionend)
  */
  	
-	shift.fn.set = function(_property, _value, _duration, _easing, _complete){
+	shift.fn.set = function(_property, _value, _duration, _easing, _complete) {
 		
 		var timer, callback, easing, collection;
 			
@@ -20,14 +20,14 @@
 		easing = $easingMap(_easing); // Default easing is "ease"
 		timer = (_duration && typeof _duration === "number") ? _duration + "s" : $shiftDuration; // Default duration is half a second
 		
-		if (_property && _value && typeof _property === "string" && typeof _value === "string"){
+		if (_property && _value && typeof _property === "string" && typeof _value === "string") {
 			
-			$shiftLoop(collection, function(){
+			$shiftLoop(collection, function() {
 				
 				this.style.transition = _property + " " + timer + " " + easing;
 				this.style[_property] = _value;
 				
-				if (_property === "transform"){
+				if (_property === "transform") {
 					this.style.transition = "-webkit-transform" + " " + timer + " " + easing;
 					this.style.webkitTransform = _value; // Takes care of transform vendor-prefixing automatically for the end user
 				}
@@ -39,7 +39,7 @@
 		
 		// Resets and completions...
 		//
-		callback = function(){
+		callback = function() {
 			$shiftCallback(collection, _complete, callback);
 		};
 		

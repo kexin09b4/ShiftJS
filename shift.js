@@ -11,22 +11,22 @@
  	
  	// Constructor - gathers the set
  	//
-	var Shift = function(_selector, _context){
+	var Shift = function(_selector, _context) {
 		
 		var selectedElements, ctx, els, i, j;
 		
 		// Gather the set
 		//
-		if (_context){
+		if (_context) {
 			
 			ctx = document.querySelectorAll(_context);
 			selectedElements = [];
 			
-			for (i = 0; i < ctx.length; i++){
+			for (i = 0; i < ctx.length; i++) {
 				
 				els = ctx[i].querySelectorAll(_selector);
 				
-				for (j = 0; j < els.length; j++){
+				for (j = 0; j < els.length; j++) {
 					selectedElements.push(els[j]);
 				}
 			}
@@ -35,7 +35,7 @@
 			selectedElements = document.querySelectorAll(_selector);
 		}
 		
-		if (selectedElements.length > 0){
+		if (selectedElements.length > 0) {
 			this.collection = selectedElements;
 		} else {
 			return [];
@@ -45,14 +45,14 @@
 	
 	// Shorthand method for the results above
 	//
-	var shift = function(_selector, _context){
+	var shift = function(_selector, _context) {
 		return new Shift(_selector, _context);
 	};
 	
 	// Loop through each member of the collection throughout each extension
 	//
-	var $shiftLoop = function(_array, _callback){
-		for (var i = 0; i < _array.length; i++){
+	var $shiftLoop = function(_array, _callback) {
+		for (var i = 0; i < _array.length; i++) {
 			_callback.call(_array[i]);
 		}
 	};
@@ -63,8 +63,8 @@
 	 * Called in the $shiftCallback function below
 	 */
 	
-	var $shiftReset = function(_array){
-		for (var j = 0; j < _array.length; j++){
+	var $shiftReset = function(_array) {
+		for (var j = 0; j < _array.length; j++) {
 			_array[j].style.transition = "";
 			_array[j].style.webkitTransition = "";
 		}
@@ -76,14 +76,14 @@
 	 * Leverages the $shiftReset function above
 	 */
 	
-	var $shiftCallback = function(_array, _complete, _callback){
+	var $shiftCallback = function(_array, _complete, _callback) {
 		
 		// Reset all transitions after completion
 		//
 		$shiftReset(_array);
 		
-		if (_complete){
-			setTimeout(function(){ // setTimeout necessary to let transitions reset properly
+		if (_complete) {
+			setTimeout(function() { // setTimeout necessary to let transitions reset properly
 				_complete();
 			}, 50);
 		}
@@ -140,11 +140,11 @@
 	 * -custom (applies cubic-bezier)
 	 */
 	
-	var $easingMap = function(_value){
+	var $easingMap = function(_value) {
 		
 		var easingValue;
 		
-		switch (_value){
+		switch (_value) {
 			case "ease":
 				easingValue = "ease"; // Necessary to put this here in case developers change the default value
 				break;
@@ -170,7 +170,7 @@
 		
 		// Override the default value if a cubic-bezier array is passed
 		//
-		if (typeof _value === "object" && _value.length === 4){
+		if (typeof _value === "object" && _value.length === 4) {
 			easingValue = "cubic-bezier(" + _value[0] + "," + _value[1] + "," + _value[2] + "," + _value[3] + ")";
 		}
 		

@@ -7,7 +7,7 @@
  * -delay (number in seconds, not a string)
  */
  	
-	shift.fn.delay = function(_delay){
+	shift.fn.delay = function(_delay) {
 		
 		var timer, collection;
 		
@@ -16,7 +16,7 @@
 		
 		// Apply the delay to all members of the collection
 		//
-		$shiftLoop(collection, function(){
+		$shiftLoop(collection, function() {
 			this.style.transitionDelay = timer;
 		});
 		

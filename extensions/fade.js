@@ -9,7 +9,7 @@
  * -complete (optional... callback fired after transitionend)
  */
  	
-	shift.fn.fadeOut = function(_duration, _easing, _complete){
+	shift.fn.fadeOut = function(_duration, _easing, _complete) {
 		
 		var timer, callback, easing, collection;
 		
@@ -17,14 +17,14 @@
 		easing = $easingMap(_easing); // Default easing is "ease"
 		timer = (_duration && typeof _duration === "number") ? _duration + "s" : $shiftDuration; // Default duration is half a second
 		
-		$shiftLoop(collection, function(){
+		$shiftLoop(collection, function() {
 			this.style.transition = "all " + timer + " " + easing;
 			this.style.opacity = 0;
 		});
 		
 		// Resets and completions...
 		//
-		callback = function(){
+		callback = function() {
 			$shiftCallback(collection, _complete, callback);
 		};
 		
@@ -35,7 +35,7 @@
 	
 	// fadeIn() assumes opacity < 1 before calling the method
 	//
-	shift.fn.fadeIn = function(_duration, _easing, _complete){
+	shift.fn.fadeIn = function(_duration, _easing, _complete) {
 		
 		var timer, callback, easing, collection;
 		
@@ -43,14 +43,14 @@
 		easing = $easingMap(_easing); // Default easing is "ease"
 		timer = (_duration && typeof _duration === "number") ? _duration + "s" : $shiftDuration;
 		
-		$shiftLoop(collection, function(){
+		$shiftLoop(collection, function() {
 			this.style.transition = "all " + timer + " " + easing;
 			this.style.opacity = 1;
 		});
 		
 		// Resets and completions...
 		//
-		callback = function(){
+		callback = function() {
 			$shiftCallback(collection, _complete, callback);
 		};
 		

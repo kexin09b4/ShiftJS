@@ -12,7 +12,7 @@
  	
  	// Note: as of the time this library was built, Safari still requires the -webkit- vendor prefix for transforms
  	//
-	shift.fn.skew = function(_values, _duration, _easing, _complete){
+	shift.fn.skew = function(_values, _duration, _easing, _complete) {
 		
 		var timer, callback, easing, collection;
 			
@@ -20,9 +20,9 @@
 		easing = $easingMap(_easing); // Default easing is "ease"
 		timer = (_duration && typeof _duration === "number") ? _duration + "s" : $shiftDuration; // Default duration is half a second
 		
-		if (_values && typeof _values === "object" && _values.length === 2){
+		if (_values && typeof _values === "object" && _values.length === 2) {
 			
-			$shiftLoop(collection, function(){
+			$shiftLoop(collection, function() {
 				
 				this.style.transition = "transform " + timer + " " + easing;
 				this.style.webkitTransition = "-webkit-transform " + timer + " " + easing;
@@ -32,9 +32,9 @@
 				
 			});
 			
-		} else if (_values && typeof _values === "number" || _values === 0){ // If no array is passed, apply the same skew value to x and y
+		} else if (_values && typeof _values === "number" || _values === 0) { // If no array is passed, apply the same skew value to x and y
 			
-			$shiftLoop(collection, function(){
+			$shiftLoop(collection, function() {
 				
 				this.style.transition = "transform " + timer + " " + easing;
 				this.style.webkitTransition = "-webkit-transform " + timer + " " + easing;
@@ -50,7 +50,7 @@
 		
 		// Resets and completions...
 		//
-		callback = function(){
+		callback = function() {
 			$shiftCallback(collection, _complete, callback);
 		};
 		
@@ -59,7 +59,7 @@
 		return this;
 	};
 	
-	shift.fn.skewX = function(_value, _duration, _easing, _complete){
+	shift.fn.skewX = function(_value, _duration, _easing, _complete) {
 		
 		var timer, callback, easing, collection;
 			
@@ -67,9 +67,9 @@
 		easing = $easingMap(_easing); // Default easing is "ease"
 		timer = (_duration && typeof _duration === "number") ? _duration + "s" : $shiftDuration; // Default duration is half a second
 		
-		if (_value && typeof _value === "number" || _value === 0){
+		if (_value && typeof _value === "number" || _value === 0) {
 			
-			$shiftLoop(collection, function(){
+			$shiftLoop(collection, function() {
 				
 				this.style.transition = "transform " + timer + " " + easing;
 				this.style.webkitTransition = "-webkit-transform " + timer + " " + easing;
@@ -85,7 +85,7 @@
 		
 		// Resets and completions...
 		//
-		callback = function(){
+		callback = function() {
 			$shiftCallback(collection, _complete, callback);
 		};
 		
@@ -94,7 +94,7 @@
 		return this;
 	};
 	
-	shift.fn.skewY = function(_value, _duration, _easing, _complete){
+	shift.fn.skewY = function(_value, _duration, _easing, _complete) {
 		
 		var timer, callback, easing, collection;
 			
@@ -102,9 +102,9 @@
 		easing = $easingMap(_easing); // Default easing is "ease"
 		timer = (_duration && typeof _duration === "number") ? _duration + "s" : $shiftDuration; // Default duration is half a second
 		
-		if (_value && typeof _value === "number" || _value === 0){
+		if (_value && typeof _value === "number" || _value === 0) {
 			
-			$shiftLoop(collection, function(){
+			$shiftLoop(collection, function() {
 				
 				this.style.transition = "transform " + timer + " " + easing;
 				this.style.webkitTransition = "-webkit-transform " + timer + " " + easing;
@@ -120,7 +120,7 @@
 		
 		// Resets and completions...
 		//
-		callback = function(){
+		callback = function() {
 			$shiftCallback(collection, _complete, callback);
 		};
 		

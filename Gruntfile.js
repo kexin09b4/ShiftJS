@@ -1,6 +1,6 @@
 // ShiftJS Gruntfile
 //
-module.exports = function(grunt){
+module.exports = function(grunt) {
 
 	grunt.initConfig({
 		pkg: grunt.file.readJSON("package.json"),
@@ -35,6 +35,6 @@ module.exports = function(grunt){
 	grunt.loadNpmTasks("grunt-contrib-concat");
 	grunt.loadNpmTasks("grunt-contrib-uglify");
 	
-	grunt.registerTask("default", ["concat","uglify"]);
+	grunt.registerTask("default", ["concat", "uglify"]);
 	
 };

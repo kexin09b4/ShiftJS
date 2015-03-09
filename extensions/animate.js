@@ -10,7 +10,7 @@
  * -complete (optional... callback fired after transitionend)
  */
  	
-	shift.fn.animate = function(_properties, _duration, _easing, _complete){
+	shift.fn.animate = function(_properties, _duration, _easing, _complete) {
 		
 		var timer, styles, callback, easing, collection;
 		
@@ -18,19 +18,19 @@
 		easing = $easingMap(_easing); // Default easing is "ease"
 		timer = (_duration && typeof _duration === "number") ? _duration + "s" : $shiftDuration; // Default duration is half a second
 		
-		if (_properties && typeof _properties === "object"){
+		if (_properties && typeof _properties === "object") {
 			
 			// Add all applicable styles to the element per user-definition
 			//
-			$shiftLoop(collection, function(){
+			$shiftLoop(collection, function() {
 				
 				this.style.transition = "all " + timer + " " + easing;
 				
-				for (styles in _properties){
+				for (styles in _properties) {
 					
 					this.style[styles] = _properties[styles];
 					
-					if (styles === "transform"){
+					if (styles === "transform") {
 						this.style.webkitTransform = _properties[styles]; // Takes care of transform vendor-prefixing automatically for the end user
 					}
 				}
@@ -39,7 +39,7 @@
 			
 			// Resets and completions...
 			//
-			callback = function(){
+			callback = function() {
 				$shiftCallback(collection, _complete, callback);
 			};
 			

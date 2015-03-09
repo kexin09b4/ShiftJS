@@ -10,7 +10,7 @@
  	
  	// Note: as of the time this library was built, Safari still requires the -webkit- vendor prefix for transforms
  	//
-	shift.fn.origin = function(_x, _y){
+	shift.fn.origin = function(_x, _y) {
 		
 		var x, y, collection;
 		
@@ -20,7 +20,7 @@
 		
 		// Apply transform-origin to all members of the collection
 		//
-		$shiftLoop(collection, function(){
+		$shiftLoop(collection, function() {
 			this.style.transformOrigin = x + " " + y;
 			this.style.webkitTransformOrigin = x + " " + y;
 		});
