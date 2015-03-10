@@ -7,18 +7,18 @@ module.exports = function(grunt) {
 		concat: {
 		    dist: {
 			    src: [
-				    "shift.js",
-		    		"extensions/animate.js",
-		    		"extensions/delay.js",
-		    		"extensions/fade.js",
-		    		"extensions/origin.js",
-		    		"extensions/rotate.js",
-		    		"extensions/scale.js",
-		    		"extensions/set.js",
-		    		"extensions/skew.js",
-		    		"extensions/translate.js"
+				    "src/shift.js", // INCLUDE THIS FILE BEFORE ALL OTHERS
+		    		"src/animate.js",
+		    		"src/delay.js",
+		    		"src/fade.js",
+		    		"src/origin.js",
+		    		"src/rotate.js",
+		    		"src/scale.js",
+		    		"src/set.js",
+		    		"src/skew.js",
+		    		"src/translate.js"
 			    ],
-			    dest: "bin/<%= pkg.name %>-v<%= pkg.version %>.js"
+			    dest: "dist/<%= pkg.name %>-v<%= pkg.version %>.js"
 		    }
 		},
 		uglify: {
@@ -26,8 +26,8 @@ module.exports = function(grunt) {
 		    	banner: "/* ShiftJS v<%= pkg.version %> | Copyright (c) <%= grunt.template.today('yyyy') %> Dan Zervoudakes | https://github.com/DanZiti/ShiftJS/blob/master/LICENSE */\n"
 		    },
 		    build: {
-            	src: "bin/<%= pkg.name %>-v<%= pkg.version %>.js",
-				dest: "bin/<%= pkg.name %>-v<%= pkg.version %>.min.js"
+            	src: "dist/<%= pkg.name %>-v<%= pkg.version %>.js",
+				dest: "dist/<%= pkg.name %>-v<%= pkg.version %>.min.js"
         	}
 		}
 	});

@@ -1,5 +1,5 @@
 /**
- * ShiftJS v1.0.0
+ * ShiftJS v1.0.1
  * https://github.com/DanZiti/ShiftJS
  * 
  * Copyright (c) 2015 Dan Zervoudakes
@@ -51,19 +51,19 @@
 	
 	// Loop through each member of the collection throughout each extension
 	//
-	var $shiftLoop = function(_array, _callback) {
+	Shift.loop = function(_array, _callback) {
 		for (var i = 0; i < _array.length; i++) {
 			_callback.call(_array[i]);
 		}
 	};
 	
 	/**
-	 * $shiftReset()
+	 * Shift.reset()
 	 * To be used in all extensions after the transition has completed...
-	 * Called in the $shiftCallback function below
+	 * Called in the Shift.callback function below
 	 */
 	
-	var $shiftReset = function(_array) {
+	Shift.reset = function(_array) {
 		for (var j = 0; j < _array.length; j++) {
 			_array[j].style.transition = "";
 			_array[j].style.webkitTransition = "";
@@ -71,16 +71,16 @@
 	};
 	
 	/**
-	 * $shiftCallback()
+	 * Shift.callback()
 	 * To be used in all extensions after the transition has completed
-	 * Leverages the $shiftReset function above
+	 * Leverages the Shift.reset function above
 	 */
 	
-	var $shiftCallback = function(_array, _complete, _callback) {
+	Shift.callback = function(_array, _complete, _callback) {
 		
 		// Reset all transitions after completion
 		//
-		$shiftReset(_array);
+		Shift.reset(_array);
 		
 		if (_complete) {
 			setTimeout(function() { // setTimeout necessary to let transitions reset properly
@@ -96,7 +96,7 @@
 	
 	/**
 	 * Below are variables developers can reset themselves to better suit the needs of their site or application
-	 * The variables are prefixed by "$" to reduce the possibility of interference with other variables or libraries
+	 * Developers may access the "Shift.environment" object and change the default values as they see fit
 	 * Choices include:
 	 * -duration
 	 * -easing
@@ -115,20 +115,6 @@
 	};
 	
 	/**
-	 * Shorthand variables to access the values above
-	 * Note: $-prefixed variables are for use within the library only...
-	 * If resetting default values, users will have to use the "Shift.environment" syntax
-	 */
-	
-	var $shiftDuration, $shiftEasing, $shiftDelay, $shiftOriginX, $shiftOriginY;
-	
-	$shiftDuration = Shift.environment["duration"];
-	$shiftEasing   = Shift.environment["easing"];
-	$shiftDelay    = Shift.environment["delay"];
-	$shiftOriginX  = Shift.environment["originX"];
-	$shiftOriginY  = Shift.environment["originY"];
-	
-	/**
 	 * Below is the easing funcion
 	 * This function maps certain values to CSS3 easing values
 	 * Choices include:
@@ -140,7 +126,7 @@
 	 * -custom (applies cubic-bezier)
 	 */
 	
-	var $easingMap = function(_value) {
+	Shift.easingMap = function(_value) {
 		
 		var easingValue;
 		
@@ -164,7 +150,7 @@
 				easingValue = "cubic-bezier(0,1,0.5,1)";
 				break;
 			default:
-				easingValue = $shiftEasing; // If no easing is defined, the default value will be "ease" unless redefined by the developer
+				easingValue = Shift.environment["easing"]; // If no easing is defined, the default value will be "ease" unless redefined by the developer
 				break;
 		};
 		

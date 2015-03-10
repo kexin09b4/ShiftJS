@@ -12,11 +12,11 @@
 		var timer, collection;
 		
 		collection = this.collection;
-		timer = (_delay && typeof _delay === "number") ? _delay + "s" : $shiftDelay; // Default delay is half a second
+		timer = (_delay && typeof _delay === "number") ? _delay + "s" : Shift.environment["delay"]; // Default delay is half a second
 		
 		// Apply the delay to all members of the collection
 		//
-		$shiftLoop(collection, function() {
+		Shift.loop(collection, function() {
 			this.style.transitionDelay = timer;
 		});
 		

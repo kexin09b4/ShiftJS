@@ -15,14 +15,14 @@
 		var timer, styles, callback, easing, collection;
 		
 		collection = this.collection;
-		easing = $easingMap(_easing); // Default easing is "ease"
-		timer = (_duration && typeof _duration === "number") ? _duration + "s" : $shiftDuration; // Default duration is half a second
+		easing = Shift.easingMap(_easing); // Default easing is "ease"
+		timer = (_duration && typeof _duration === "number") ? _duration + "s" : Shift.environment["duration"]; // Default duration is half a second
 		
 		if (_properties && typeof _properties === "object") {
 			
 			// Add all applicable styles to the element per user-definition
 			//
-			$shiftLoop(collection, function() {
+			Shift.loop(collection, function() {
 				
 				this.style.transition = "all " + timer + " " + easing;
 				
@@ -40,7 +40,7 @@
 			// Resets and completions...
 			//
 			callback = function() {
-				$shiftCallback(collection, _complete, callback);
+				Shift.callback(collection, _complete, callback);
 			};
 			
 			collection[collection.length - 1].addEventListener("transitionend", callback, false);

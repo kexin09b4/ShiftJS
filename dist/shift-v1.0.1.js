@@ -1,5 +1,5 @@
 /**
- * ShiftJS v1.0.0
+ * ShiftJS v1.0.1
  * https://github.com/DanZiti/ShiftJS
  * 
  * Copyright (c) 2015 Dan Zervoudakes
@@ -51,19 +51,19 @@
 	
 	// Loop through each member of the collection throughout each extension
 	//
-	var $shiftLoop = function(_array, _callback) {
+	Shift.loop = function(_array, _callback) {
 		for (var i = 0; i < _array.length; i++) {
 			_callback.call(_array[i]);
 		}
 	};
 	
 	/**
-	 * $shiftReset()
+	 * Shift.reset()
 	 * To be used in all extensions after the transition has completed...
-	 * Called in the $shiftCallback function below
+	 * Called in the Shift.callback function below
 	 */
 	
-	var $shiftReset = function(_array) {
+	Shift.reset = function(_array) {
 		for (var j = 0; j < _array.length; j++) {
 			_array[j].style.transition = "";
 			_array[j].style.webkitTransition = "";
@@ -71,16 +71,16 @@
 	};
 	
 	/**
-	 * $shiftCallback()
+	 * Shift.callback()
 	 * To be used in all extensions after the transition has completed
-	 * Leverages the $shiftReset function above
+	 * Leverages the Shift.reset function above
 	 */
 	
-	var $shiftCallback = function(_array, _complete, _callback) {
+	Shift.callback = function(_array, _complete, _callback) {
 		
 		// Reset all transitions after completion
 		//
-		$shiftReset(_array);
+		Shift.reset(_array);
 		
 		if (_complete) {
 			setTimeout(function() { // setTimeout necessary to let transitions reset properly
@@ -96,7 +96,7 @@
 	
 	/**
 	 * Below are variables developers can reset themselves to better suit the needs of their site or application
-	 * The variables are prefixed by "$" to reduce the possibility of interference with other variables or libraries
+	 * Developers may access the "Shift.environment" object and change the default values as they see fit
 	 * Choices include:
 	 * -duration
 	 * -easing
@@ -115,20 +115,6 @@
 	};
 	
 	/**
-	 * Shorthand variables to access the values above
-	 * Note: $-prefixed variables are for use within the library only...
-	 * If resetting default values, users will have to use the "Shift.environment" syntax
-	 */
-	
-	var $shiftDuration, $shiftEasing, $shiftDelay, $shiftOriginX, $shiftOriginY;
-	
-	$shiftDuration = Shift.environment["duration"];
-	$shiftEasing   = Shift.environment["easing"];
-	$shiftDelay    = Shift.environment["delay"];
-	$shiftOriginX  = Shift.environment["originX"];
-	$shiftOriginY  = Shift.environment["originY"];
-	
-	/**
 	 * Below is the easing funcion
 	 * This function maps certain values to CSS3 easing values
 	 * Choices include:
@@ -140,7 +126,7 @@
 	 * -custom (applies cubic-bezier)
 	 */
 	
-	var $easingMap = function(_value) {
+	Shift.easingMap = function(_value) {
 		
 		var easingValue;
 		
@@ -164,7 +150,7 @@
 				easingValue = "cubic-bezier(0,1,0.5,1)";
 				break;
 			default:
-				easingValue = $shiftEasing; // If no easing is defined, the default value will be "ease" unless redefined by the developer
+				easingValue = Shift.environment["easing"]; // If no easing is defined, the default value will be "ease" unless redefined by the developer
 				break;
 		};
 		
@@ -199,14 +185,14 @@
 		var timer, styles, callback, easing, collection;
 		
 		collection = this.collection;
-		easing = $easingMap(_easing); // Default easing is "ease"
-		timer = (_duration && typeof _duration === "number") ? _duration + "s" : $shiftDuration; // Default duration is half a second
+		easing = Shift.easingMap(_easing); // Default easing is "ease"
+		timer = (_duration && typeof _duration === "number") ? _duration + "s" : Shift.environment["duration"]; // Default duration is half a second
 		
 		if (_properties && typeof _properties === "object") {
 			
 			// Add all applicable styles to the element per user-definition
 			//
-			$shiftLoop(collection, function() {
+			Shift.loop(collection, function() {
 				
 				this.style.transition = "all " + timer + " " + easing;
 				
@@ -224,7 +210,7 @@
 			// Resets and completions...
 			//
 			callback = function() {
-				$shiftCallback(collection, _complete, callback);
+				Shift.callback(collection, _complete, callback);
 			};
 			
 			collection[collection.length - 1].addEventListener("transitionend", callback, false);
@@ -248,11 +234,11 @@
 		var timer, collection;
 		
 		collection = this.collection;
-		timer = (_delay && typeof _delay === "number") ? _delay + "s" : $shiftDelay; // Default delay is half a second
+		timer = (_delay && typeof _delay === "number") ? _delay + "s" : Shift.environment["delay"]; // Default delay is half a second
 		
 		// Apply the delay to all members of the collection
 		//
-		$shiftLoop(collection, function() {
+		Shift.loop(collection, function() {
 			this.style.transitionDelay = timer;
 		});
 		
@@ -275,10 +261,10 @@
 		var timer, callback, easing, collection;
 		
 		collection = this.collection;
-		easing = $easingMap(_easing); // Default easing is "ease"
-		timer = (_duration && typeof _duration === "number") ? _duration + "s" : $shiftDuration; // Default duration is half a second
+		easing = Shift.easingMap(_easing); // Default easing is "ease"
+		timer = (_duration && typeof _duration === "number") ? _duration + "s" : Shift.environment["duration"]; // Default duration is half a second
 		
-		$shiftLoop(collection, function() {
+		Shift.loop(collection, function() {
 			this.style.transition = "all " + timer + " " + easing;
 			this.style.opacity = 0;
 		});
@@ -286,7 +272,7 @@
 		// Resets and completions...
 		//
 		callback = function() {
-			$shiftCallback(collection, _complete, callback);
+			Shift.callback(collection, _complete, callback);
 		};
 		
 		collection[collection.length - 1].addEventListener("transitionend", callback, false);
@@ -301,10 +287,10 @@
 		var timer, callback, easing, collection;
 		
 		collection = this.collection;
-		easing = $easingMap(_easing); // Default easing is "ease"
-		timer = (_duration && typeof _duration === "number") ? _duration + "s" : $shiftDuration;
+		easing = Shift.easingMap(_easing); // Default easing is "ease"
+		timer = (_duration && typeof _duration === "number") ? _duration + "s" : Shift.environment["duration"];
 		
-		$shiftLoop(collection, function() {
+		Shift.loop(collection, function() {
 			this.style.transition = "all " + timer + " " + easing;
 			this.style.opacity = 1;
 		});
@@ -312,7 +298,7 @@
 		// Resets and completions...
 		//
 		callback = function() {
-			$shiftCallback(collection, _complete, callback);
+			Shift.callback(collection, _complete, callback);
 		};
 		
 		collection[collection.length - 1].addEventListener("transitionend", callback, false);
@@ -337,12 +323,12 @@
 		var x, y, collection;
 		
 		collection = this.collection;
-		x = (_x && typeof _x === "number" || _x === 0) ? _x + "%" : $shiftOriginX; // Default transform-originX is 50%
-		y = (_y && typeof _y === "number" || _y === 0) ? _y + "%" : $shiftOriginY; // Default transform-originY is 50%
+		x = (_x && typeof _x === "number" || _x === 0) ? _x + "%" : Shift.environment["originX"]; // Default transform-originX is 50%
+		y = (_y && typeof _y === "number" || _y === 0) ? _y + "%" : Shift.environment["originY"]; // Default transform-originY is 50%
 		
 		// Apply transform-origin to all members of the collection
 		//
-		$shiftLoop(collection, function() {
+		Shift.loop(collection, function() {
 			this.style.transformOrigin = x + " " + y;
 			this.style.webkitTransformOrigin = x + " " + y;
 		});
@@ -369,12 +355,12 @@
 		var timer, callback, easing, collection;
 			
 		collection = this.collection;
-		easing = $easingMap(_easing); // Default easing is "ease"
-		timer = (_duration && typeof _duration === "number") ? _duration + "s" : $shiftDuration; // Default duration is half a second
+		easing = Shift.easingMap(_easing); // Default easing is "ease"
+		timer = (_duration && typeof _duration === "number") ? _duration + "s" : Shift.environment["duration"]; // Default duration is half a second
 		
 		if (_degree && typeof _degree === "number" || _degree === 0) {
 			
-			$shiftLoop(collection, function() {
+			Shift.loop(collection, function() {
 				
 				this.style.transition = "transform " + timer + " " + easing;
 				this.style.webkitTransition = "-webkit-transform " + timer + " " + easing;
@@ -391,7 +377,7 @@
 		// Resets and completions...
 		//
 		callback = function() {
-			$shiftCallback(collection, _complete, callback);
+			Shift.callback(collection, _complete, callback);
 		};
 		
 		collection[collection.length - 1].addEventListener("transitionend", callback, false);
@@ -404,12 +390,12 @@
 		var timer, callback, easing, collection;
 			
 		collection = this.collection;
-		easing = $easingMap(_easing); // Default easing is "ease"
-		timer = (_duration && typeof _duration === "number") ? _duration + "s" : $shiftDuration; // Default duration is half a second
+		easing = Shift.easingMap(_easing); // Default easing is "ease"
+		timer = (_duration && typeof _duration === "number") ? _duration + "s" : Shift.environment["duration"]; // Default duration is half a second
 		
 		if (_degree && typeof _degree === "number" || _degree === 0) {
 			
-			$shiftLoop(collection, function() {
+			Shift.loop(collection, function() {
 				
 				this.style.transition = "transform " + timer + " " + easing;
 				this.style.webkitTransition = "-webkit-transform " + timer + " " + easing;
@@ -426,7 +412,7 @@
 		// Resets and completions...
 		//
 		callback = function() {
-			$shiftCallback(collection, _complete, callback);
+			Shift.callback(collection, _complete, callback);
 		};
 		
 		collection[collection.length - 1].addEventListener("transitionend", callback, false);
@@ -439,12 +425,12 @@
 		var timer, callback, easing, collection;
 			
 		collection = this.collection;
-		easing = $easingMap(_easing); // Default easing is "ease"
-		timer = (_duration && typeof _duration === "number") ? _duration + "s" : $shiftDuration; // Default duration is half a second
+		easing = Shift.easingMap(_easing); // Default easing is "ease"
+		timer = (_duration && typeof _duration === "number") ? _duration + "s" : Shift.environment["duration"]; // Default duration is half a second
 		
 		if (_degree && typeof _degree === "number" || _degree === 0) {
 			
-			$shiftLoop(collection, function() {
+			Shift.loop(collection, function() {
 				
 				this.style.transition = "transform " + timer + " " + easing;
 				this.style.webkitTransition = "-webkit-transform " + timer + " " + easing;
@@ -461,7 +447,7 @@
 		// Resets and completions...
 		//
 		callback = function() {
-			$shiftCallback(collection, _complete, callback);
+			Shift.callback(collection, _complete, callback);
 		};
 		
 		collection[collection.length - 1].addEventListener("transitionend", callback, false);
@@ -488,12 +474,12 @@
 		var timer, callback, easing, collection;
 			
 		collection = this.collection;
-		easing = $easingMap(_easing); // Default easing is "ease"
-		timer = (_duration && typeof _duration === "number") ? _duration + "s" : $shiftDuration; // Default duration is half a second
+		easing = Shift.easingMap(_easing); // Default easing is "ease"
+		timer = (_duration && typeof _duration === "number") ? _duration + "s" : Shift.environment["duration"]; // Default duration is half a second
 		
 		if (_values && typeof _values === "object" && _values.length === 2) {
 			
-			$shiftLoop(collection, function() {
+			Shift.loop(collection, function() {
 				
 				this.style.transition = "transform " + timer + " " + easing;
 				this.style.webkitTransition = "-webkit-transform " + timer + " " + easing;
@@ -505,7 +491,7 @@
 			
 		} else if (_values && typeof _values === "number" || _values === 0) { // If no array is passed, apply the same scale value to x and y
 			
-			$shiftLoop(collection, function() {
+			Shift.loop(collection, function() {
 				
 				this.style.transition = "transform " + timer + " " + easing;
 				this.style.webkitTransition = "-webkit-transform " + timer + " " + easing;
@@ -522,7 +508,7 @@
 		// Resets and completions...
 		//
 		callback = function() {
-			$shiftCallback(collection, _complete, callback);
+			Shift.callback(collection, _complete, callback);
 		};
 		
 		collection[collection.length - 1].addEventListener("transitionend", callback, false);
@@ -535,12 +521,12 @@
 		var timer, callback, easing, collection;
 			
 		collection = this.collection;
-		easing = $easingMap(_easing); // Default easing is "ease"
-		timer = (_duration && typeof _duration === "number") ? _duration + "s" : $shiftDuration; // Default duration is half a second
+		easing = Shift.easingMap(_easing); // Default easing is "ease"
+		timer = (_duration && typeof _duration === "number") ? _duration + "s" : Shift.environment["duration"]; // Default duration is half a second
 		
 		if (_value && typeof _value === "number" || _value === 0) {
 			
-			$shiftLoop(collection, function() {
+			Shift.loop(collection, function() {
 				
 				this.style.transition = "transform " + timer + " " + easing;
 				this.style.webkitTransition = "-webkit-transform " + timer + " " + easing;
@@ -557,7 +543,7 @@
 		// Resets and completions...
 		//
 		callback = function() {
-			$shiftCallback(collection, _complete, callback);
+			Shift.callback(collection, _complete, callback);
 		};
 		
 		collection[collection.length - 1].addEventListener("transitionend", callback, false);
@@ -570,12 +556,12 @@
 		var timer, callback, easing, collection;
 			
 		collection = this.collection;
-		easing = $easingMap(_easing); // Default easing is "ease"
-		timer = (_duration && typeof _duration === "number") ? _duration + "s" : $shiftDuration; // Default duration is half a second
+		easing = Shift.easingMap(_easing); // Default easing is "ease"
+		timer = (_duration && typeof _duration === "number") ? _duration + "s" : Shift.environment["duration"]; // Default duration is half a second
 		
 		if (_value && typeof _value === "number" || _value === 0) {
 			
-			$shiftLoop(collection, function() {
+			Shift.loop(collection, function() {
 				
 				this.style.transition = "transform " + timer + " " + easing;
 				this.style.webkitTransition = "-webkit-transform " + timer + " " + easing;
@@ -592,7 +578,7 @@
 		// Resets and completions...
 		//
 		callback = function() {
-			$shiftCallback(collection, _complete, callback);
+			Shift.callback(collection, _complete, callback);
 		};
 		
 		collection[collection.length - 1].addEventListener("transitionend", callback, false);
@@ -619,12 +605,12 @@
 		var timer, callback, easing, collection;
 			
 		collection = this.collection;
-		easing = $easingMap(_easing); // Default easing is "ease"
-		timer = (_duration && typeof _duration === "number") ? _duration + "s" : $shiftDuration; // Default duration is half a second
+		easing = Shift.easingMap(_easing); // Default easing is "ease"
+		timer = (_duration && typeof _duration === "number") ? _duration + "s" : Shift.environment["duration"]; // Default duration is half a second
 		
 		if (_property && _value && typeof _property === "string" && typeof _value === "string") {
 			
-			$shiftLoop(collection, function() {
+			Shift.loop(collection, function() {
 				
 				this.style.transition = _property + " " + timer + " " + easing;
 				this.style[_property] = _value;
@@ -642,7 +628,7 @@
 		// Resets and completions...
 		//
 		callback = function() {
-			$shiftCallback(collection, _complete, callback);
+			Shift.callback(collection, _complete, callback);
 		};
 		
 		collection[collection.length - 1].addEventListener("transitionend", callback, false);
@@ -669,12 +655,12 @@
 		var timer, callback, easing, collection;
 			
 		collection = this.collection;
-		easing = $easingMap(_easing); // Default easing is "ease"
-		timer = (_duration && typeof _duration === "number") ? _duration + "s" : $shiftDuration; // Default duration is half a second
+		easing = Shift.easingMap(_easing); // Default easing is "ease"
+		timer = (_duration && typeof _duration === "number") ? _duration + "s" : Shift.environment["duration"]; // Default duration is half a second
 		
 		if (_values && typeof _values === "object" && _values.length === 2) {
 			
-			$shiftLoop(collection, function() {
+			Shift.loop(collection, function() {
 				
 				this.style.transition = "transform " + timer + " " + easing;
 				this.style.webkitTransition = "-webkit-transform " + timer + " " + easing;
@@ -686,7 +672,7 @@
 			
 		} else if (_values && typeof _values === "number" || _values === 0) { // If no array is passed, apply the same skew value to x and y
 			
-			$shiftLoop(collection, function() {
+			Shift.loop(collection, function() {
 				
 				this.style.transition = "transform " + timer + " " + easing;
 				this.style.webkitTransition = "-webkit-transform " + timer + " " + easing;
@@ -703,7 +689,7 @@
 		// Resets and completions...
 		//
 		callback = function() {
-			$shiftCallback(collection, _complete, callback);
+			Shift.callback(collection, _complete, callback);
 		};
 		
 		collection[collection.length - 1].addEventListener("transitionend", callback, false);
@@ -716,12 +702,12 @@
 		var timer, callback, easing, collection;
 			
 		collection = this.collection;
-		easing = $easingMap(_easing); // Default easing is "ease"
-		timer = (_duration && typeof _duration === "number") ? _duration + "s" : $shiftDuration; // Default duration is half a second
+		easing = Shift.easingMap(_easing); // Default easing is "ease"
+		timer = (_duration && typeof _duration === "number") ? _duration + "s" : Shift.environment["duration"]; // Default duration is half a second
 		
 		if (_value && typeof _value === "number" || _value === 0) {
 			
-			$shiftLoop(collection, function() {
+			Shift.loop(collection, function() {
 				
 				this.style.transition = "transform " + timer + " " + easing;
 				this.style.webkitTransition = "-webkit-transform " + timer + " " + easing;
@@ -738,7 +724,7 @@
 		// Resets and completions...
 		//
 		callback = function() {
-			$shiftCallback(collection, _complete, callback);
+			Shift.callback(collection, _complete, callback);
 		};
 		
 		collection[collection.length - 1].addEventListener("transitionend", callback, false);
@@ -751,12 +737,12 @@
 		var timer, callback, easing, collection;
 			
 		collection = this.collection;
-		easing = $easingMap(_easing); // Default easing is "ease"
-		timer = (_duration && typeof _duration === "number") ? _duration + "s" : $shiftDuration; // Default duration is half a second
+		easing = Shift.easingMap(_easing); // Default easing is "ease"
+		timer = (_duration && typeof _duration === "number") ? _duration + "s" : Shift.environment["duration"]; // Default duration is half a second
 		
 		if (_value && typeof _value === "number" || _value === 0) {
 			
-			$shiftLoop(collection, function() {
+			Shift.loop(collection, function() {
 				
 				this.style.transition = "transform " + timer + " " + easing;
 				this.style.webkitTransition = "-webkit-transform " + timer + " " + easing;
@@ -773,7 +759,7 @@
 		// Resets and completions...
 		//
 		callback = function() {
-			$shiftCallback(collection, _complete, callback);
+			Shift.callback(collection, _complete, callback);
 		};
 		
 		collection[collection.length - 1].addEventListener("transitionend", callback, false);
@@ -800,12 +786,12 @@
 		var timer, callback, easing, collection;
 			
 		collection = this.collection;
-		easing = $easingMap(_easing); // Default easing is "ease"
-		timer = (_duration && typeof _duration === "number") ? _duration + "s" : $shiftDuration; // Default duration is half a second
+		easing = Shift.easingMap(_easing); // Default easing is "ease"
+		timer = (_duration && typeof _duration === "number") ? _duration + "s" : Shift.environment["duration"]; // Default duration is half a second
 		
 		if (_values && typeof _values === "object" && _values.length === 2) {
 			
-			$shiftLoop(collection, function() {
+			Shift.loop(collection, function() {
 				
 				this.style.transition = "transform " + timer + " " + easing;
 				this.style.webkitTransition = "-webkit-transform " + timer + " " + easing;
@@ -817,7 +803,7 @@
 			
 		} else if (_values && typeof _values === "number" || _values === 0) { // If no array is passed, apply the same translate value to x and y
 			
-			$shiftLoop(collection, function() {
+			Shift.loop(collection, function() {
 				
 				this.style.transition = "transform " + timer + " " + easing;
 				this.style.webkitTransition = "-webkit-transform " + timer + " " + easing;
@@ -834,7 +820,7 @@
 		// Resets and completions...
 		//
 		callback = function() {
-			$shiftCallback(collection, _complete, callback);
+			Shift.callback(collection, _complete, callback);
 		};
 		
 		collection[collection.length - 1].addEventListener("transitionend", callback, false);
@@ -847,12 +833,12 @@
 		var timer, callback, easing, collection;
 			
 		collection = this.collection;
-		easing = $easingMap(_easing); // Default easing is "ease"
-		timer = (_duration && typeof _duration === "number") ? _duration + "s" : $shiftDuration; // Default duration is half a second
+		easing = Shift.easingMap(_easing); // Default easing is "ease"
+		timer = (_duration && typeof _duration === "number") ? _duration + "s" : Shift.environment["duration"]; // Default duration is half a second
 		
 		if (_value && typeof _value === "number" || _value === 0) {
 			
-			$shiftLoop(collection, function() {
+			Shift.loop(collection, function() {
 				
 				this.style.transition = "transform " + timer + " " + easing;
 				this.style.webkitTransition = "-webkit-transform " + timer + " " + easing;
@@ -869,7 +855,7 @@
 		// Resets and completions...
 		//
 		callback = function() {
-			$shiftCallback(collection, _complete, callback);
+			Shift.callback(collection, _complete, callback);
 		};
 		
 		collection[collection.length - 1].addEventListener("transitionend", callback, false);
@@ -882,12 +868,12 @@
 		var timer, callback, easing, collection;
 			
 		collection = this.collection;
-		easing = $easingMap(_easing); // Default easing is "ease"
-		timer = (_duration && typeof _duration === "number") ? _duration + "s" : $shiftDuration; // Default duration is half a second
+		easing = Shift.easingMap(_easing); // Default easing is "ease"
+		timer = (_duration && typeof _duration === "number") ? _duration + "s" : Shift.environment["duration"]; // Default duration is half a second
 		
 		if (_value && typeof _value === "number" || _value === 0) {
 			
-			$shiftLoop(collection, function() {
+			Shift.loop(collection, function() {
 				
 				this.style.transition = "transform " + timer + " " + easing;
 				this.style.webkitTransition = "-webkit-transform " + timer + " " + easing;
@@ -904,7 +890,7 @@
 		// Resets and completions...
 		//
 		callback = function() {
-			$shiftCallback(collection, _complete, callback);
+			Shift.callback(collection, _complete, callback);
 		};
 		
 		collection[collection.length - 1].addEventListener("transitionend", callback, false);
