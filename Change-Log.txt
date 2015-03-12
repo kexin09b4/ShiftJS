@@ -1,7 +1,7 @@
 /**
  * Shift.js - Change Log
  * 
- * Current Version: 1.0.1
+ * Current Version: 1.0.2
  */
 
 ==========================================================================================================
@@ -17,3 +17,9 @@
  
  	-Removed all globally-scoped variables throughout the library
  	-Edited build folder structure in repository
+
+----------------------------------------------------------------------------------------------------------
+ 
+ /* Version 1.0.2 - 3/11/15 */
+ 
+ 	-Edited "translate.js" - now developers can use "%" instead of defaulting to "px" for translations 

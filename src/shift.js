@@ -1,5 +1,5 @@
 /**
- * ShiftJS v1.0.1
+ * ShiftJS v1.0.2
  * https://github.com/DanZiti/ShiftJS
  * 
  * Copyright (c) 2015 Dan Zervoudakes
@@ -147,7 +147,7 @@
 				easingValue = "linear";
 				break;
 			case "snap":
-				easingValue = "cubic-bezier(0,1,0.5,1)";
+				easingValue = "cubic-bezier(0, 1, 0.5, 1)";
 				break;
 			default:
 				easingValue = Shift.environment["easing"]; // If no easing is defined, the default value will be "ease" unless redefined by the developer
