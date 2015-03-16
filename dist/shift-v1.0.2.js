@@ -131,24 +131,31 @@
 		var easingValue;
 		
 		switch (_value) {
+			
 			case "ease":
 				easingValue = "ease"; // Necessary to put this here in case developers change the default value
 				break;
+				
 			case "in":
 				easingValue = "ease-in";
 				break;
+				
 			case "out":
 				easingValue = "ease-out";
 				break;
+				
 			case "in-out":
 				easingValue = "ease-in-out";
 				break;
+				
 			case "linear":
 				easingValue = "linear";
 				break;
+				
 			case "snap":
 				easingValue = "cubic-bezier(0, 1, 0.5, 1)";
 				break;
+				
 			default:
 				easingValue = Shift.environment["easing"]; // If no easing is defined, the default value will be "ease" unless redefined by the developer
 				break;
