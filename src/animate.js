@@ -16,9 +16,9 @@
 		
 		collection = this.collection;
 		easing = Shift.easingMap(_easing); // Default easing is "ease"
-		timer = (_duration && typeof _duration === "number") ? _duration + "s" : Shift.environment["duration"]; // Default duration is half a second
+		timer = (typeof _duration === "number") ? _duration + "s" : Shift.environment["duration"]; // Default duration is half a second
 		
-		if (_properties && typeof _properties === "object") {
+		if (typeof _properties === "object") {
 			
 			// Add all applicable styles to the element per user-definition
 			//

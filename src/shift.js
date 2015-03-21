@@ -1,5 +1,5 @@
 /**
- * ShiftJS v1.0.2
+ * ShiftJS v1.1.0
  * https://github.com/DanZiti/ShiftJS
  * 
  * Copyright (c) 2015 Dan Zervoudakes
@@ -82,11 +82,9 @@
 		//
 		Shift.reset(_array);
 		
-		if (_complete) {
-			setTimeout(function() { // setTimeout necessary to let transitions reset properly
-				_complete();
-			}, 50);
-		}
+		setTimeout(function() { // setTimeout necessary to let transitions reset properly
+			_complete();
+		}, 50);
 		
 		// Necessary to prevent the transitionend event from firing too many times
 		//

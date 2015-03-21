@@ -15,7 +15,7 @@
 		
 		collection = this.collection;
 		easing = Shift.easingMap(_easing); // Default easing is "ease"
-		timer = (_duration && typeof _duration === "number") ? _duration + "s" : Shift.environment["duration"]; // Default duration is half a second
+		timer = (typeof _duration === "number") ? _duration + "s" : Shift.environment["duration"]; // Default duration is half a second
 		
 		Shift.loop(collection, function() {
 			this.style.transition = "all " + timer + " " + easing;
@@ -41,7 +41,7 @@
 		
 		collection = this.collection;
 		easing = Shift.easingMap(_easing); // Default easing is "ease"
-		timer = (_duration && typeof _duration === "number") ? _duration + "s" : Shift.environment["duration"];
+		timer = (typeof _duration === "number") ? _duration + "s" : Shift.environment["duration"];
 		
 		Shift.loop(collection, function() {
 			this.style.transition = "all " + timer + " " + easing;

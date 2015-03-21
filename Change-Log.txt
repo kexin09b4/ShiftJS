@@ -23,4 +23,12 @@ Contributor(s): Dan Zervoudakes
 
 v1.0.2
  
-- Edited "translate.js" - now developers can use "%" instead of defaulting to "px" for translations 
+- Edited "translate.js" - now developers can use "%" instead of defaulting to "px" for translations
+
+Date: 3/21/15
+Changes Current Version: YES
+Contributor(s): Dan Zervoudakes
+
+v1.1.0
+ 
+- Streamlined codebase throughout

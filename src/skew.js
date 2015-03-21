@@ -18,9 +18,9 @@
 			
 		collection = this.collection;
 		easing = Shift.easingMap(_easing); // Default easing is "ease"
-		timer = (_duration && typeof _duration === "number") ? _duration + "s" : Shift.environment["duration"]; // Default duration is half a second
+		timer = (typeof _duration === "number") ? _duration + "s" : Shift.environment["duration"]; // Default duration is half a second
 		
-		if (_values && typeof _values === "object" && _values.length === 2) {
+		if (typeof _values === "object" && _values.length === 2) {
 			
 			Shift.loop(collection, function() {
 				
@@ -32,7 +32,7 @@
 				
 			});
 			
-		} else if (_values && typeof _values === "number" || _values === 0) { // If no array is passed, apply the same skew value to x and y
+		} else if (typeof _values === "number" || _values === 0) { // If no array is passed, apply the same skew value to x and y
 			
 			Shift.loop(collection, function() {
 				
@@ -65,9 +65,9 @@
 			
 		collection = this.collection;
 		easing = Shift.easingMap(_easing); // Default easing is "ease"
-		timer = (_duration && typeof _duration === "number") ? _duration + "s" : Shift.environment["duration"]; // Default duration is half a second
+		timer = (typeof _duration === "number") ? _duration + "s" : Shift.environment["duration"]; // Default duration is half a second
 		
-		if (_value && typeof _value === "number" || _value === 0) {
+		if (typeof _value === "number" || _value === 0) {
 			
 			Shift.loop(collection, function() {
 				
@@ -100,9 +100,9 @@
 			
 		collection = this.collection;
 		easing = Shift.easingMap(_easing); // Default easing is "ease"
-		timer = (_duration && typeof _duration === "number") ? _duration + "s" : Shift.environment["duration"]; // Default duration is half a second
+		timer = (typeof _duration === "number") ? _duration + "s" : Shift.environment["duration"]; // Default duration is half a second
 		
-		if (_value && typeof _value === "number" || _value === 0) {
+		if (typeof _value === "number" || _value === 0) {
 			
 			Shift.loop(collection, function() {
 				

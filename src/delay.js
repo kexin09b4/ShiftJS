@@ -12,7 +12,7 @@
 		var timer, collection;
 		
 		collection = this.collection;
-		timer = (_delay && typeof _delay === "number") ? _delay + "s" : Shift.environment["delay"]; // Default delay is half a second
+		timer = (typeof _delay === "number") ? _delay + "s" : Shift.environment["delay"]; // Default delay is half a second
 		
 		// Apply the delay to all members of the collection
 		//
