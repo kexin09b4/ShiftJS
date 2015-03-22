@@ -12,15 +12,10 @@
  	//
 	shift.fn.origin = function(_x, _y) {
 		
-		var x, y, collection;
+		var x = (typeof _x === "number" || _x === 0) ? _x + "%" : Shift.environment["originX"]; // Default transform-originX is 50%
+		var y = (typeof _y === "number" || _y === 0) ? _y + "%" : Shift.environment["originY"]; // Default transform-originY is 50%
 		
-		collection = this.collection;
-		x = (typeof _x === "number" || _x === 0) ? _x + "%" : Shift.environment["originX"]; // Default transform-originX is 50%
-		y = (typeof _y === "number" || _y === 0) ? _y + "%" : Shift.environment["originY"]; // Default transform-originY is 50%
-		
-		// Apply transform-origin to all members of the collection
-		//
-		Shift.loop(collection, function() {
+		Shift.loop(this.collection, function() {
 			this.style.transformOrigin = x + " " + y;
 			this.style.webkitTransformOrigin = x + " " + y;
 		});

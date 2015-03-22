@@ -16,7 +16,7 @@
 		
 		collection = this.collection;
 		easing = Shift.easingMap(_easing); // Default easing is "ease"
-		timer = (typeof _duration === "number") ? _duration + "s" : Shift.environment["duration"]; // Default duration is half a second
+		timer = Shift.timer(_duration); // Default duration is "0.5s"
 		
 		if (typeof _properties === "object") {
 			
@@ -30,9 +30,10 @@
 					
 					this.style[styles] = _properties[styles];
 					
-					if (styles === "transform") {
-						this.style.webkitTransform = _properties[styles]; // Takes care of transform vendor-prefixing automatically for the end user
-					}
+					// Takes care of transform vendor-prefixing automatically for the end user
+					//
+					if (styles === "transform") this.style.webkitTransform = _properties[styles];
+					
 				}
 				
 			});

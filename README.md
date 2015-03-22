@@ -147,7 +147,7 @@ shift(_selector).skewY(_number, _duration, _easing, _complete);
 
 ##### translate()
 
-_Defines a translation along the X and Y axis. The "number" parameter below is either a string or an array of strings defining "px" or "%" values for X and Y._
+_Defines a translation along the X and Y axis._
 
 ```
 shift(_selector).translate(_number, _duration, _easing, _complete); => X === Y

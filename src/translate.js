@@ -18,7 +18,7 @@
 			
 		collection = this.collection;
 		easing = Shift.easingMap(_easing); // Default easing is "ease"
-		timer = (_duration && typeof _duration === "number") ? _duration + "s" : Shift.environment["duration"]; // Default duration is half a second
+		timer = Shift.timer(_duration); // Default duration is "0.5s"
 		
 		if (typeof _values === "object" && _values.length === 2) {
 			
@@ -65,7 +65,7 @@
 			
 		collection = this.collection;
 		easing = Shift.easingMap(_easing); // Default easing is "ease"
-		timer = (typeof _duration === "number") ? _duration + "s" : Shift.environment["duration"]; // Default duration is half a second
+		timer = Shift.timer(_duration); // Default duration is "0.5s"
 		
 		if (typeof _value === "string") {
 			
@@ -100,7 +100,7 @@
 			
 		collection = this.collection;
 		easing = Shift.easingMap(_easing); // Default easing is "ease"
-		timer = (typeof _duration === "number") ? _duration + "s" : Shift.environment["duration"]; // Default duration is half a second
+		timer = Shift.timer(_duration); // Default duration is "0.5s"
 		
 		if (typeof _value === "string") {
 			

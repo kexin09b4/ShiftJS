@@ -1,5 +1,5 @@
 /**
- * ShiftJS v1.1.0
+ * ShiftJS v1.0.3
  * https://github.com/DanZiti/ShiftJS
  * 
  * Copyright (c) 2015 Dan Zervoudakes
@@ -82,9 +82,11 @@
 		//
 		Shift.reset(_array);
 		
-		setTimeout(function() { // setTimeout necessary to let transitions reset properly
-			_complete();
-		}, 50);
+		if (_complete) {
+			setTimeout(function() { // setTimeout necessary to let transitions reset properly
+				_complete();
+			}, 50);
+		}
 		
 		// Necessary to prevent the transitionend event from firing too many times
 		//
@@ -167,6 +169,16 @@
 		
 		return easingValue;
 		
+	};
+	
+	/**
+	 * Below is the timing funcion
+	 * This function determines the duration of each animation
+	 * Default duration is specified in the "Shift.environment" object as "0.5s"
+	 */
+	 
+	Shift.timer = function(_duration) {
+		return (typeof _duration === number) ? _duration + "s" : Shift.environment["duration"];
 	};
 	
 	// Prototype shorthand for building new extensions

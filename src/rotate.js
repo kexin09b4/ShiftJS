@@ -18,7 +18,7 @@
 			
 		collection = this.collection;
 		easing = Shift.easingMap(_easing); // Default easing is "ease"
-		timer = (typeof _duration === "number") ? _duration + "s" : Shift.environment["duration"]; // Default duration is half a second
+		timer = Shift.timer(_duration); // Default duration is "0.5s"
 		
 		if (typeof _degree === "number" || _degree === 0) {
 			
@@ -53,7 +53,7 @@
 			
 		collection = this.collection;
 		easing = Shift.easingMap(_easing); // Default easing is "ease"
-		timer = (typeof _duration === "number") ? _duration + "s" : Shift.environment["duration"]; // Default duration is half a second
+		timer = Shift.timer(_duration); // Default duration is "0.5s"
 		
 		if (typeof _degree === "number" || _degree === 0) {
 			
@@ -88,7 +88,7 @@
 			
 		collection = this.collection;
 		easing = Shift.easingMap(_easing); // Default easing is "ease"
-		timer = (typeof _duration === "number") ? _duration + "s" : Shift.environment["duration"]; // Default duration is half a second
+		timer = Shift.timer(_duration); // Default duration is "0.5s"
 		
 		if (typeof _degree === "number" || _degree === 0) {
 			
