@@ -178,7 +178,7 @@
 	 */
 	 
 	Shift.timer = function(_duration) {
-		return (typeof _duration === number) ? _duration + "s" : Shift.environment["duration"];
+		return (typeof _duration === "number") ? _duration + "s" : Shift.environment["duration"];
 	};
 	
 	// Prototype shorthand for building new extensions
