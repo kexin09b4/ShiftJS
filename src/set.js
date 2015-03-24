@@ -33,7 +33,9 @@
 				}
 			});
 			
-		} else {
+		}
+		
+		else {
 			throw new Error("'Property' and 'value' parameters for set() must be strings.");
 		}
 		

@@ -32,7 +32,9 @@
 				
 			});
 			
-		} else if (typeof _values === "number" || _values === 0) { // If no array is passed, apply the same skew value to x and y
+		}
+		
+		else if (typeof _values === "number" || _values === 0) { // If no array is passed, apply the same skew value to x and y
 			
 			Shift.loop(collection, function() {
 				
@@ -44,7 +46,9 @@
 				
 			});
 			
-		} else {
+		}
+		
+		else {
 			throw new Error("The first argument for skew() must either be a number or an array of 2 numbers.")
 		}
 		
@@ -79,7 +83,9 @@
 				
 			});
 			
-		} else {
+		}
+		
+		else {
 			throw new Error("skewX() requires a number as its first argument.");
 		}
 		
@@ -114,7 +120,9 @@
 				
 			});
 			
-		} else {
+		}
+		
+		else {
 			throw new Error("skewY() requires a number as its first argument.");
 		}
 		

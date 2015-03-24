@@ -32,7 +32,9 @@
 				
 			});
 			
-		} else if (typeof _values === "string") { // If no array is passed, apply the same translate value to x and y
+		}
+		
+		else if (typeof _values === "string") { // If no array is passed, apply the same translate value to x and y
 			
 			Shift.loop(collection, function() {
 				
@@ -44,7 +46,9 @@
 				
 			});
 			
-		} else {
+		}
+		
+		else {
 			throw new Error("The first argument for translate() must either be a string or an array of 2 strings ('px' or '%' values).")
 		}
 		
@@ -79,7 +83,9 @@
 				
 			});
 			
-		} else {
+		}
+		
+		else {
 			throw new Error("translateX() requires a string ('px' or '%') as its first argument.");
 		}
 		
@@ -114,7 +120,9 @@
 				
 			});
 			
-		} else {
+		}
+		
+		else {
 			throw new Error("translateY() requires a string ('px' or '%') as its first argument.");
 		}
 		

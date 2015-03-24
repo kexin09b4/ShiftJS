@@ -31,13 +31,17 @@
 				}
 			}
 			
-		} else {
+		}
+		
+		else {
 			selectedElements = document.querySelectorAll(_selector);
 		}
 		
 		if (selectedElements.length > 0) {
 			this.collection = selectedElements;
-		} else {
+		}
+		
+		else {
 			return [];
 		}
 		

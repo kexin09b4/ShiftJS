@@ -32,7 +32,9 @@
 				
 			});
 			
-		} else {
+		}
+		
+		else {
 			throw new Error("Degree value for rotate() must be a valid number.");
 		}
 		
@@ -67,7 +69,9 @@
 				
 			});
 			
-		} else {
+		}
+		
+		else {
 			throw new Error("Degree value for rotateX() must be a valid number.");
 		}
 		
@@ -102,7 +106,9 @@
 				
 			});
 			
-		} else {
+		}
+		
+		else {
 			throw new Error("Degree value for rotateY() must be a valid number.");
 		}
 		

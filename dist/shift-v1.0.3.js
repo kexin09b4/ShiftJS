@@ -31,13 +31,17 @@
 				}
 			}
 			
-		} else {
+		}
+		
+		else {
 			selectedElements = document.querySelectorAll(_selector);
 		}
 		
 		if (selectedElements.length > 0) {
 			this.collection = selectedElements;
-		} else {
+		}
+		
+		else {
 			return [];
 		}
 		
@@ -178,7 +182,7 @@
 	 */
 	 
 	Shift.timer = function(_duration) {
-		return (typeof _duration === number) ? _duration + "s" : Shift.environment["duration"];
+		return (typeof _duration === "number") ? _duration + "s" : Shift.environment["duration"];
 	};
 	
 	// Prototype shorthand for building new extensions
@@ -376,7 +380,9 @@
 				
 			});
 			
-		} else {
+		}
+		
+		else {
 			throw new Error("Degree value for rotate() must be a valid number.");
 		}
 		
@@ -411,7 +417,9 @@
 				
 			});
 			
-		} else {
+		}
+		
+		else {
 			throw new Error("Degree value for rotateX() must be a valid number.");
 		}
 		
@@ -446,7 +454,9 @@
 				
 			});
 			
-		} else {
+		}
+		
+		else {
 			throw new Error("Degree value for rotateY() must be a valid number.");
 		}
 		
@@ -495,7 +505,9 @@
 				
 			});
 			
-		} else if (typeof _values === "number" || _values === 0) { // If no array is passed, apply the same scale value to x and y
+		}
+		
+		else if (typeof _values === "number" || _values === 0) { // If no array is passed, apply the same scale value to x and y
 			
 			Shift.loop(collection, function() {
 				
@@ -507,7 +519,9 @@
 				
 			});
 			
-		} else {
+		}
+		
+		else {
 			throw new Error("The first argument for scale() must either be a number or an array of 2 numbers.")
 		}
 		
@@ -542,7 +556,9 @@
 				
 			});
 			
-		} else {
+		}
+		
+		else {
 			throw new Error("scaleX() requires a number as its first argument.");
 		}
 		
@@ -577,7 +593,9 @@
 				
 			});
 			
-		} else {
+		}
+		
+		else {
 			throw new Error("scaleY() requires a number as its first argument.");
 		}
 		
@@ -627,7 +645,9 @@
 				}
 			});
 			
-		} else {
+		}
+		
+		else {
 			throw new Error("'Property' and 'value' parameters for set() must be strings.");
 		}
 		
@@ -676,7 +696,9 @@
 				
 			});
 			
-		} else if (typeof _values === "number" || _values === 0) { // If no array is passed, apply the same skew value to x and y
+		}
+		
+		else if (typeof _values === "number" || _values === 0) { // If no array is passed, apply the same skew value to x and y
 			
 			Shift.loop(collection, function() {
 				
@@ -688,7 +710,9 @@
 				
 			});
 			
-		} else {
+		}
+		
+		else {
 			throw new Error("The first argument for skew() must either be a number or an array of 2 numbers.")
 		}
 		
@@ -723,7 +747,9 @@
 				
 			});
 			
-		} else {
+		}
+		
+		else {
 			throw new Error("skewX() requires a number as its first argument.");
 		}
 		
@@ -758,7 +784,9 @@
 				
 			});
 			
-		} else {
+		}
+		
+		else {
 			throw new Error("skewY() requires a number as its first argument.");
 		}
 		
@@ -807,7 +835,9 @@
 				
 			});
 			
-		} else if (typeof _values === "string") { // If no array is passed, apply the same translate value to x and y
+		}
+		
+		else if (typeof _values === "string") { // If no array is passed, apply the same translate value to x and y
 			
 			Shift.loop(collection, function() {
 				
@@ -819,7 +849,9 @@
 				
 			});
 			
-		} else {
+		}
+		
+		else {
 			throw new Error("The first argument for translate() must either be a string or an array of 2 strings ('px' or '%' values).")
 		}
 		
@@ -854,7 +886,9 @@
 				
 			});
 			
-		} else {
+		}
+		
+		else {
 			throw new Error("translateX() requires a string ('px' or '%') as its first argument.");
 		}
 		
@@ -889,7 +923,9 @@
 				
 			});
 			
-		} else {
+		}
+		
+		else {
 			throw new Error("translateY() requires a string ('px' or '%') as its first argument.");
 		}
 		
