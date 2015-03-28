@@ -1,6 +1,6 @@
 # Shift.js
 
-##### Stand-alone JavaScript library that triggers native CSS3 transition-based animations in modern browsers.
+_CSS3 Transitions and Transforms achieved through JavaScript._
 
 Full documentation and examples: http://shiftjs.drzwebdev.com/
 
