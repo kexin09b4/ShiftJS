@@ -4,6 +4,10 @@ _CSS3 Transitions and Transforms achieved through JavaScript._
 
 Full documentation and examples: http://shiftjs.drzwebdev.com/
 
+```
+npm install shiftjs
+```
+
 ##### Browser Support:
 
 * IE10+
