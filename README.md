@@ -1,6 +1,6 @@
 # Shift.js
 
-_CSS3 Transitions and Transforms achieved through JavaScript._
+CSS3 Transitions and Transforms achieved through JavaScript.
 
 Full documentation and examples: http://shiftjs.drzwebdev.com/
 
