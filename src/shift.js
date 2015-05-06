@@ -1,5 +1,5 @@
 /**
- * ShiftJS v1.0.3
+ * ShiftJS v1.0.4
  * https://github.com/DanZiti/ShiftJS
  * 
  * Copyright (c) 2015 Dan Zervoudakes

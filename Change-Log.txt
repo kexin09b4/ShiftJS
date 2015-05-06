@@ -32,3 +32,11 @@ Contributor(s): Dan Zervoudakes
 v1.0.3
  
 - Streamlined codebase throughout the library
+
+Date: 5/5/15
+Changes Current Version: NO
+Contributor(s): Dan Zervoudakes
+
+v1.0.4
+ 
+- Package update, no actual library updates
