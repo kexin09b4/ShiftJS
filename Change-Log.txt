@@ -37,6 +37,6 @@ Date: 5/5/15
 Changes Current Version: NO
 Contributor(s): Dan Zervoudakes
 
-v1.0.4
+v1.0.4 / v1.0.5
  
-- Package update, no actual library updates
+- Package updates, no actual library updates

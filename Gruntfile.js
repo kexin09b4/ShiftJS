@@ -18,7 +18,7 @@ module.exports = function(grunt) {
 		    		"src/skew.js",
 		    		"src/translate.js"
 			    ],
-			    dest: "dist/<%= pkg.name %>-v<%= pkg.version %>.js"
+			    dest: "dist/shift-v<%= pkg.version %>.js"
 		    }
 		},
 		uglify: {
@@ -26,8 +26,8 @@ module.exports = function(grunt) {
 		    	banner: "/* ShiftJS v<%= pkg.version %> | Copyright (c) <%= grunt.template.today('yyyy') %> Dan Zervoudakes | https://github.com/DanZiti/ShiftJS/blob/master/LICENSE */\n"
 		    },
 		    build: {
-            	src: "dist/<%= pkg.name %>-v<%= pkg.version %>.js",
-				dest: "dist/<%= pkg.name %>-v<%= pkg.version %>.min.js"
+            	src: "dist/shift-v<%= pkg.version %>.js",
+				dest: "dist/shift-v<%= pkg.version %>.min.js"
         	}
 		}
 	});
