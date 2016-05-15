@@ -11,10 +11,12 @@
     "type": "git",
     "url": "https://github.com/dzervoudakes/ShiftJS/"
   },
-  "dependencies": {
+  "devDependencies": {
     "grunt": "0.x.x",
+    "grunt-contrib-clean": "0.5.x",
     "grunt-contrib-concat": "0.5.x",
-    "grunt-contrib-uglify": "0.7.x"
+    "grunt-contrib-uglify": "0.7.x",
+    "grunt-contrib-watch": "1.0.x"
   },
   "keywords": ["shift", "css3", "transition", "transform", "library"],
   "license": "MIT"
