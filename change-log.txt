@@ -37,6 +37,22 @@ Date: 5/5/15
 Changes Current Version: NO
 Contributor(s): Dan Zervoudakes
 
-v1.0.4 / v1.0.5
+v1.0.4
  
 - Package updates, no actual library updates
+
+Date: 5/6/15
+Changes Current Version: NO
+Contributor(s): Dan Zervoudakes
+
+v1.0.5
+ 
+- Package updates, no actual library updates
+
+Date: 5/16/16
+Changes Current Version: YES
+Contributor(s): Dan Zervoudakes
+
+v1.1.0
+ 
+- Refactored codebase; no actual functionality changes

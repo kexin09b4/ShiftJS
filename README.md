@@ -28,7 +28,7 @@ For full documentation/examples, navigate to the official site. (link provided a
 _Either method below will suffice..._
 
 ```
-shift(selector, [context]);
+shift(selector [, context]);
 var el = new Shift(selector, [context]);
 ```
 
@@ -224,10 +224,10 @@ You may edit the default values of several transition/transform properties by ac
 
 ```
 Shift.environment = {
-	"duration": "0.5s",
-	"easing": "ease",
-	"delay": "0.5s",
-	"originX": "50%",
-	"originY": "50%"
+	'duration': '0.5s',
+	'easing': 'ease',
+	'delay': '0.5s',
+	'originX': '50%',
+	'originY': '50%'
 };
 ```
