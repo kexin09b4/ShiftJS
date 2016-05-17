@@ -51,102 +51,106 @@
 		<button></button>
 		<script type="text/javascript">
 			
-			var btn = document.getElementsByTagName("button")[0];
-			var btn2 = document.getElementsByTagName("button")[1];
-			
-			var test = shift("#test-div");
-			
-			function func() {
-				console.log("animation complete");
-			};
-			
-			function func2() {
-				console.log("animation 2 complete");
-			};
-			
-			var animObj = {
-				left: "200px",
-				top: "250px",
-				background: "#f00",
-				width: "160px",
-				borderRadius: "20px"
-			};
-			
-			btn.onclick = function() {
+			(function() {
 				
-				/*test.animate(animObj, 2, "ease", function() {
-					test.rotate(35, 0.6, "in-out", function() {
-						test.fadeOut(0.75, "linear", func);
-					}).origin(2, 2);
-				}).delay(0.6);*/
+				var btn = document.getElementsByTagName('button')[0];
+				var btn2 = document.getElementsByTagName('button')[1];
 				
-				//test.set("background", "#f00", 0.8, "", func);
+				var test = shift('#test-div');
 				
-				test.scale([2.4,1.8], 0.8, "ease", function() {
-					test.scale([1,1], 0.8, "ease", function() {
-						test.scaleX(4, 0.8, "ease", function() {
-							test.scaleY(4, 0.8, "ease", func);
-						}).origin(0, 0);
+				function func() {
+					console.log('animation complete');
+				};
+				
+				function func2() {
+					console.log('animation 2 complete');
+				};
+				
+				var animObj = {
+					left: '200px',
+					top: '250px',
+					background: '#f00',
+					width: '160px',
+					borderRadius: '20px'
+				};
+				
+				btn.addEventListener('click', function() {
+					
+					/*test.animate(animObj, 2, 'ease', function() {
+						test.rotate(35, 0.6, 'in-out', function() {
+							test.fadeOut(0.75, 'linear', func);
+						}).origin(2, 2);
+					}).delay(0.6);*/
+					
+					//test.set('background', '#f00', 0.8, '', func);
+					
+					test.scale([2.4,1.8], 0.8, 'ease', function() {
+						test.scale([1,1], 0.8, 'ease', function() {
+							test.scaleX(4, 0.8, 'ease', function() {
+								test.scaleY(4, 0.8, 'ease', func);
+							}).origin(0, 0);
+						});
 					});
-				});
+					
+					/*test.set('transform', 'rotate(145deg) scale(1.6, 1.6)', '', '', function() {
+						test.set('border-radius', '35px', 1);
+					});*/
+					
+					/*test.animate({
+						left: '200px',
+						top: '160px',
+						transform: 'scale(2.4) rotate(125deg)'
+					}, 1.5, 'ease', function() {
+						test.set('transform', 'scale(1) rotate(0)', 0.8, 'snap', func);
+					});*/
+					
+					//test.skewX(40, 0.8, 'snap', func);
+					
+					//test.translate(100, 0.8, 'snap', func);
+					
+					//test.translate([120, 200], 0.8, 'ease', func);
+					
+					//test.rotate(140).origin(20, 40);
+					
+				}, false);
 				
-				/*test.set("transform", "rotate(145deg) scale(1.6,1.6)", "", "", function() {
-					test.set("border-radius", "35px", 1);
-				});*/
+				btn2.addEventListener('click', function() {
+					
+					/*test.set('top', '200px', 0.6, '', function() {
+						test.set('left', '200px', 0.6, '', func2);
+					});*/
+					
+					//test.fadeOut(1, '', func2);
+					
+					//test.rotate(65, 0.8, '', func2).origin(1, 5);
+					
+					//test.scaleX(3, 1, 'ease', func2).origin(0, 0).delay(0.5);
+					
+					/*test.rotateY(56, 0.6, 'snap', function() {
+						test.rotateX(166, 0.6, 'ease', func2).delay(0.5);
+					});*/
+					
+					//test.rotateY(180, 1.4, 'snap', func2);
+					
+					//test.scale(2.4, 0.8, 'ease', func2);
+					
+					//test.skew([24, 44], 0.8, 'snap', func2);
+					
+					//test.skew(-34, 0.8, 'snap', func2);
+					
+					//test.skewY(-34, 0.8, 'snap', func2);
+					
+					//test.translateX(120, 0.8, 'ease', func2);
+					
+					/*test.translateY(200, 0.8, 'ease', function() {
+						test.translateY(0, 0.8, 'ease', func2).delay(0.5);
+					});*/
+					
+					test.translate(['500%', '250px']).delay(1);
+					
+				}, false);
 				
-				/*test.animate({
-					left: "200px",
-					top: "160px",
-					transform: "scale(2.4) rotate(125deg)"
-				}, 1.5, "ease", function() {
-					test.set("transform", "scale(1) rotate(0)", 0.8, "snap", func);
-				});*/
-				
-				//test.skewX(40, 0.8, "snap", func);
-				
-				//test.translate(100, 0.8, "snap", func);
-				
-				//test.translate([120, 200], 0.8, "ease", func);
-				
-				//test.rotate(140).origin(20, 40);
-				
-			};
-			
-			btn2.onclick = function() {
-				
-				/*test.set("top", "200px", 0.6, "", function() {
-					test.set("left", "200px", 0.6, "", func2);
-				});*/
-				
-				//test.fadeOut(1, "", func2);
-				
-				//test.rotate(65, 0.8, "", func2).origin(1, 5);
-				
-				//test.scaleX(3, 1, "ease", func2).origin(0, 0).delay(0.5);
-				
-				/*test.rotateY(56, 0.6, "snap", function() {
-					test.rotateX(166, 0.6, "ease", func2).delay(0.5);
-				});*/
-				
-				//test.rotateY(180, 1.4, "snap", func2);
-				
-				//test.scale(2.4, 0.8, "ease", func2);
-				
-				//test.skew([24, 44], 0.8, "snap", func2);
-				
-				//test.skew(-34, 0.8, "snap", func2);
-				
-				//test.skewY(-34, 0.8, "snap", func2);
-				
-				//test.translateX(120, 0.8, "ease", func2);
-				
-				/*test.translateY(200, 0.8, "ease", function() {
-					test.translateY(0, 0.8, "ease", func2).delay(0.5);
-				});*/
-				
-				test.translate(["500%", "250px"]).delay(1);
-				
-			};
+			})();
 			
 		</script>
 	</body>

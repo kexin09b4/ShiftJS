@@ -46,7 +46,7 @@
 	
 	shift.fn.scaleX = function(value, duration, easing, complete) {
 		
-		var easing = priv.easingMap(easing);
+		var ease = priv.easingMap(easing);
 		var timer = priv.timer(duration);
 		
 		if (typeof value === 'number' || value === 0) {

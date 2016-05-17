@@ -11,8 +11,8 @@
  	
 	shift.fn.fadeOut = function(duration, easing, complete) {
 		
-		var ease = Shift.easingMap(easing);
-		var timer = Shift.timer(duration);
+		var ease = priv.easingMap(easing);
+		var timer = priv.timer(duration);
 		
 		priv.loop(this.collection, function() {
 			this.style.transition = 'all ' + timer + ' ' + ease;

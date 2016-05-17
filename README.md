@@ -38,9 +38,9 @@ _Transition several properties at once._
 
 ```
 shift(selector).animate({
-	prop1: "value1",
-	prop2: "value2",
-	prop3: "value3"
+	prop1: 'value1',
+	prop2: 'value2',
+	prop3: 'value3'
 }), duration, easing, complete);
 ```
 
@@ -216,18 +216,4 @@ The complete parameter comes in handy for more involved sequential animations. T
 shift(selector).set(property, value, duration, easing, function() {
 	// do stuff here
 });
-```
-
-##### Default Values and How to Alter Them
-
-You may edit the default values of several transition/transform properties by accessing the "Shift.environment" object. Below are the existing defaults.
-
-```
-Shift.environment = {
-	'duration': '0.5s',
-	'easing': 'ease',
-	'delay': '0.5s',
-	'originX': '50%',
-	'originY': '50%'
-};
 ```

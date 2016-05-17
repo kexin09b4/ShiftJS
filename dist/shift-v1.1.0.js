@@ -12,7 +12,7 @@
 'use strict';
 
 // TODO: ADD JSDoc-STYLE NOTES HERE AND ACROSS ALL MODULES
-// TODO: TRY TO SHRINK DOWN ALL REPETITIVE .loop() CONTENTS AS A REUSABLE FUNCTION TO STREAMLINE THE CODE BASE
+// TODO: TRY TO SHRINK DOWN ALL REPETITIVE .loop() CONTENTS AS A REUSABLE FUNCTION(S) TO STREAMLINE THE CODE BASE
 	
 	// Primary constructor
 	var Shift = function(selector, context) {
@@ -20,7 +20,7 @@
 		var selectedElements, ctx, els, i, j;
 		
 		if (context) {
-			ctx = d.querySelectorAll(context);
+			ctx = document.querySelectorAll(context);
 			selectedElements = [];
 			for (i = 0; i < ctx.length; i++) {
 				els = ctx[i].querySelectorAll(selector);
@@ -29,7 +29,7 @@
 				}
 			}
 		} else {
-			selectedElements = d.querySelectorAll(selector);
+			selectedElements = document.querySelectorAll(selector);
 		}
 		
 		if (selectedElements.length > 0) {
@@ -41,25 +41,6 @@
 
 	var shift = function(selector, context) {
 		return new Shift(selector, context);
-	};
-
-/**
- * Below are variables developers can reset themselves to better suit the needs of their site or application
- * Developers may access the "Shift.environment" object and change the default values as they see fit
- * Choices include:
- * -duration
- * -easing
- * -delay
- * -transform-origin (x and y)
- */
-	
-	// Default values
-	Shift.environment = {
-		duration: '0.5s',
-		easing: 'ease',
-		delay: '0.5s',
-		originX: '50%',
-		originY: '50%'
 	};
 
 /**
@@ -77,31 +58,20 @@
 		return this;
 	};
 	
-	// Reset everything after transitioning
-	priv.reset = function(array) {
-		for (var i = 0; i < array.length; i++) {
-			array[i].style.transition = '';
-			array[i].style.webkitTransition = '';
-		}
-		return this;
-	};
-	
-	// Called after all transtions end
-	priv.callback = function(array, complete, callback) {
-		this.reset(array);
-		if (complete) {
-			setTimeout(function() {
-				complete();
-			}, 50);
-		}
-		// Prevent transitionend event from firing too many times
-		array[array.length - 1].removeEventListener('transitionend', callback, false);
-		return this;
+	// Default properties
+	priv.environment = {
+		duration: '0.5s',
+		easing: 'ease',
+		delay: '0.5s',
+		originX: '50%',
+		originY: '50%'
 	};
 	
 	// Easing values
 	priv.easingMap = function(value) {
+		
 		var easingValue;
+		
 		switch (value) {
 			case 'ease':
 				easingValue = 'ease';
@@ -122,7 +92,7 @@
 				easingValue = 'cubic-bezier(0, 1, 0.5, 1)';
 				break;
 			default:
-				easingValue = Shift.environment['easing']; // If no easing is defined, the default value will be "ease" unless redefined by the developer
+				easingValue = priv.environment['easing']; // If no easing is defined, the default value will be "ease" unless redefined by the developer
 		};
 		
 		// Override the default value if a cubic-bezier array is passed
@@ -133,7 +103,7 @@
 	
 	// Duration of each animation
 	priv.timer = function(duration) {
-		return (typeof duration === 'number') ? duration + 's' : Shift.environment['duration'];
+		return (typeof duration === 'number') ? duration + 's' : priv.environment['duration'];
 	};
 	
 	// Prototype shorthand
@@ -185,7 +155,7 @@
 	shift.fn.delay = function(delay) {
 		
 		priv.loop(this.collection, function() {
-			this.style.transitionDelay = (typeof delay === 'number') ? delay + 's' : Shift.environment['delay'];
+			this.style.transitionDelay = (typeof delay === 'number') ? delay + 's' : priv.environment['delay'];
 		});
 		
 		return this;
@@ -204,8 +174,8 @@
  	
 	shift.fn.fadeOut = function(duration, easing, complete) {
 		
-		var ease = Shift.easingMap(easing);
-		var timer = Shift.timer(duration);
+		var ease = priv.easingMap(easing);
+		var timer = priv.timer(duration);
 		
 		priv.loop(this.collection, function() {
 			this.style.transition = 'all ' + timer + ' ' + ease;
@@ -246,8 +216,8 @@
  	
 	shift.fn.origin = function(x, y) {
 		
-		var origX = (typeof x === 'number' || x === 0) ? x + '%' : Shift.environment['originX'];
-		var origY = (typeof y === 'number' || y === 0) ? y + '%' : Shift.environment['originY'];
+		var origX = (typeof x === 'number' || x === 0) ? x + '%' : priv.environment['originX'];
+		var origY = (typeof y === 'number' || y === 0) ? y + '%' : priv.environment['originY'];
 		
 		priv.loop(this.collection, function() {
 			this.style.transformOrigin = origX + ' ' + origY;
@@ -389,7 +359,7 @@
 	
 	shift.fn.scaleX = function(value, duration, easing, complete) {
 		
-		var easing = priv.easingMap(easing);
+		var ease = priv.easingMap(easing);
 		var timer = priv.timer(duration);
 		
 		if (typeof value === 'number' || value === 0) {
@@ -666,6 +636,30 @@
 	return w.Shift = w.shift = shift;
  	
 })(window, document, function(collection, complete) {
+	
+	var priv = {};
+	
+	// Reset everything after transitioning
+	priv.reset = function(array) {
+		for (var i = 0; i < array.length; i++) {
+			array[i].style.transition = '';
+			array[i].style.webkitTransition = '';
+		}
+		return this;
+	};
+	
+	// Called after all transtions end
+	priv.callback = function(array, complete, callback) {
+		this.reset(array);
+		if (complete) {
+			setTimeout(function() {
+				complete();
+			}, 50);
+		}
+		// Prevent transitionend event from firing too many times
+		array[array.length - 1].removeEventListener('transitionend', callback, false);
+		return this;
+	};
 	
 	// Global resets
 	var reset = function() {
