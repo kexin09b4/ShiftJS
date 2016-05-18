@@ -1,29 +1,21 @@
 /**
- * rotate() / rotateX() / rotateY()
- * 
- * Rotates the target DOM elements to the specified x/y degree values
- * 
- * Parameters:
- * -degree (required... degrees as a number, not a string)
- * -duration (optional... seconds as a number, not a string)
- * -easing (optional... string)
- * -complete (optional... callback fired after transitionend)
+ * Rotate element(s)
+ * @param {number} value
+ * @param {number} duration - in seconds
+ * @param {string} easing
+ * @param {function} complete
+ * @returns {object} current instance of Shift
  */
- 	
-	shift.fn.rotate = function(degree, duration, easing, complete) {
+
+	shift.fn.rotate = function(value, duration, easing, complete) {
 		
 		var ease = priv.easingMap(easing);
 		var timer = priv.timer(duration);
 		
-		if (typeof degree === 'number' || degree === 0) {
-			
+		if (typeof value === 'number' || value === 0) {
 			priv.loop(this.collection, function() {
-				this.style.transition = 'transform ' + timer + ' ' + ease;
-				this.style.webkitTransition = '-webkit-transform ' + timer + ' ' + ease;
-				this.style.transform = 'rotate(' + degree + 'deg)';
-				this.style.webkitTransform = 'rotate(' + degree + 'deg)';
+				priv.singleValueTransform(this, 'rotate', timer, ease, value, true);
 			});
-			
 		} else {
 			throw new Error('Degree value for rotate() must be a valid number.');
 		}
@@ -33,21 +25,25 @@
 		
 		return this;
 	};
-	
-	shift.fn.rotateX = function(degree, duration, easing, complete) {
+
+/**
+ * Rotate element(s) along the X axis
+ * @param {number} value
+ * @param {number} duration - in seconds
+ * @param {string} easing
+ * @param {function} complete
+ * @returns {object} current instance of Shift
+ */
+
+	shift.fn.rotateX = function(value, duration, easing, complete) {
 		
 		var ease = priv.easingMap(easing);
 		var timer = priv.timer(duration);
 		
-		if (typeof degree === 'number' || degree === 0) {
-			
+		if (typeof value === 'number' || value === 0) {
 			priv.loop(this.collection, function() {
-				this.style.transition = 'transform ' + timer + ' ' + ease;
-				this.style.webkitTransition = '-webkit-transform ' + timer + ' ' + ease;
-				this.style.transform = 'rotateX(' + degree + 'deg)';
-				this.style.webkitTransform = 'rotateX(' + degree + 'deg)';
+				priv.singleValueTransform(this, 'rotateX', timer, ease, value, true);
 			});
-			
 		} else {
 			throw new Error('Degree value for rotateX() must be a valid number.');
 		}
@@ -57,21 +53,25 @@
 		
 		return this;
 	};
-	
-	shift.fn.rotateY = function(degree, duration, easing, complete) {
+
+/**
+ * Rotate element(s) along the Y axis
+ * @param {number} value
+ * @param {number} duration - in seconds
+ * @param {string} easing
+ * @param {function} complete
+ * @returns {object} current instance of Shift
+ */
+
+	shift.fn.rotateY = function(value, duration, easing, complete) {
 		
 		var ease = priv.easingMap(easing);
 		var timer = priv.timer(duration);
 		
-		if (typeof degree === 'number' || degree === 0) {
-			
+		if (typeof value === 'number' || value === 0) {
 			priv.loop(this.collection, function() {
-				this.style.transition = 'transform ' + timer + ' ' + ease;
-				this.style.webkitTransition = '-webkit-transform ' + timer + ' ' + ease;
-				this.style.transform = 'rotateY(' + degree + 'deg)';
-				this.style.webkitTransform = 'rotateY(' + degree + 'deg)';
+				priv.singleValueTransform(this, 'rotateY', timer, ease, value, true);
 			});
-			
 		} else {
 			throw new Error('Degree value for rotateY() must be a valid number.');
 		}

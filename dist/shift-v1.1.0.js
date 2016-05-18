@@ -11,16 +11,19 @@
 	
 'use strict';
 
-// TODO: ADD JSDoc-STYLE NOTES HERE AND ACROSS ALL MODULES
-// TODO: TRY TO SHRINK DOWN ALL REPETITIVE .loop() CONTENTS AS A REUSABLE FUNCTION(S) TO STREAMLINE THE CODE BASE
-	
-	// Primary constructor
+/**
+ * Library core: constructor, prototype, private functions
+ * @param {string|object} selector
+ * @param {string} context - optional
+ * @returns {array} Shift.collection
+ */
+
 	var Shift = function(selector, context) {
 		
 		var selectedElements, ctx, els, i, j;
 		
 		if (context) {
-			ctx = document.querySelectorAll(context);
+			ctx = d.querySelectorAll(context);
 			selectedElements = [];
 			for (i = 0; i < ctx.length; i++) {
 				els = ctx[i].querySelectorAll(selector);
@@ -29,7 +32,7 @@
 				}
 			}
 		} else {
-			selectedElements = document.querySelectorAll(selector);
+			selectedElements = d.querySelectorAll(selector);
 		}
 		
 		if (selectedElements.length > 0) {
@@ -43,21 +46,22 @@
 		return new Shift(selector, context);
 	};
 
+	shift.fn = Shift.prototype;
+
 /**
  * Private functions:
  * Used throughout the library
  */
-	
+
 	var priv = {};
-	
-	// Loop through each member of the collection throughout each extension
+
+	// Loop through each member of the collection throughout each module
 	priv.loop = function(array, callback) {
 		for (var i = 0; i < array.length; i++) {
 			callback.call(array[i]);
 		}
-		return this;
 	};
-	
+
 	// Default properties
 	priv.environment = {
 		duration: '0.5s',
@@ -66,7 +70,7 @@
 		originX: '50%',
 		originY: '50%'
 	};
-	
+
 	// Easing values
 	priv.easingMap = function(value) {
 		
@@ -92,7 +96,7 @@
 				easingValue = 'cubic-bezier(0, 1, 0.5, 1)';
 				break;
 			default:
-				easingValue = priv.environment['easing']; // If no easing is defined, the default value will be "ease" unless redefined by the developer
+				easingValue = priv.environment['easing'];
 		};
 		
 		// Override the default value if a cubic-bezier array is passed
@@ -100,27 +104,37 @@
 		
 		return easingValue;
 	};
-	
+
 	// Duration of each animation
 	priv.timer = function(duration) {
 		return (typeof duration === 'number') ? duration + 's' : priv.environment['duration'];
 	};
-	
-	// Prototype shorthand
-	shift.fn = Shift.prototype;
+
+	// Multiple-value transforms
+	priv.multipleValueTransform = function(target, func, timer, ease, val1, val2, deg) {
+		target.style.transition = 'transform ' + timer + ' ' + ease;
+		target.style.webkitTransition = '-webkit-transform ' + timer + ' ' + ease;
+		target.style.transform = func + '(' + val1 + (deg ? 'deg' : '') + ',' + val2 + (deg ? 'deg' : '') + ')';
+		target.style.webkitTransform = func + '(' + val1 + (deg ? 'deg' : '') + ',' + val2 + (deg ? 'deg' : '') + ')';
+	};
+
+	// Single-value transforms
+	priv.singleValueTransform = function(target, func, timer, ease, val, deg) {
+		target.style.transition = 'transform ' + timer + ' ' + ease;
+		target.style.webkitTransition = '-webkit-transform ' + timer + ' ' + ease;
+		target.style.transform = func + '(' + val + (deg ? 'deg' : '') + ')';
+		target.style.webkitTransform = func + '(' + val + (deg ? 'deg' : '') + ')';
+	};
 
 /**
- * animate()
- * 
- * Applies several CSS styles to the target DOM elements
- * 
- * Parameters:
- * -properties (object containing CSS key-value pairs)
- * -duration (optional... number in seconds, not a string)
- * -easing (optional... string)
- * -complete (optional... callback fired after transitionend)
+ * Animate CSS properties of the target element(s)
+ * @param {object} properties
+ * @param {number} duration
+ * @param {string} easing
+ * @param {function} complete
+ * @returns {object} current instance of Shift
  */
- 	
+
 	shift.fn.animate = function(properties, duration, easing, complete) {
 		
 		var ease = priv.easingMap(easing);
@@ -144,34 +158,26 @@
 	};
 
 /**
- * delay()
- * 
- * Adds a transition-delay to each instance
- * 
- * Parameter:
- * -delay (number in seconds, not a string)
+ * Delay a triggered animation
+ * @param {number} delay - in seconds
+ * @returns {object} current instance of Shift
  */
- 	
+
 	shift.fn.delay = function(delay) {
-		
 		priv.loop(this.collection, function() {
 			this.style.transitionDelay = (typeof delay === 'number') ? delay + 's' : priv.environment['delay'];
 		});
-		
 		return this;
 	};
 
 /**
- * fadeOut() / fadeIn()
- * 
- * Fades-in/out the target DOM elements
- * 
- * Parameter:
- * -duration (optional... number in seconds, not a string)
- * -easing (optional... string)
- * -complete (optional... callback fired after transitionend)
+ * Fade-out visible element(s)
+ * @param {number} duration - in seconds
+ * @param {string} easing
+ * @param {function} complete
+ * @returns {object} current instance of Shift
  */
- 	
+
 	shift.fn.fadeOut = function(duration, easing, complete) {
 		
 		var ease = priv.easingMap(easing);
@@ -187,7 +193,15 @@
 		
 		return this;
 	};
-	
+
+/**
+ * Fade-in hidden element(s)
+ * @param {number} duration - in seconds
+ * @param {string} easing
+ * @param {function} complete
+ * @returns {object} current instance of Shift
+ */
+
 	shift.fn.fadeIn = function(duration, easing, complete) {
 		
 		var ease = priv.easingMap(easing);
@@ -205,15 +219,12 @@
 	};
 
 /**
- * origin()
- * 
- * Defines a transform-origin for applicable animations
- * 
- * Parameter:
- * -x (number; percentage)
- * -y (number; percentage)
+ * Define transform-origin for transform-based animations
+ * @param {number} x - percent
+ * @param {number} y - percent
+ * @returns {object} current instance of Shift
  */
- 	
+
 	shift.fn.origin = function(x, y) {
 		
 		var origX = (typeof x === 'number' || x === 0) ? x + '%' : priv.environment['originX'];
@@ -228,31 +239,23 @@
 	};
 
 /**
- * rotate() / rotateX() / rotateY()
- * 
- * Rotates the target DOM elements to the specified x/y degree values
- * 
- * Parameters:
- * -degree (required... degrees as a number, not a string)
- * -duration (optional... seconds as a number, not a string)
- * -easing (optional... string)
- * -complete (optional... callback fired after transitionend)
+ * Rotate element(s)
+ * @param {number} value
+ * @param {number} duration - in seconds
+ * @param {string} easing
+ * @param {function} complete
+ * @returns {object} current instance of Shift
  */
- 	
-	shift.fn.rotate = function(degree, duration, easing, complete) {
+
+	shift.fn.rotate = function(value, duration, easing, complete) {
 		
 		var ease = priv.easingMap(easing);
 		var timer = priv.timer(duration);
 		
-		if (typeof degree === 'number' || degree === 0) {
-			
+		if (typeof value === 'number' || value === 0) {
 			priv.loop(this.collection, function() {
-				this.style.transition = 'transform ' + timer + ' ' + ease;
-				this.style.webkitTransition = '-webkit-transform ' + timer + ' ' + ease;
-				this.style.transform = 'rotate(' + degree + 'deg)';
-				this.style.webkitTransform = 'rotate(' + degree + 'deg)';
+				priv.singleValueTransform(this, 'rotate', timer, ease, value, true);
 			});
-			
 		} else {
 			throw new Error('Degree value for rotate() must be a valid number.');
 		}
@@ -262,21 +265,25 @@
 		
 		return this;
 	};
-	
-	shift.fn.rotateX = function(degree, duration, easing, complete) {
+
+/**
+ * Rotate element(s) along the X axis
+ * @param {number} value
+ * @param {number} duration - in seconds
+ * @param {string} easing
+ * @param {function} complete
+ * @returns {object} current instance of Shift
+ */
+
+	shift.fn.rotateX = function(value, duration, easing, complete) {
 		
 		var ease = priv.easingMap(easing);
 		var timer = priv.timer(duration);
 		
-		if (typeof degree === 'number' || degree === 0) {
-			
+		if (typeof value === 'number' || value === 0) {
 			priv.loop(this.collection, function() {
-				this.style.transition = 'transform ' + timer + ' ' + ease;
-				this.style.webkitTransition = '-webkit-transform ' + timer + ' ' + ease;
-				this.style.transform = 'rotateX(' + degree + 'deg)';
-				this.style.webkitTransform = 'rotateX(' + degree + 'deg)';
+				priv.singleValueTransform(this, 'rotateX', timer, ease, value, true);
 			});
-			
 		} else {
 			throw new Error('Degree value for rotateX() must be a valid number.');
 		}
@@ -286,21 +293,25 @@
 		
 		return this;
 	};
-	
-	shift.fn.rotateY = function(degree, duration, easing, complete) {
+
+/**
+ * Rotate element(s) along the Y axis
+ * @param {number} value
+ * @param {number} duration - in seconds
+ * @param {string} easing
+ * @param {function} complete
+ * @returns {object} current instance of Shift
+ */
+
+	shift.fn.rotateY = function(value, duration, easing, complete) {
 		
 		var ease = priv.easingMap(easing);
 		var timer = priv.timer(duration);
 		
-		if (typeof degree === 'number' || degree === 0) {
-			
+		if (typeof value === 'number' || value === 0) {
 			priv.loop(this.collection, function() {
-				this.style.transition = 'transform ' + timer + ' ' + ease;
-				this.style.webkitTransition = '-webkit-transform ' + timer + ' ' + ease;
-				this.style.transform = 'rotateY(' + degree + 'deg)';
-				this.style.webkitTransform = 'rotateY(' + degree + 'deg)';
+				priv.singleValueTransform(this, 'rotateY', timer, ease, value, true);
 			});
-			
 		} else {
 			throw new Error('Degree value for rotateY() must be a valid number.');
 		}
@@ -312,41 +323,27 @@
 	};
 
 /**
- * scale() / scaleX() / scaleY()
- * 
- * Scales the target DOM elements to the specified x/y values
- * 
- * Parameters:
- * -values (required... number or array of numbers; scale multipliers)
- * -duration (optional... seconds as a number, not a string)
- * -easing (optional... string)
- * -complete (optional... callback fired after transitionend)
+ * Scale element(s)
+ * @param {array|number} values
+ * @param {number} duration - in seconds
+ * @param {string} easing
+ * @param {function} complete
+ * @returns {object} current instance of Shift
  */
- 	
+
 	shift.fn.scale = function(values, duration, easing, complete) {
 		
 		var ease = priv.easingMap(easing);
 		var timer = priv.timer(duration);
 		
-		if (typeof values === 'object' && values.length === 2) {
-			
+		if (Array.isArray(values) && values.length === 2) {
 			priv.loop(this.collection, function() {
-				this.style.transition = 'transform ' + timer + ' ' + ease;
-				this.style.webkitTransition = '-webkit-transform ' + timer + ' ' + ease;
-				this.style.transform = 'scale(' + values[0] + ',' + values[1] + ')';
-				this.style.webkitTransform = 'scale(' + values[0] + ',' + values[1] + ')';
-				
+				priv.multipleValueTransform(this, 'scale', timer, ease, values[0], values[1]);
 			});
-			
-		} else if (typeof values === 'number' || values === 0) { // If no array is passed, apply the same scale value to x and y
-			
+		} else if (typeof values === 'number' || values === 0) {
 			priv.loop(this.collection, function() {
-				this.style.transition = 'transform ' + timer + ' ' + ease;
-				this.style.webkitTransition = '-webkit-transform ' + timer + ' ' + ease;
-				this.style.transform = 'scale(' + values + ', ' + values + ')';
-				this.style.webkitTransform = 'scale(' + values + ', ' + values + ')';
+				priv.multipleValueTransform(this, 'scale', timer, ease, values, values);
 			});
-			
 		} else {
 			throw new Error('The first argument for scale() must either be a number or an array of 2 numbers.');
 		}
@@ -356,21 +353,25 @@
 		
 		return this;
 	};
-	
+
+/**
+ * Scale element(s) along the X axis
+ * @param {number} value
+ * @param {number} duration - in seconds
+ * @param {string} easing
+ * @param {function} complete
+ * @returns {object} current instance of Shift
+ */
+
 	shift.fn.scaleX = function(value, duration, easing, complete) {
 		
 		var ease = priv.easingMap(easing);
 		var timer = priv.timer(duration);
 		
 		if (typeof value === 'number' || value === 0) {
-			
 			priv.loop(this.collection, function() {
-				this.style.transition = 'transform ' + timer + ' ' + ease;
-				this.style.webkitTransition = '-webkit-transform ' + timer + ' ' + ease;
-				this.style.transform = 'scaleX(' + value + ')';
-				this.style.webkitTransform = 'scaleX(' + value + ')';
+				priv.singleValueTransform(this, 'scaleX', timer, ease, value);
 			});
-			
 		} else {
 			throw new Error('scaleX() requires a number as its first argument.');
 		}
@@ -380,21 +381,25 @@
 		
 		return this;
 	};
-	
+
+/**
+ * Scale element(s) along the Y axis
+ * @param {number} value
+ * @param {number} duration - in seconds
+ * @param {string} easing
+ * @param {function} complete
+ * @returns {object} current instance of Shift
+ */
+
 	shift.fn.scaleY = function(value, duration, easing, complete) {
 		
 		var ease = priv.easingMap(easing);
 		var timer = priv.timer(duration);
 		
 		if (typeof value === 'number' || value === 0) {
-			
 			priv.loop(this.collection, function() {
-				this.style.transition = 'transform ' + timer + ' ' + ease;
-				this.style.webkitTransition = '-webkit-transform ' + timer + ' ' + ease;
-				this.style.transform = 'scaleY(' + value + ')';
-				this.style.webkitTransform = 'scaleY(' + value + ')';
+				priv.singleValueTransform(this, 'scaleY', timer, ease, value);
 			});
-			
 		} else {
 			throw new Error('scaleY() requires a number as its first argument.');
 		}
@@ -406,26 +411,21 @@
 	};
 
 /**
- * set()
- * 
- * Sets CSS properties for the target DOM elements...
- * ...unlike animate(), this method only accepts one property at a time
- * 
- * Parameters:
- * -property (required; string)
- * -value (required; string)
- * -duration (optional... number in seconds, not a string)
- * -easing (optional... string)
- * -complete (optional... callback fired after transitionend)
+ * Set a single CSS property
+ * @param {string} property
+ * @param {string} value
+ * @param {number} duration - in seconds
+ * @param {string} easing
+ * @param {function} complete
+ * @returns {object} current instance of Shift
  */
- 	
+
 	shift.fn.set = function(property, value, duration, easing, complete) {
 		
 		var ease = priv.easingMap(easing);
 		var timer = priv.timer(duration);
 		
 		if (typeof property === 'string' && typeof value === 'string') {
-			
 			priv.loop(this.collection, function() {
 				this.style.transition = property + ' ' + timer + ' ' + ease;
 				this.style[property] = value;
@@ -434,7 +434,6 @@
 					this.style.webkitTransform = value;
 				}
 			});
-			
 		} else {
 			throw new Error('"Property" and "value" parameters for set() must be strings.');
 		}
@@ -446,40 +445,27 @@
 	};
 
 /**
- * skew() / skewX() / skewY()
- * 
- * Skews the target DOM elements to the specified x/y values
- * 
- * Parameters:
- * -values (required... number or array of numbers; degrees)
- * -duration (optional... seconds as a number, not a string)
- * -easing (optional... string)
- * -complete (optional... callback fired after transitionend)
+ * Skew element(s)
+ * @param {array|number} values
+ * @param {number} duration - in seconds
+ * @param {string} easing
+ * @param {function} complete
+ * @returns {object} current instance of Shift
  */
- 	
+
 	shift.fn.skew = function(values, duration, easing, complete) {
 		
 		var ease = priv.easingMap(easing);
 		var timer = priv.timer(duration);
 		
-		if (typeof values === 'object' && values.length === 2) {
-			
+		if (Array.isArray(values) && values.length === 2) {
 			priv.loop(this.collection, function() {
-				this.style.transition = 'transform ' + timer + ' ' + ease;
-				this.style.webkitTransition = '-webkit-transform ' + timer + ' ' + ease;
-				this.style.transform = 'skew(' + values[0] + 'deg,' + values[1] + 'deg)';
-				this.style.webkitTransform = 'skew(' + values[0] + 'deg,' + values[1] + 'deg)';
+				priv.multipleValueTransform(this, 'skew', timer, ease, values[0], values[1], true);
 			});
-			
-		} else if (typeof values === 'number' || values === 0) { // If no array is passed, apply the same skew value to x and y
-			
+		} else if (typeof values === 'number' || values === 0) {
 			priv.loop(this.collection, function() {
-				this.style.transition = 'transform ' + timer + ' ' + ease;
-				this.style.webkitTransition = '-webkit-transform ' + timer + ' ' + ease;
-				this.style.transform = 'skew(' + values + 'deg, ' + values + 'deg)';
-				this.style.webkitTransform = 'skew(' + values + 'deg, ' + values + 'deg)';
+				priv.multipleValueTransform(this, 'skew', timer, ease, values, values, true);
 			});
-			
 		} else {
 			throw new Error('The first argument for skew() must either be a number or an array of 2 numbers.');
 		}
@@ -489,21 +475,25 @@
 		
 		return this;
 	};
-	
+
+/**
+ * Skew element(s) along the X axis
+ * @param {number} value
+ * @param {number} duration - in seconds
+ * @param {string} easing
+ * @param {function} complete
+ * @returns {object} current instance of Shift
+ */
+
 	shift.fn.skewX = function(value, duration, easing, complete) {
 		
 		var ease = priv.easingMap(easing);
 		var timer = priv.timer(duration);
 		
 		if (typeof value === 'number' || value === 0) {
-			
 			priv.loop(this.collection, function() {
-				this.style.transition = 'transform ' + timer + ' ' + ease;
-				this.style.webkitTransition = '-webkit-transform ' + timer + ' ' + ease;
-				this.style.transform = 'skewX(' + value + 'deg)';
-				this.style.webkitTransform = 'skewX(' + value + 'deg)';
+				priv.singleValueTransform(this, 'skewX', timer, ease, value, true);
 			});
-			
 		} else {
 			throw new Error('skewX() requires a number as its first argument.');
 		}
@@ -513,21 +503,25 @@
 		
 		return this;
 	};
-	
+
+/**
+ * Skew element(s) along the Y axis
+ * @param {number} value
+ * @param {number} duration - in seconds
+ * @param {string} easing
+ * @param {function} complete
+ * @returns {object} current instance of Shift
+ */
+
 	shift.fn.skewY = function(value, duration, easing, complete) {
 		
 		var ease = priv.easingMap(easing);
 		var timer = priv.timer(duration);
 		
 		if (typeof value === 'number' || value === 0) {
-			
 			priv.loop(this.collection, function() {
-				this.style.transition = 'transform ' + timer + ' ' + ease;
-				this.style.webkitTransition = '-webkit-transform ' + timer + ' ' + ease;
-				this.style.transform = 'skewY(' + value + 'deg)';
-				this.style.webkitTransform = 'skewY(' + value + 'deg)';
+				priv.singleValueTransform(this, 'skewY', timer, ease, value, true);
 			});
-			
 		} else {
 			throw new Error('skewY() requires a number as its first argument.');
 		}
@@ -539,44 +533,29 @@
 	};
 
 /**
- * translate() / translateX() / translateY()
- * 
- * Translates the target DOM elements to the specified x/y values
- * 
- * Parameters:
- * -values (required... string or array of strings; the 'px' or '%' x and y values)
- * -duration (optional... seconds as a number, not a string)
- * -easing (optional... string)
- * -complete (optional... callback fired after transitionend)
+ * Translate element(s)
+ * @param {array|string} values
+ * @param {number} duration - in seconds
+ * @param {string} easing
+ * @param {function} complete
+ * @returns {object} current instance of Shift
  */
- 	
- 	// Note: as of the time this library was built, Safari still requires the -webkit- vendor prefix for transforms
- 	//
+
 	shift.fn.translate = function(values, duration, easing, complete) {
 		
 		var ease = priv.easingMap(easing);
 		var timer = priv.timer(duration);
 		
-		if (typeof values === 'object' && values.length === 2) {
-			
+		if (Array.isArray(values) && values.length === 2) {
 			priv.loop(this.collection, function() {
-				this.style.transition = 'transform ' + timer + ' ' + ease;
-				this.style.webkitTransition = '-webkit-transform ' + timer + ' ' + ease;
-				this.style.transform = 'translate(' + values[0] + ',' + values[1] + ')';
-				this.style.webkitTransform = 'translate(' + values[0] + ',' + values[1] + ')';
+				priv.multipleValueTransform(this, 'translate', timer, ease, values[0], values[1]);
 			});
-			
-		} else if (typeof _values === 'string') { // If no array is passed, apply the same translate value to x and y
-			
+		} else if (typeof values === 'string') {
 			priv.loop(this.collection, function() {
-				this.style.transition = 'transform ' + timer + ' ' + ease;
-				this.style.webkitTransition = '-webkit-transform ' + timer + ' ' + ease;
-				this.style.transform = 'translate(' + values + ',' + values + ')';
-				this.style.webkitTransform = 'translate(' + values + ',' + values + ')';
+				priv.multipleValueTransform(this, 'translate', timer, ease, values, values);
 			});
-			
 		} else {
-			throw new Error('The first argument for translate() must either be a string or an array of 2 strings ("px" or "%" values).');
+			throw new Error('The first argument for translate() must either be a string or an array of 2 strings ("number + px" or "number + %" values).');
 		}
 		
 		// Resets and completions...
@@ -584,23 +563,27 @@
 		
 		return this;
 	};
-	
+
+/**
+ * Translate element(s) along the X axis
+ * @param {string} value
+ * @param {number} duration - in seconds
+ * @param {string} easing
+ * @param {function} complete
+ * @returns {object} current instance of Shift
+ */
+
 	shift.fn.translateX = function(value, duration, easing, complete) {
 		
 		var ease = priv.easingMap(easing);
 		var timer = priv.timer(duration);
 		
 		if (typeof value === 'string') {
-			
 			priv.loop(this.collection, function() {
-				this.style.transition = 'transform ' + timer + ' ' + ease;
-				this.style.webkitTransition = '-webkit-transform ' + timer + ' ' + ease;
-				this.style.transform = 'translateX(' + value + ')';
-				this.style.webkitTransform = 'translateX(' + value + ')';
+				priv.singleValueTransform(this, 'translateX', timer, ease, value);
 			});
-			
 		} else {
-			throw new Error('translateX() requires a string ("px" or "%") as its first argument.');
+			throw new Error('translateX() requires a string ("number + px" or "number + %") as its first argument.');
 		}
 		
 		// Resets and completions...
@@ -608,23 +591,27 @@
 		
 		return this;
 	};
-	
+
+/**
+ * Translate element(s) along the Y axis
+ * @param {string} value
+ * @param {number} duration - in seconds
+ * @param {string} easing
+ * @param {function} complete
+ * @returns {object} current instance of Shift
+ */
+
 	shift.fn.translateY = function(value, duration, easing, complete) {
 		
 		var ease = priv.easingMap(easing);
 		var timer = priv.timer(duration);
 		
 		if (typeof value === 'string') {
-			
 			priv.loop(this.collection, function() {
-				this.style.transition = 'transform ' + timer + ' ' + ease;
-				this.style.webkitTransition = '-webkit-transform ' + timer + ' ' + ease;
-				this.style.transform = 'translateY(' + value + ')';
-				this.style.webkitTransform = 'translateY(' + value + ')';
+				priv.singleValueTransform(this, 'translateY', timer, ease, value);
 			});
-			
 		} else {
-			throw new Error('translateY() requires a string ("px" or "%") as its first argument.');
+			throw new Error('translateY() requires a string ("number + px" or "number + %") as its first argument.');
 		}
 		
 		// Resets and completions...
@@ -666,6 +653,6 @@
 		priv.callback(collection, complete, reset);
 	};
 	
-	collection[collection.length - 1].addEventListener('transitionend', reset, false);
+	return collection[collection.length - 1].addEventListener('transitionend', reset, false);
 	
 });

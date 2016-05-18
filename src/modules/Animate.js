@@ -1,15 +1,12 @@
 /**
- * animate()
- * 
- * Applies several CSS styles to the target DOM elements
- * 
- * Parameters:
- * -properties (object containing CSS key-value pairs)
- * -duration (optional... number in seconds, not a string)
- * -easing (optional... string)
- * -complete (optional... callback fired after transitionend)
+ * Animate CSS properties of the target element(s)
+ * @param {object} properties
+ * @param {number} duration
+ * @param {string} easing
+ * @param {function} complete
+ * @returns {object} current instance of Shift
  */
- 	
+
 	shift.fn.animate = function(properties, duration, easing, complete) {
 		
 		var ease = priv.easingMap(easing);

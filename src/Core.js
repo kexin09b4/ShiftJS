@@ -1,13 +1,16 @@
-// TODO: ADD JSDoc-STYLE NOTES HERE AND ACROSS ALL MODULES
-// TODO: TRY TO SHRINK DOWN ALL REPETITIVE .loop() CONTENTS AS A REUSABLE FUNCTION(S) TO STREAMLINE THE CODE BASE
-	
-	// Primary constructor
+/**
+ * Library core: constructor, prototype, private functions
+ * @param {string|object} selector
+ * @param {string} context - optional
+ * @returns {array} Shift.collection
+ */
+
 	var Shift = function(selector, context) {
 		
 		var selectedElements, ctx, els, i, j;
 		
 		if (context) {
-			ctx = document.querySelectorAll(context);
+			ctx = d.querySelectorAll(context);
 			selectedElements = [];
 			for (i = 0; i < ctx.length; i++) {
 				els = ctx[i].querySelectorAll(selector);
@@ -16,7 +19,7 @@
 				}
 			}
 		} else {
-			selectedElements = document.querySelectorAll(selector);
+			selectedElements = d.querySelectorAll(selector);
 		}
 		
 		if (selectedElements.length > 0) {
@@ -30,21 +33,22 @@
 		return new Shift(selector, context);
 	};
 
+	shift.fn = Shift.prototype;
+
 /**
  * Private functions:
  * Used throughout the library
  */
-	
+
 	var priv = {};
-	
-	// Loop through each member of the collection throughout each extension
+
+	// Loop through each member of the collection throughout each module
 	priv.loop = function(array, callback) {
 		for (var i = 0; i < array.length; i++) {
 			callback.call(array[i]);
 		}
-		return this;
 	};
-	
+
 	// Default properties
 	priv.environment = {
 		duration: '0.5s',
@@ -53,7 +57,7 @@
 		originX: '50%',
 		originY: '50%'
 	};
-	
+
 	// Easing values
 	priv.easingMap = function(value) {
 		
@@ -79,7 +83,7 @@
 				easingValue = 'cubic-bezier(0, 1, 0.5, 1)';
 				break;
 			default:
-				easingValue = priv.environment['easing']; // If no easing is defined, the default value will be "ease" unless redefined by the developer
+				easingValue = priv.environment['easing'];
 		};
 		
 		// Override the default value if a cubic-bezier array is passed
@@ -87,11 +91,24 @@
 		
 		return easingValue;
 	};
-	
+
 	// Duration of each animation
 	priv.timer = function(duration) {
 		return (typeof duration === 'number') ? duration + 's' : priv.environment['duration'];
 	};
-	
-	// Prototype shorthand
-	shift.fn = Shift.prototype;
+
+	// Multiple-value transforms
+	priv.multipleValueTransform = function(target, func, timer, ease, val1, val2, deg) {
+		target.style.transition = 'transform ' + timer + ' ' + ease;
+		target.style.webkitTransition = '-webkit-transform ' + timer + ' ' + ease;
+		target.style.transform = func + '(' + val1 + (deg ? 'deg' : '') + ',' + val2 + (deg ? 'deg' : '') + ')';
+		target.style.webkitTransform = func + '(' + val1 + (deg ? 'deg' : '') + ',' + val2 + (deg ? 'deg' : '') + ')';
+	};
+
+	// Single-value transforms
+	priv.singleValueTransform = function(target, func, timer, ease, val, deg) {
+		target.style.transition = 'transform ' + timer + ' ' + ease;
+		target.style.webkitTransition = '-webkit-transform ' + timer + ' ' + ease;
+		target.style.transform = func + '(' + val + (deg ? 'deg' : '') + ')';
+		target.style.webkitTransform = func + '(' + val + (deg ? 'deg' : '') + ')';
+	};

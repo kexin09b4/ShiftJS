@@ -1,14 +1,11 @@
 /**
- * fadeOut() / fadeIn()
- * 
- * Fades-in/out the target DOM elements
- * 
- * Parameter:
- * -duration (optional... number in seconds, not a string)
- * -easing (optional... string)
- * -complete (optional... callback fired after transitionend)
+ * Fade-out visible element(s)
+ * @param {number} duration - in seconds
+ * @param {string} easing
+ * @param {function} complete
+ * @returns {object} current instance of Shift
  */
- 	
+
 	shift.fn.fadeOut = function(duration, easing, complete) {
 		
 		var ease = priv.easingMap(easing);
@@ -24,7 +21,15 @@
 		
 		return this;
 	};
-	
+
+/**
+ * Fade-in hidden element(s)
+ * @param {number} duration - in seconds
+ * @param {string} easing
+ * @param {function} complete
+ * @returns {object} current instance of Shift
+ */
+
 	shift.fn.fadeIn = function(duration, easing, complete) {
 		
 		var ease = priv.easingMap(easing);

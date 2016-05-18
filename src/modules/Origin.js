@@ -1,13 +1,10 @@
 /**
- * origin()
- * 
- * Defines a transform-origin for applicable animations
- * 
- * Parameter:
- * -x (number; percentage)
- * -y (number; percentage)
+ * Define transform-origin for transform-based animations
+ * @param {number} x - percent
+ * @param {number} y - percent
+ * @returns {object} current instance of Shift
  */
- 	
+
 	shift.fn.origin = function(x, y) {
 		
 		var origX = (typeof x === 'number' || x === 0) ? x + '%' : priv.environment['originX'];

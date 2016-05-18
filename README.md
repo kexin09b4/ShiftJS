@@ -203,8 +203,8 @@ shift(selector).fadeOut(duration, [0, 1, 0.5, 0]); => the easing array will be c
 The duration parameter is always in _seconds_, not in milliseconds. If omitted, the default value is 0.5.
 
 ```
-shift(_selector).fadeOut(); => defaults to 0.5-second transition
-shift(_selector).fadeOut(2); => 2-second transition
+shift(selector).fadeOut(); => defaults to 0.5-second transition
+shift(selector).fadeOut(2); => 2-second transition
 ```
 
 

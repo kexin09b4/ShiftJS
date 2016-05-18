@@ -49,7 +49,7 @@ v1.0.5
  
 - Package updates, no actual library updates
 
-Date: 5/16/16
+Date: 5/17/16
 Changes Current Version: YES
 Contributor(s): Dan Zervoudakes
 

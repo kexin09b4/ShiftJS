@@ -31,6 +31,6 @@
 		priv.callback(collection, complete, reset);
 	};
 	
-	collection[collection.length - 1].addEventListener('transitionend', reset, false);
+	return collection[collection.length - 1].addEventListener('transitionend', reset, false);
 	
 });

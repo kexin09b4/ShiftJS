@@ -1,42 +1,27 @@
 /**
- * translate() / translateX() / translateY()
- * 
- * Translates the target DOM elements to the specified x/y values
- * 
- * Parameters:
- * -values (required... string or array of strings; the 'px' or '%' x and y values)
- * -duration (optional... seconds as a number, not a string)
- * -easing (optional... string)
- * -complete (optional... callback fired after transitionend)
+ * Translate element(s)
+ * @param {array|string} values
+ * @param {number} duration - in seconds
+ * @param {string} easing
+ * @param {function} complete
+ * @returns {object} current instance of Shift
  */
- 	
- 	// Note: as of the time this library was built, Safari still requires the -webkit- vendor prefix for transforms
- 	//
+
 	shift.fn.translate = function(values, duration, easing, complete) {
 		
 		var ease = priv.easingMap(easing);
 		var timer = priv.timer(duration);
 		
-		if (typeof values === 'object' && values.length === 2) {
-			
+		if (Array.isArray(values) && values.length === 2) {
 			priv.loop(this.collection, function() {
-				this.style.transition = 'transform ' + timer + ' ' + ease;
-				this.style.webkitTransition = '-webkit-transform ' + timer + ' ' + ease;
-				this.style.transform = 'translate(' + values[0] + ',' + values[1] + ')';
-				this.style.webkitTransform = 'translate(' + values[0] + ',' + values[1] + ')';
+				priv.multipleValueTransform(this, 'translate', timer, ease, values[0], values[1]);
 			});
-			
-		} else if (typeof _values === 'string') { // If no array is passed, apply the same translate value to x and y
-			
+		} else if (typeof values === 'string') {
 			priv.loop(this.collection, function() {
-				this.style.transition = 'transform ' + timer + ' ' + ease;
-				this.style.webkitTransition = '-webkit-transform ' + timer + ' ' + ease;
-				this.style.transform = 'translate(' + values + ',' + values + ')';
-				this.style.webkitTransform = 'translate(' + values + ',' + values + ')';
+				priv.multipleValueTransform(this, 'translate', timer, ease, values, values);
 			});
-			
 		} else {
-			throw new Error('The first argument for translate() must either be a string or an array of 2 strings ("px" or "%" values).');
+			throw new Error('The first argument for translate() must either be a string or an array of 2 strings ("number + px" or "number + %" values).');
 		}
 		
 		// Resets and completions...
@@ -44,23 +29,27 @@
 		
 		return this;
 	};
-	
+
+/**
+ * Translate element(s) along the X axis
+ * @param {string} value
+ * @param {number} duration - in seconds
+ * @param {string} easing
+ * @param {function} complete
+ * @returns {object} current instance of Shift
+ */
+
 	shift.fn.translateX = function(value, duration, easing, complete) {
 		
 		var ease = priv.easingMap(easing);
 		var timer = priv.timer(duration);
 		
 		if (typeof value === 'string') {
-			
 			priv.loop(this.collection, function() {
-				this.style.transition = 'transform ' + timer + ' ' + ease;
-				this.style.webkitTransition = '-webkit-transform ' + timer + ' ' + ease;
-				this.style.transform = 'translateX(' + value + ')';
-				this.style.webkitTransform = 'translateX(' + value + ')';
+				priv.singleValueTransform(this, 'translateX', timer, ease, value);
 			});
-			
 		} else {
-			throw new Error('translateX() requires a string ("px" or "%") as its first argument.');
+			throw new Error('translateX() requires a string ("number + px" or "number + %") as its first argument.');
 		}
 		
 		// Resets and completions...
@@ -68,23 +57,27 @@
 		
 		return this;
 	};
-	
+
+/**
+ * Translate element(s) along the Y axis
+ * @param {string} value
+ * @param {number} duration - in seconds
+ * @param {string} easing
+ * @param {function} complete
+ * @returns {object} current instance of Shift
+ */
+
 	shift.fn.translateY = function(value, duration, easing, complete) {
 		
 		var ease = priv.easingMap(easing);
 		var timer = priv.timer(duration);
 		
 		if (typeof value === 'string') {
-			
 			priv.loop(this.collection, function() {
-				this.style.transition = 'transform ' + timer + ' ' + ease;
-				this.style.webkitTransition = '-webkit-transform ' + timer + ' ' + ease;
-				this.style.transform = 'translateY(' + value + ')';
-				this.style.webkitTransform = 'translateY(' + value + ')';
+				priv.singleValueTransform(this, 'translateY', timer, ease, value);
 			});
-			
 		} else {
-			throw new Error('translateY() requires a string ("px" or "%") as its first argument.');
+			throw new Error('translateY() requires a string ("number + px" or "number + %") as its first argument.');
 		}
 		
 		// Resets and completions...
