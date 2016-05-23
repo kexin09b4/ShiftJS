@@ -29,7 +29,7 @@ _Either method below will suffice..._
 
 ```
 shift(selector [, context]);
-var el = new Shift(selector, [context]);
+var el = new Shift(selector [, context]);
 ```
 
 ##### animate()
