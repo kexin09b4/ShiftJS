@@ -21,7 +21,7 @@ module.exports = function(grunt) {
 			    options: {
 				    banner: [
 					    '/**',
-						' * ShiftJS v1.1.0',
+						' * ShiftJS v<%= pkg.version %>',
 						' * https://github.com/dzervoudakes/ShiftJS',
 						' * ',
 						' * Copyright (c) 2015, <%= grunt.template.today("yyyy") %> Dan Zervoudakes',
