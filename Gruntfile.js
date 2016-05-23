@@ -18,6 +18,19 @@ module.exports = function(grunt) {
 		    		'src/modules/*',
 		    		'src/templates/Outro.js'
 			    ],
+			    options: {
+				    banner: [
+					    '/**',
+						' * ShiftJS v1.1.0',
+						' * https://github.com/dzervoudakes/ShiftJS',
+						' * ',
+						' * Copyright (c) 2015, <%= grunt.template.today("yyyy") %> Dan Zervoudakes',
+						' * Released under the MIT license',
+						' * https://github.com/dzervoudakes/ShiftJS/blob/master/LICENSE',
+						' */',
+						'\n'
+					].join('\n')
+			    },
 			    dest: 'dist/shift-v<%= pkg.version %>.js'
 		    }
 		},
