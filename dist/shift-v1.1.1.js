@@ -1,5 +1,5 @@
 /**
- * ShiftJS v1.1.0
+ * ShiftJS v1.1.1
  * https://github.com/dzervoudakes/ShiftJS
  * 
  * Copyright (c) 2015, 2016 Dan Zervoudakes
@@ -107,23 +107,23 @@
 
 	// Duration of each animation
 	priv.timer = function(duration) {
-		return (typeof duration === 'number') ? duration + 's' : priv.environment['duration'];
+		return typeof duration === 'number' ? duration + 's' : priv.environment['duration'];
 	};
 
 	// Multiple-value transforms
 	priv.multipleValueTransform = function(target, func, timer, ease, val1, val2, deg) {
 		target.style.transition = 'transform ' + timer + ' ' + ease;
 		target.style.webkitTransition = '-webkit-transform ' + timer + ' ' + ease;
-		target.style.transform = func + '(' + val1 + (deg ? 'deg' : '') + ',' + val2 + (deg ? 'deg' : '') + ')';
-		target.style.webkitTransform = func + '(' + val1 + (deg ? 'deg' : '') + ',' + val2 + (deg ? 'deg' : '') + ')';
+		target.style.transform = func + '(' + val1 + deg ? 'deg' : '' + ',' + val2 + deg ? 'deg' : '' + ')';
+		target.style.webkitTransform = func + '(' + val1 + deg ? 'deg' : '' + ',' + val2 + deg ? 'deg' : '' + ')';
 	};
 
 	// Single-value transforms
 	priv.singleValueTransform = function(target, func, timer, ease, val, deg) {
 		target.style.transition = 'transform ' + timer + ' ' + ease;
 		target.style.webkitTransition = '-webkit-transform ' + timer + ' ' + ease;
-		target.style.transform = func + '(' + val + (deg ? 'deg' : '') + ')';
-		target.style.webkitTransform = func + '(' + val + (deg ? 'deg' : '') + ')';
+		target.style.transform = func + '(' + val + deg ? 'deg' : '' + ')';
+		target.style.webkitTransform = func + '(' + val + deg ? 'deg' : '' + ')';
 	};
 
 /**
@@ -165,7 +165,7 @@
 
 	shift.fn.delay = function(delay) {
 		priv.loop(this.collection, function() {
-			this.style.transitionDelay = (typeof delay === 'number') ? delay + 's' : priv.environment['delay'];
+			this.style.transitionDelay = typeof delay === 'number' ? delay + 's' : priv.environment['delay'];
 		});
 		return this;
 	};

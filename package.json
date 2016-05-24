@@ -1,7 +1,7 @@
 {
   "name": "shiftjs",
-  "version": "1.1.0",
-  "main": "dist/shift-v1.1.0.min.js",
+  "version": "1.1.1",
+  "main": "dist/shift-v1.1.1.min.js",
   "homepage": "http://shiftjs.drzwebdev.com/",
   "author": {
     "name": "Dan Zervoudakes <dan.zervoudakes@gmail.com>",

@@ -56,3 +56,11 @@ Contributor(s): Dan Zervoudakes
 v1.1.0
  
 - Refactored codebase; no actual functionality changes
+
+Date: 5/24/16
+Changes Current Version: YES
+Contributor(s): Dan Zervoudakes
+
+v1.1.1
+ 
+- Update ternary syntax and fix error in README
