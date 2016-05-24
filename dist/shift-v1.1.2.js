@@ -1,5 +1,5 @@
 /**
- * ShiftJS v1.1.1
+ * ShiftJS v1.1.2
  * https://github.com/dzervoudakes/ShiftJS
  * 
  * Copyright (c) 2015, 2016 Dan Zervoudakes
@@ -114,16 +114,16 @@
 	priv.multipleValueTransform = function(target, func, timer, ease, val1, val2, deg) {
 		target.style.transition = 'transform ' + timer + ' ' + ease;
 		target.style.webkitTransition = '-webkit-transform ' + timer + ' ' + ease;
-		target.style.transform = func + '(' + val1 + deg ? 'deg' : '' + ',' + val2 + deg ? 'deg' : '' + ')';
-		target.style.webkitTransform = func + '(' + val1 + deg ? 'deg' : '' + ',' + val2 + deg ? 'deg' : '' + ')';
+		target.style.transform = func + '(' + val1 + (deg ? 'deg' : '') + ',' + val2 + (deg ? 'deg' : '') + ')';
+		target.style.webkitTransform = func + '(' + val1 + (deg ? 'deg' : '') + ',' + val2 + (deg ? 'deg' : '') + ')';
 	};
 
 	// Single-value transforms
 	priv.singleValueTransform = function(target, func, timer, ease, val, deg) {
 		target.style.transition = 'transform ' + timer + ' ' + ease;
 		target.style.webkitTransition = '-webkit-transform ' + timer + ' ' + ease;
-		target.style.transform = func + '(' + val + deg ? 'deg' : '' + ')';
-		target.style.webkitTransform = func + '(' + val + deg ? 'deg' : '' + ')';
+		target.style.transform = func + '(' + val + (deg ? 'deg' : '') + ')';
+		target.style.webkitTransform = func + '(' + val + (deg ? 'deg' : '') + ')';
 	};
 
 /**
