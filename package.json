@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/dzervoudakes/ShiftJS/"
+    "url": "https://github.com/dzervoudakes/ShiftJS.git"
   },
   "devDependencies": {
     "grunt": "^0.4.5",
