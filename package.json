@@ -2,14 +2,14 @@
   "name": "shiftjs",
   "version": "1.1.2",
   "main": "dist/shift-v1.1.2.min.js",
-  "homepage": "http://shiftjs.drzwebdev.com/",
+  "homepage": "http://shiftjs.drzwebdev.com",
   "author": {
     "name": "Dan Zervoudakes",
-    "url": "http://drzwebdev.com/"
+    "url": "http://drzwebdev.com"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/dzervoudakes/ShiftJS.git"
+    "url": "https://github.com/dzervoudakes/ShiftJS"
   },
   "devDependencies": {
     "grunt": "^0.4.5",
