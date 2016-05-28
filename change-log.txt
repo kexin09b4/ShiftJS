@@ -81,3 +81,11 @@ v1.1.3
  
 - Some slight refactoring
 - Converted Grunt tasks to Gulp tasks
+
+Date: 5/27/16
+Changes Current Version: NO
+Contributor(s): Dan Zervoudakes
+
+v1.1.4
+ 
+- Bug fix in Fade.js

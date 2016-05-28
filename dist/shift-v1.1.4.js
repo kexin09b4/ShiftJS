@@ -1,5 +1,5 @@
 /**
- * Shift.js Animation Library v1.1.3
+ * Shift.js Animation Library v1.1.4
  * https://github.com/dzervoudakes/ShiftJS
  * 
  * Copyright (c) 2015, 2016 Dan Zervoudakes
@@ -190,7 +190,7 @@
 			this.style.opacity = 1;
 		});
 		// Resets and completions...
-		resetAll(this.collection, complete);
+		reset(this.collection, complete);
 		return this;
 	};
 

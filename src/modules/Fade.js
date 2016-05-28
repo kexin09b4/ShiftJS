@@ -34,6 +34,6 @@
 			this.style.opacity = 1;
 		});
 		// Resets and completions...
-		resetAll(this.collection, complete);
+		reset(this.collection, complete);
 		return this;
 	};
