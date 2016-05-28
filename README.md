@@ -10,18 +10,17 @@ npm install shiftjs
 
 ##### Browser Support:
 
-* IE10+
-* Firefox 34+
 * Chrome 31+
+* Firefox 34+
+* Edge 13+
+* IE10+
 * Safari 7.1+
 * Opera 26+
 * Mobile
 
 _In older browsers, some transform-based animations will not work if the browser does not natively support the feature. All other CSS changes will be applied normally albeit without a smooth CSS3 transition._
 
-### Abbreviated Documentation
-
-For full documentation/examples, navigate to the official site. (link provided above)
+### Documentation/Examples
 
 ##### Initialization
 

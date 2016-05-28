@@ -8,10 +8,8 @@
  */
 
 	shift.fn.skew = function(values, duration, easing, complete) {
-		
 		var ease = priv.easingMap(easing);
 		var timer = priv.timer(duration);
-		
 		if (Array.isArray(values) && values.length === 2) {
 			priv.loop(this.collection, function() {
 				priv.multipleValueTransform(this, 'skew', timer, ease, values[0], values[1], true);
@@ -23,10 +21,8 @@
 		} else {
 			throw new Error('The first argument for skew() must either be a number or an array of 2 numbers.');
 		}
-		
 		// Resets and completions...
-		resetAll(this.collection, complete);
-		
+		reset(this.collection, complete);
 		return this;
 	};
 
@@ -40,10 +36,8 @@
  */
 
 	shift.fn.skewX = function(value, duration, easing, complete) {
-		
 		var ease = priv.easingMap(easing);
 		var timer = priv.timer(duration);
-		
 		if (typeof value === 'number' || value === 0) {
 			priv.loop(this.collection, function() {
 				priv.singleValueTransform(this, 'skewX', timer, ease, value, true);
@@ -51,10 +45,8 @@
 		} else {
 			throw new Error('skewX() requires a number as its first argument.');
 		}
-		
 		// Resets and completions...
-		resetAll(this.collection, complete);
-		
+		reset(this.collection, complete);
 		return this;
 	};
 
@@ -68,10 +60,8 @@
  */
 
 	shift.fn.skewY = function(value, duration, easing, complete) {
-		
 		var ease = priv.easingMap(easing);
 		var timer = priv.timer(duration);
-		
 		if (typeof value === 'number' || value === 0) {
 			priv.loop(this.collection, function() {
 				priv.singleValueTransform(this, 'skewY', timer, ease, value, true);
@@ -79,9 +69,7 @@
 		} else {
 			throw new Error('skewY() requires a number as its first argument.');
 		}
-		
 		// Resets and completions...
-		resetAll(this.collection, complete);
-		
+		reset(this.collection, complete);
 		return this;
 	};

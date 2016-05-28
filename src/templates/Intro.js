@@ -1,3 +1,3 @@
-(function(w, d, resetAll) {
+(function(w, d, reset) {
 	
 'use strict';

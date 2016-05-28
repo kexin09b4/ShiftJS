@@ -8,12 +8,9 @@
  */
 
 	shift.fn.animate = function(properties, duration, easing, complete) {
-		
 		var ease = priv.easingMap(easing);
 		var timer = priv.timer(duration);
-		
 		if (typeof properties === 'object') {
-			
 			priv.loop(this.collection, function() {
 				this.style.transition = 'all ' + timer + ' ' + ease;
 				for (var styles in properties) {
@@ -21,10 +18,8 @@
 					if (styles === 'transform') this.style.webkitTransform = properties[styles];
 				}
 			});
-			
 			// Resets and completions...
-			resetAll(this.collection, complete);
+			reset(this.collection, complete);
 		}
-		
 		return this;
 	};

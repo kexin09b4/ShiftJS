@@ -1,5 +1,5 @@
 /**
- * ShiftJS v1.1.2
+ * Shift.js Animation Library v1.1.3
  * https://github.com/dzervoudakes/ShiftJS
  * 
  * Copyright (c) 2015, 2016 Dan Zervoudakes
@@ -7,7 +7,7 @@
  * https://github.com/dzervoudakes/ShiftJS/blob/master/LICENSE
  */
 
-(function(w, d, resetAll) {
+(function(w, d, reset) {
 	
 'use strict';
 
@@ -19,27 +19,20 @@
  */
 
 	var Shift = function(selector, context) {
-		
-		var selectedElements, ctx, els, i, j;
-		
+		var selectedElements, ctx, els;
 		if (context) {
 			ctx = d.querySelectorAll(context);
 			selectedElements = [];
-			for (i = 0; i < ctx.length; i++) {
-				els = ctx[i].querySelectorAll(selector);
-				for (j = 0; j < els.length; j++) {
-					selectedElements.push(els[j]);
-				}
-			}
+			[].forEach.call(ctx, function(container) {
+				els = container.querySelectorAll(selector);
+				[].forEach.call(els, function(el) {
+					selectedElements.push(el);
+				});
+			});
 		} else {
 			selectedElements = d.querySelectorAll(selector);
 		}
-		
-		if (selectedElements.length > 0) {
-			this.collection = selectedElements;
-		} else {
-			return [];
-		}
+		if (selectedElements.length > 0) this.collection = selectedElements;
 	};
 
 	var shift = function(selector, context) {
@@ -56,9 +49,9 @@
 	var priv = {};
 
 	// Loop through each member of the collection throughout each module
-	priv.loop = function(array, callback) {
-		for (var i = 0; i < array.length; i++) {
-			callback.call(array[i]);
+	priv.loop = function(collection, callback) {
+		for (var i = 0; i < collection.length; i++) {
+			callback.call(collection[i]);
 		}
 	};
 
@@ -73,9 +66,7 @@
 
 	// Easing values
 	priv.easingMap = function(value) {
-		
 		var easingValue;
-		
 		switch (value) {
 			case 'ease':
 				easingValue = 'ease';
@@ -98,10 +89,8 @@
 			default:
 				easingValue = priv.environment['easing'];
 		};
-		
 		// Override the default value if a cubic-bezier array is passed
 		if (typeof value === 'object' && value.length === 4) easingValue = 'cubic-bezier(' + value[0] + ',' + value[1] + ',' + value[2] + ',' + value[3] + ')';
-		
 		return easingValue;
 	};
 
@@ -136,12 +125,9 @@
  */
 
 	shift.fn.animate = function(properties, duration, easing, complete) {
-		
 		var ease = priv.easingMap(easing);
 		var timer = priv.timer(duration);
-		
 		if (typeof properties === 'object') {
-			
 			priv.loop(this.collection, function() {
 				this.style.transition = 'all ' + timer + ' ' + ease;
 				for (var styles in properties) {
@@ -149,11 +135,9 @@
 					if (styles === 'transform') this.style.webkitTransform = properties[styles];
 				}
 			});
-			
 			// Resets and completions...
-			resetAll(this.collection, complete);
+			reset(this.collection, complete);
 		}
-		
 		return this;
 	};
 
@@ -179,18 +163,14 @@
  */
 
 	shift.fn.fadeOut = function(duration, easing, complete) {
-		
 		var ease = priv.easingMap(easing);
 		var timer = priv.timer(duration);
-		
 		priv.loop(this.collection, function() {
 			this.style.transition = 'all ' + timer + ' ' + ease;
 			this.style.opacity = 0;
 		});
-		
 		// Resets and completions...
-		resetAll(this.collection, complete);
-		
+		reset(this.collection, complete);
 		return this;
 	};
 
@@ -203,18 +183,14 @@
  */
 
 	shift.fn.fadeIn = function(duration, easing, complete) {
-		
 		var ease = priv.easingMap(easing);
 		var timer = priv.timer(duration);
-		
 		priv.loop(this.collection, function() {
 			this.style.transition = 'all ' + timer + ' ' + ease;
 			this.style.opacity = 1;
 		});
-		
 		// Resets and completions...
 		resetAll(this.collection, complete);
-		
 		return this;
 	};
 
@@ -226,15 +202,12 @@
  */
 
 	shift.fn.origin = function(x, y) {
-		
 		var origX = (typeof x === 'number' || x === 0) ? x + '%' : priv.environment['originX'];
 		var origY = (typeof y === 'number' || y === 0) ? y + '%' : priv.environment['originY'];
-		
 		priv.loop(this.collection, function() {
 			this.style.transformOrigin = origX + ' ' + origY;
 			this.style.webkitTransformOrigin = origX + ' ' + origY;
 		});
-		
 		return this;
 	};
 
@@ -248,10 +221,8 @@
  */
 
 	shift.fn.rotate = function(value, duration, easing, complete) {
-		
 		var ease = priv.easingMap(easing);
 		var timer = priv.timer(duration);
-		
 		if (typeof value === 'number' || value === 0) {
 			priv.loop(this.collection, function() {
 				priv.singleValueTransform(this, 'rotate', timer, ease, value, true);
@@ -259,10 +230,8 @@
 		} else {
 			throw new Error('Degree value for rotate() must be a valid number.');
 		}
-		
 		// Resets and completions...
-		resetAll(this.collection, complete);
-		
+		reset(this.collection, complete);
 		return this;
 	};
 
@@ -276,10 +245,8 @@
  */
 
 	shift.fn.rotateX = function(value, duration, easing, complete) {
-		
 		var ease = priv.easingMap(easing);
 		var timer = priv.timer(duration);
-		
 		if (typeof value === 'number' || value === 0) {
 			priv.loop(this.collection, function() {
 				priv.singleValueTransform(this, 'rotateX', timer, ease, value, true);
@@ -287,10 +254,8 @@
 		} else {
 			throw new Error('Degree value for rotateX() must be a valid number.');
 		}
-		
 		// Resets and completions...
-		resetAll(this.collection, complete);
-		
+		reset(this.collection, complete);
 		return this;
 	};
 
@@ -304,10 +269,8 @@
  */
 
 	shift.fn.rotateY = function(value, duration, easing, complete) {
-		
 		var ease = priv.easingMap(easing);
 		var timer = priv.timer(duration);
-		
 		if (typeof value === 'number' || value === 0) {
 			priv.loop(this.collection, function() {
 				priv.singleValueTransform(this, 'rotateY', timer, ease, value, true);
@@ -315,10 +278,8 @@
 		} else {
 			throw new Error('Degree value for rotateY() must be a valid number.');
 		}
-		
 		// Resets and completions...
-		resetAll(this.collection, complete);
-		
+		reset(this.collection, complete);
 		return this;
 	};
 
@@ -332,10 +293,8 @@
  */
 
 	shift.fn.scale = function(values, duration, easing, complete) {
-		
 		var ease = priv.easingMap(easing);
 		var timer = priv.timer(duration);
-		
 		if (Array.isArray(values) && values.length === 2) {
 			priv.loop(this.collection, function() {
 				priv.multipleValueTransform(this, 'scale', timer, ease, values[0], values[1]);
@@ -347,10 +306,8 @@
 		} else {
 			throw new Error('The first argument for scale() must either be a number or an array of 2 numbers.');
 		}
-		
 		// Resets and completions...
-		resetAll(this.collection, complete);
-		
+		reset(this.collection, complete);
 		return this;
 	};
 
@@ -364,10 +321,8 @@
  */
 
 	shift.fn.scaleX = function(value, duration, easing, complete) {
-		
 		var ease = priv.easingMap(easing);
 		var timer = priv.timer(duration);
-		
 		if (typeof value === 'number' || value === 0) {
 			priv.loop(this.collection, function() {
 				priv.singleValueTransform(this, 'scaleX', timer, ease, value);
@@ -375,10 +330,8 @@
 		} else {
 			throw new Error('scaleX() requires a number as its first argument.');
 		}
-		
 		// Resets and completions...
-		resetAll(this.collection, complete);
-		
+		reset(this.collection, complete);
 		return this;
 	};
 
@@ -392,10 +345,8 @@
  */
 
 	shift.fn.scaleY = function(value, duration, easing, complete) {
-		
 		var ease = priv.easingMap(easing);
 		var timer = priv.timer(duration);
-		
 		if (typeof value === 'number' || value === 0) {
 			priv.loop(this.collection, function() {
 				priv.singleValueTransform(this, 'scaleY', timer, ease, value);
@@ -403,10 +354,8 @@
 		} else {
 			throw new Error('scaleY() requires a number as its first argument.');
 		}
-		
 		// Resets and completions...
-		resetAll(this.collection, complete);
-		
+		reset(this.collection, complete);
 		return this;
 	};
 
@@ -421,10 +370,8 @@
  */
 
 	shift.fn.set = function(property, value, duration, easing, complete) {
-		
 		var ease = priv.easingMap(easing);
 		var timer = priv.timer(duration);
-		
 		if (typeof property === 'string' && typeof value === 'string') {
 			priv.loop(this.collection, function() {
 				this.style.transition = property + ' ' + timer + ' ' + ease;
@@ -437,10 +384,8 @@
 		} else {
 			throw new Error('"Property" and "value" parameters for set() must be strings.');
 		}
-		
 		// Resets and completions...
-		resetAll(this.collection, complete);
-		
+		reset(this.collection, complete);
 		return this;
 	};
 
@@ -454,10 +399,8 @@
  */
 
 	shift.fn.skew = function(values, duration, easing, complete) {
-		
 		var ease = priv.easingMap(easing);
 		var timer = priv.timer(duration);
-		
 		if (Array.isArray(values) && values.length === 2) {
 			priv.loop(this.collection, function() {
 				priv.multipleValueTransform(this, 'skew', timer, ease, values[0], values[1], true);
@@ -469,10 +412,8 @@
 		} else {
 			throw new Error('The first argument for skew() must either be a number or an array of 2 numbers.');
 		}
-		
 		// Resets and completions...
-		resetAll(this.collection, complete);
-		
+		reset(this.collection, complete);
 		return this;
 	};
 
@@ -486,10 +427,8 @@
  */
 
 	shift.fn.skewX = function(value, duration, easing, complete) {
-		
 		var ease = priv.easingMap(easing);
 		var timer = priv.timer(duration);
-		
 		if (typeof value === 'number' || value === 0) {
 			priv.loop(this.collection, function() {
 				priv.singleValueTransform(this, 'skewX', timer, ease, value, true);
@@ -497,10 +436,8 @@
 		} else {
 			throw new Error('skewX() requires a number as its first argument.');
 		}
-		
 		// Resets and completions...
-		resetAll(this.collection, complete);
-		
+		reset(this.collection, complete);
 		return this;
 	};
 
@@ -514,10 +451,8 @@
  */
 
 	shift.fn.skewY = function(value, duration, easing, complete) {
-		
 		var ease = priv.easingMap(easing);
 		var timer = priv.timer(duration);
-		
 		if (typeof value === 'number' || value === 0) {
 			priv.loop(this.collection, function() {
 				priv.singleValueTransform(this, 'skewY', timer, ease, value, true);
@@ -525,10 +460,8 @@
 		} else {
 			throw new Error('skewY() requires a number as its first argument.');
 		}
-		
 		// Resets and completions...
-		resetAll(this.collection, complete);
-		
+		reset(this.collection, complete);
 		return this;
 	};
 
@@ -542,10 +475,8 @@
  */
 
 	shift.fn.translate = function(values, duration, easing, complete) {
-		
 		var ease = priv.easingMap(easing);
 		var timer = priv.timer(duration);
-		
 		if (Array.isArray(values) && values.length === 2) {
 			priv.loop(this.collection, function() {
 				priv.multipleValueTransform(this, 'translate', timer, ease, values[0], values[1]);
@@ -557,10 +488,8 @@
 		} else {
 			throw new Error('The first argument for translate() must either be a string or an array of 2 strings ("number + px" or "number + %" values).');
 		}
-		
 		// Resets and completions...
-		resetAll(this.collection, complete);
-		
+		reset(this.collection, complete);
 		return this;
 	};
 
@@ -574,10 +503,8 @@
  */
 
 	shift.fn.translateX = function(value, duration, easing, complete) {
-		
 		var ease = priv.easingMap(easing);
 		var timer = priv.timer(duration);
-		
 		if (typeof value === 'string') {
 			priv.loop(this.collection, function() {
 				priv.singleValueTransform(this, 'translateX', timer, ease, value);
@@ -585,10 +512,8 @@
 		} else {
 			throw new Error('translateX() requires a string ("number + px" or "number + %") as its first argument.');
 		}
-		
 		// Resets and completions...
-		resetAll(this.collection, complete);
-		
+		reset(this.collection, complete);
 		return this;
 	};
 
@@ -602,10 +527,8 @@
  */
 
 	shift.fn.translateY = function(value, duration, easing, complete) {
-		
 		var ease = priv.easingMap(easing);
 		var timer = priv.timer(duration);
-		
 		if (typeof value === 'string') {
 			priv.loop(this.collection, function() {
 				priv.singleValueTransform(this, 'translateY', timer, ease, value);
@@ -613,10 +536,8 @@
 		} else {
 			throw new Error('translateY() requires a string ("number + px" or "number + %") as its first argument.');
 		}
-		
 		// Resets and completions...
-		resetAll(this.collection, complete);
-		
+		reset(this.collection, complete);
 		return this;
 	};
 
@@ -627,24 +548,24 @@
 	var priv = {};
 	
 	// Reset everything after transitioning
-	priv.reset = function(array) {
-		for (var i = 0; i < array.length; i++) {
-			array[i].style.transition = '';
-			array[i].style.webkitTransition = '';
-		}
+	priv.reset = function(nodeList) {
+		[].forEach.call(nodeList, function(item) {
+			item.style.transition = '';
+			item.style.webkitTransition = '';
+		});
 		return this;
 	};
 	
 	// Called after all transtions end
-	priv.callback = function(array, complete, callback) {
-		this.reset(array);
+	priv.callback = function(nodeList, complete, callback) {
+		this.reset(nodeList);
 		if (complete) {
 			setTimeout(function() {
 				complete();
 			}, 50);
 		}
 		// Prevent transitionend event from firing too many times
-		array[array.length - 1].removeEventListener('transitionend', callback, false);
+		nodeList[nodeList.length - 1].removeEventListener('transitionend', callback, false);
 		return this;
 	};
 	

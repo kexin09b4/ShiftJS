@@ -6,27 +6,20 @@
  */
 
 	var Shift = function(selector, context) {
-		
-		var selectedElements, ctx, els, i, j;
-		
+		var selectedElements, ctx, els;
 		if (context) {
 			ctx = d.querySelectorAll(context);
 			selectedElements = [];
-			for (i = 0; i < ctx.length; i++) {
-				els = ctx[i].querySelectorAll(selector);
-				for (j = 0; j < els.length; j++) {
-					selectedElements.push(els[j]);
-				}
-			}
+			[].forEach.call(ctx, function(container) {
+				els = container.querySelectorAll(selector);
+				[].forEach.call(els, function(el) {
+					selectedElements.push(el);
+				});
+			});
 		} else {
 			selectedElements = d.querySelectorAll(selector);
 		}
-		
-		if (selectedElements.length > 0) {
-			this.collection = selectedElements;
-		} else {
-			return [];
-		}
+		if (selectedElements.length > 0) this.collection = selectedElements;
 	};
 
 	var shift = function(selector, context) {
@@ -43,9 +36,9 @@
 	var priv = {};
 
 	// Loop through each member of the collection throughout each module
-	priv.loop = function(array, callback) {
-		for (var i = 0; i < array.length; i++) {
-			callback.call(array[i]);
+	priv.loop = function(collection, callback) {
+		for (var i = 0; i < collection.length; i++) {
+			callback.call(collection[i]);
 		}
 	};
 
@@ -60,9 +53,7 @@
 
 	// Easing values
 	priv.easingMap = function(value) {
-		
 		var easingValue;
-		
 		switch (value) {
 			case 'ease':
 				easingValue = 'ease';
@@ -85,10 +76,8 @@
 			default:
 				easingValue = priv.environment['easing'];
 		};
-		
 		// Override the default value if a cubic-bezier array is passed
 		if (typeof value === 'object' && value.length === 4) easingValue = 'cubic-bezier(' + value[0] + ',' + value[1] + ',' + value[2] + ',' + value[3] + ')';
-		
 		return easingValue;
 	};
 

@@ -9,10 +9,8 @@
  */
 
 	shift.fn.set = function(property, value, duration, easing, complete) {
-		
 		var ease = priv.easingMap(easing);
 		var timer = priv.timer(duration);
-		
 		if (typeof property === 'string' && typeof value === 'string') {
 			priv.loop(this.collection, function() {
 				this.style.transition = property + ' ' + timer + ' ' + ease;
@@ -25,9 +23,7 @@
 		} else {
 			throw new Error('"Property" and "value" parameters for set() must be strings.');
 		}
-		
 		// Resets and completions...
-		resetAll(this.collection, complete);
-		
+		reset(this.collection, complete);
 		return this;
 	};
