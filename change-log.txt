@@ -97,3 +97,11 @@ Contributor(s): Dan Zervoudakes
 v1.1.5
  
 - Slight for loop refactoring and spacing/commenting updates
+
+Date: 6/29/16
+Changes Current Version: NO
+Contributor(s): Dan Zervoudakes
+
+v1.1.6
+ 
+- Fixed a really obvious error with nodeList-to-array conversion in Core.js

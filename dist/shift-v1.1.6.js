@@ -1,5 +1,5 @@
 /**
- * Shift.js Animation Library v1.1.5
+ * Shift.js Animation Library v1.1.6
  * https://github.com/dzervoudakes/ShiftJS
  * 
  * Copyright (c) 2015, 2016 Dan Zervoudakes
@@ -26,7 +26,7 @@
 			selectedElements = [];
 			ctx.forEach(function(container) {
 				els = container.querySelectorAll(selector);
-				els.Array.prototype.slice.call(els);
+				els = Array.prototype.slice.call(els);
 				els.forEach(function(el) {
 					selectedElements.push(el);
 				});

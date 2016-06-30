@@ -13,7 +13,7 @@
 			selectedElements = [];
 			ctx.forEach(function(container) {
 				els = container.querySelectorAll(selector);
-				els.Array.prototype.slice.call(els);
+				els = Array.prototype.slice.call(els);
 				els.forEach(function(el) {
 					selectedElements.push(el);
 				});
