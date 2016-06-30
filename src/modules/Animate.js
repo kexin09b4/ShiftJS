@@ -13,12 +13,12 @@
 		if (typeof properties === 'object') {
 			priv.loop(this.collection, function() {
 				this.style.transition = 'all ' + timer + ' ' + ease;
-				for (var styles in properties) {
-					this.style[styles] = properties[styles];
-					if (styles === 'transform') this.style.webkitTransform = properties[styles];
-				}
+				var self = this;
+				var props = Object.keys(properties);
+				props.forEach(function(prop) {
+					self.style[prop] = properties[prop];
+				});
 			});
-			// Resets and completions...
 			reset(this.collection, complete);
 		}
 		return this;

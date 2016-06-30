@@ -21,7 +21,6 @@
 		} else {
 			throw new Error('The first argument for skew() must either be a number or an array of 2 numbers.');
 		}
-		// Resets and completions...
 		reset(this.collection, complete);
 		return this;
 	};
@@ -45,7 +44,6 @@
 		} else {
 			throw new Error('skewX() requires a number as its first argument.');
 		}
-		// Resets and completions...
 		reset(this.collection, complete);
 		return this;
 	};
@@ -69,7 +67,6 @@
 		} else {
 			throw new Error('skewY() requires a number as its first argument.');
 		}
-		// Resets and completions...
 		reset(this.collection, complete);
 		return this;
 	};

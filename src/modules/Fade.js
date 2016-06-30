@@ -13,7 +13,6 @@
 			this.style.transition = 'all ' + timer + ' ' + ease;
 			this.style.opacity = 0;
 		});
-		// Resets and completions...
 		reset(this.collection, complete);
 		return this;
 	};
@@ -33,7 +32,6 @@
 			this.style.transition = 'all ' + timer + ' ' + ease;
 			this.style.opacity = 1;
 		});
-		// Resets and completions...
 		reset(this.collection, complete);
 		return this;
 	};

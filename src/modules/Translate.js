@@ -21,7 +21,6 @@
 		} else {
 			throw new Error('The first argument for translate() must either be a string or an array of 2 strings ("number + px" or "number + %" values).');
 		}
-		// Resets and completions...
 		reset(this.collection, complete);
 		return this;
 	};
@@ -45,7 +44,6 @@
 		} else {
 			throw new Error('translateX() requires a string ("number + px" or "number + %") as its first argument.');
 		}
-		// Resets and completions...
 		reset(this.collection, complete);
 		return this;
 	};
@@ -69,7 +67,6 @@
 		} else {
 			throw new Error('translateY() requires a string ("number + px" or "number + %") as its first argument.');
 		}
-		// Resets and completions...
 		reset(this.collection, complete);
 		return this;
 	};

@@ -9,10 +9,12 @@
 		var selectedElements, ctx, els;
 		if (context) {
 			ctx = d.querySelectorAll(context);
+			ctx = Array.prototype.slice.call(ctx);
 			selectedElements = [];
-			[].forEach.call(ctx, function(container) {
+			ctx.forEach(function(container) {
 				els = container.querySelectorAll(selector);
-				[].forEach.call(els, function(el) {
+				els.Array.prototype.slice.call(els);
+				els.forEach(function(el) {
 					selectedElements.push(el);
 				});
 			});
@@ -37,9 +39,10 @@
 
 	// Loop through each member of the collection throughout each module
 	priv.loop = function(collection, callback) {
-		for (var i = 0; i < collection.length; i++) {
-			callback.call(collection[i]);
-		}
+		var set = Array.prototype.slice.call(collection);
+		set.forEach(function(item) {
+			callback.call(item);
+		});
 	};
 
 	// Default properties

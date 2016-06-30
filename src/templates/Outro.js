@@ -6,7 +6,8 @@
 	
 	// Reset everything after transitioning
 	priv.reset = function(nodeList) {
-		[].forEach.call(nodeList, function(item) {
+		var list = Array.prototype.slice.call(nodeList);
+		list.forEach(function(item) {
 			item.style.transition = '';
 			item.style.webkitTransition = '';
 		});
@@ -16,11 +17,7 @@
 	// Called after all transtions end
 	priv.callback = function(nodeList, complete, callback) {
 		this.reset(nodeList);
-		if (complete) {
-			setTimeout(function() {
-				complete();
-			}, 50);
-		}
+		if (complete) setTimeout(complete, 50);
 		// Prevent transitionend event from firing too many times
 		nodeList[nodeList.length - 1].removeEventListener('transitionend', callback, false);
 		return this;
@@ -32,5 +29,4 @@
 	};
 	
 	return collection[collection.length - 1].addEventListener('transitionend', reset, false);
-	
 });

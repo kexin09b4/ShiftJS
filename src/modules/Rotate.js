@@ -17,7 +17,6 @@
 		} else {
 			throw new Error('Degree value for rotate() must be a valid number.');
 		}
-		// Resets and completions...
 		reset(this.collection, complete);
 		return this;
 	};
@@ -41,7 +40,6 @@
 		} else {
 			throw new Error('Degree value for rotateX() must be a valid number.');
 		}
-		// Resets and completions...
 		reset(this.collection, complete);
 		return this;
 	};
@@ -65,7 +63,6 @@
 		} else {
 			throw new Error('Degree value for rotateY() must be a valid number.');
 		}
-		// Resets and completions...
 		reset(this.collection, complete);
 		return this;
 	};

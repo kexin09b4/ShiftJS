@@ -1,5 +1,5 @@
 /**
- * Shift.js Animation Library v1.1.4
+ * Shift.js Animation Library v1.1.5
  * https://github.com/dzervoudakes/ShiftJS
  * 
  * Copyright (c) 2015, 2016 Dan Zervoudakes
@@ -22,10 +22,12 @@
 		var selectedElements, ctx, els;
 		if (context) {
 			ctx = d.querySelectorAll(context);
+			ctx = Array.prototype.slice.call(ctx);
 			selectedElements = [];
-			[].forEach.call(ctx, function(container) {
+			ctx.forEach(function(container) {
 				els = container.querySelectorAll(selector);
-				[].forEach.call(els, function(el) {
+				els.Array.prototype.slice.call(els);
+				els.forEach(function(el) {
 					selectedElements.push(el);
 				});
 			});
@@ -50,9 +52,10 @@
 
 	// Loop through each member of the collection throughout each module
 	priv.loop = function(collection, callback) {
-		for (var i = 0; i < collection.length; i++) {
-			callback.call(collection[i]);
-		}
+		var set = Array.prototype.slice.call(collection);
+		set.forEach(function(item) {
+			callback.call(item);
+		});
 	};
 
 	// Default properties
@@ -130,12 +133,12 @@
 		if (typeof properties === 'object') {
 			priv.loop(this.collection, function() {
 				this.style.transition = 'all ' + timer + ' ' + ease;
-				for (var styles in properties) {
-					this.style[styles] = properties[styles];
-					if (styles === 'transform') this.style.webkitTransform = properties[styles];
-				}
+				var self = this;
+				var props = Object.keys(properties);
+				props.forEach(function(prop) {
+					self.style[prop] = properties[prop];
+				});
 			});
-			// Resets and completions...
 			reset(this.collection, complete);
 		}
 		return this;
@@ -169,7 +172,6 @@
 			this.style.transition = 'all ' + timer + ' ' + ease;
 			this.style.opacity = 0;
 		});
-		// Resets and completions...
 		reset(this.collection, complete);
 		return this;
 	};
@@ -189,7 +191,6 @@
 			this.style.transition = 'all ' + timer + ' ' + ease;
 			this.style.opacity = 1;
 		});
-		// Resets and completions...
 		reset(this.collection, complete);
 		return this;
 	};
@@ -230,7 +231,6 @@
 		} else {
 			throw new Error('Degree value for rotate() must be a valid number.');
 		}
-		// Resets and completions...
 		reset(this.collection, complete);
 		return this;
 	};
@@ -254,7 +254,6 @@
 		} else {
 			throw new Error('Degree value for rotateX() must be a valid number.');
 		}
-		// Resets and completions...
 		reset(this.collection, complete);
 		return this;
 	};
@@ -278,7 +277,6 @@
 		} else {
 			throw new Error('Degree value for rotateY() must be a valid number.');
 		}
-		// Resets and completions...
 		reset(this.collection, complete);
 		return this;
 	};
@@ -306,7 +304,6 @@
 		} else {
 			throw new Error('The first argument for scale() must either be a number or an array of 2 numbers.');
 		}
-		// Resets and completions...
 		reset(this.collection, complete);
 		return this;
 	};
@@ -330,7 +327,6 @@
 		} else {
 			throw new Error('scaleX() requires a number as its first argument.');
 		}
-		// Resets and completions...
 		reset(this.collection, complete);
 		return this;
 	};
@@ -354,7 +350,6 @@
 		} else {
 			throw new Error('scaleY() requires a number as its first argument.');
 		}
-		// Resets and completions...
 		reset(this.collection, complete);
 		return this;
 	};
@@ -384,7 +379,6 @@
 		} else {
 			throw new Error('"Property" and "value" parameters for set() must be strings.');
 		}
-		// Resets and completions...
 		reset(this.collection, complete);
 		return this;
 	};
@@ -412,7 +406,6 @@
 		} else {
 			throw new Error('The first argument for skew() must either be a number or an array of 2 numbers.');
 		}
-		// Resets and completions...
 		reset(this.collection, complete);
 		return this;
 	};
@@ -436,7 +429,6 @@
 		} else {
 			throw new Error('skewX() requires a number as its first argument.');
 		}
-		// Resets and completions...
 		reset(this.collection, complete);
 		return this;
 	};
@@ -460,7 +452,6 @@
 		} else {
 			throw new Error('skewY() requires a number as its first argument.');
 		}
-		// Resets and completions...
 		reset(this.collection, complete);
 		return this;
 	};
@@ -488,7 +479,6 @@
 		} else {
 			throw new Error('The first argument for translate() must either be a string or an array of 2 strings ("number + px" or "number + %" values).');
 		}
-		// Resets and completions...
 		reset(this.collection, complete);
 		return this;
 	};
@@ -512,7 +502,6 @@
 		} else {
 			throw new Error('translateX() requires a string ("number + px" or "number + %") as its first argument.');
 		}
-		// Resets and completions...
 		reset(this.collection, complete);
 		return this;
 	};
@@ -536,7 +525,6 @@
 		} else {
 			throw new Error('translateY() requires a string ("number + px" or "number + %") as its first argument.');
 		}
-		// Resets and completions...
 		reset(this.collection, complete);
 		return this;
 	};
@@ -549,7 +537,8 @@
 	
 	// Reset everything after transitioning
 	priv.reset = function(nodeList) {
-		[].forEach.call(nodeList, function(item) {
+		var list = Array.prototype.slice.call(nodeList);
+		list.forEach(function(item) {
 			item.style.transition = '';
 			item.style.webkitTransition = '';
 		});
@@ -559,11 +548,7 @@
 	// Called after all transtions end
 	priv.callback = function(nodeList, complete, callback) {
 		this.reset(nodeList);
-		if (complete) {
-			setTimeout(function() {
-				complete();
-			}, 50);
-		}
+		if (complete) setTimeout(complete, 50);
 		// Prevent transitionend event from firing too many times
 		nodeList[nodeList.length - 1].removeEventListener('transitionend', callback, false);
 		return this;
@@ -575,5 +560,4 @@
 	};
 	
 	return collection[collection.length - 1].addEventListener('transitionend', reset, false);
-	
 });

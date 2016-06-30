@@ -23,7 +23,6 @@
 		} else {
 			throw new Error('"Property" and "value" parameters for set() must be strings.');
 		}
-		// Resets and completions...
 		reset(this.collection, complete);
 		return this;
 	};
